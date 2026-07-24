@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase-browser";
 import PasswordInput from "@/components/PasswordInput";
 
-export default function Connexion() {
+function ConnexionForm() {
   const router = useRouter();
   const params = useSearchParams();
   const [email, setEmail] = useState("");
@@ -105,7 +105,13 @@ export default function Connexion() {
     </div>
   );
 }
-
+export default function ConnexionPage() {
+  return (
+    <Suspense fallback={<div>Chargement...</div>}>
+      <ConnexionForm />
+    </Suspense>
+  );
+}
 function GoogleIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 48 48">
