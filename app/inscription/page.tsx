@@ -78,13 +78,23 @@ function InscriptionForm() {
       <div className="flex-1 flex items-center justify-center px-6 py-10">
         {done ? (
           <div className="w-full max-w-[380px] border border-line-strong rounded-2xl bg-bg-2 p-8 text-center">
-            <h1 className="font-display text-xl font-semibold mb-2">Vérifiez vos emails</h1>
-            <p className="text-muted text-sm">
-              Un lien de confirmation vient d&apos;être envoyé à{" "}
-              <strong className="text-white">{email}</strong>. Cliquez dessus pour activer votre
-              compte et accéder à votre espace Qrypton.
-            </p>
-          </div>
+  <h1 className="font-display text-xl font-semibold mb-2">Vérifiez vos emails</h1>
+  <p className="text-muted text-sm mb-5">
+    Un lien de confirmation vient d&apos;être envoyé à{" "}
+    <strong className="text-white">{email}</strong>. Cliquez dessus pour activer votre
+    compte.
+  </p>
+  <p className="text-muted text-xs mb-5">
+    Si vous ouvrez le lien sur un autre appareil, revenez ici et connectez-vous
+    ci-dessous une fois votre compte confirmé.
+  </p>
+  <Link
+    href="/connexion"
+    className="inline-block w-full py-3 rounded-lg bg-white text-bg font-semibold text-sm hover:bg-blue-soft transition"
+  >
+    Se connecter
+  </Link>
+</div>
         ) : (
           <form onSubmit={handleSubmit} className="w-full max-w-[400px] border border-line-strong rounded-2xl bg-bg-2 p-8">
             <h1 className="font-display text-xl font-semibold mb-1">Créer un compte</h1>
