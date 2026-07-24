@@ -24,7 +24,7 @@ function useSmoothNumber(target: number, duration = 350) {
       if (p < 1) raf.current = requestAnimationFrame(tick);
     }
     raf.current = requestAnimationFrame(tick);
-    return () => raf.current && cancelAnimationFrame(raf.current);
+    return () => { if (raf.current)cancelAnimationFrame(raf.current); }; 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [target]);
 
