@@ -23,7 +23,7 @@ export default function PathCard({
       }`}
     >
       {recommended && (
-        <span className="absolute -top-[26px] left-1/2 -translate-x-1/2 px-3.5 py-1.5 rounded-full text-[10px] font-mono uppercase tracking-wide bg-blue/15 text-blue-soft border border-blue-soft/30">
+        <span className="absolute -top-3 right-4 px-3.5 py-1.5 rounded-full text-[10px] font-mono uppercase tracking-wide bg-blue/15 text-blue-soft border border-blue-soft/30 shadow-sm">
           Recommandé
         </span>
       )}
