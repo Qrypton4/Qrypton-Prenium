@@ -84,16 +84,7 @@ export default async function ChallengePropFirm() {
           )}
         </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Reveal delay={0.15}>
-            <h2 className="text-sm text-muted mb-4">Calendrier mensuel</h2>
-            {hasClosedTrades ? <MonthlyCalendar monthly={data.monthly} /> : <EmptyBlock />}
-          </Reveal>
-          <Reveal delay={0.15}>
-            <h2 className="text-sm text-muted mb-4">Résultats par semaine</h2>
-            {hasClosedTrades ? <WeeklyResults weekly={data.weekly} /> : <EmptyBlock />}
-          </Reveal>
-        </div>
+        
 
         <Reveal delay={0.2}>
           <h2 className="text-sm text-muted mb-4">Historique des positions</h2>
