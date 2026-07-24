@@ -1,0 +1,1951 @@
+{
+  "_comment": "Source unique de vérité pour la section Performances. Généré à partir du vrai rapport MT5 (ReportTester-1513781594_BacktTest_NAS100.html) fourni le 14/07/2026. Aucune valeur inventée.",
+  "meta": {
+    "backtestStart": "2023-01-01",
+    "backtestEnd": "2026-06-30",
+    "lastUpdated": "2026-07-14",
+    "dataComplete": true,
+    "sourceReport": "ReportTester-1513781594_BacktTest_NAS100.html",
+    "symbol": "US100.cash",
+    "timeframe": "M15"
+  },
+  "summary": {
+    "initialCapital": 100000,
+    "finalCapital": 154286.12,
+    "netProfitEUR": 54286.12,
+    "netProfitPct": 54.29,
+    "profitFactor": 1.54,
+    "winRate": 30.43,
+    "totalTrades": 276,
+    "maxDrawdownPct": 5.69,
+    "maxDrawdownEquityPct": 6.33,
+    "maxConsecutiveLosses": 11,
+    "avgRiskReward": 3.52
+  },
+  "equityCurve": [
+    {
+      "date": "2023-01-04",
+      "capital": 99498.31,
+      "cumulativeProfit": -501.69,
+      "drawdownPct": 0.5
+    },
+    {
+      "date": "2023-01-11",
+      "capital": 100873.88,
+      "cumulativeProfit": 873.88,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2023-01-13",
+      "capital": 102394.37,
+      "cumulativeProfit": 2394.37,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2023-01-18",
+      "capital": 102334.81,
+      "cumulativeProfit": 2334.81,
+      "drawdownPct": 0.06
+    },
+    {
+      "date": "2023-01-24",
+      "capital": 101821.27,
+      "cumulativeProfit": 1821.27,
+      "drawdownPct": 0.56
+    },
+    {
+      "date": "2023-01-26",
+      "capital": 103317.08,
+      "cumulativeProfit": 3317.08,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2023-01-27",
+      "capital": 104886.38,
+      "cumulativeProfit": 4886.38,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2023-01-30",
+      "capital": 104344.71,
+      "cumulativeProfit": 4344.71,
+      "drawdownPct": 0.52
+    },
+    {
+      "date": "2023-02-01",
+      "capital": 105856.6,
+      "cumulativeProfit": 5856.6,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2023-02-02",
+      "capital": 105327.3,
+      "cumulativeProfit": 5327.3,
+      "drawdownPct": 0.5
+    },
+    {
+      "date": "2023-02-06",
+      "capital": 104719.67,
+      "cumulativeProfit": 4719.67,
+      "drawdownPct": 1.07
+    },
+    {
+      "date": "2023-02-06",
+      "capital": 104194.42,
+      "cumulativeProfit": 4194.42,
+      "drawdownPct": 1.57
+    },
+    {
+      "date": "2023-02-07",
+      "capital": 103666.53,
+      "cumulativeProfit": 3666.53,
+      "drawdownPct": 2.07
+    },
+    {
+      "date": "2023-02-16",
+      "capital": 103609.89,
+      "cumulativeProfit": 3609.89,
+      "drawdownPct": 2.12
+    },
+    {
+      "date": "2023-02-16",
+      "capital": 103607.68,
+      "cumulativeProfit": 3607.68,
+      "drawdownPct": 2.12
+    },
+    {
+      "date": "2023-02-27",
+      "capital": 103092.74,
+      "cumulativeProfit": 3092.74,
+      "drawdownPct": 2.61
+    },
+    {
+      "date": "2023-02-28",
+      "capital": 102582.37,
+      "cumulativeProfit": 2582.37,
+      "drawdownPct": 3.09
+    },
+    {
+      "date": "2023-03-03",
+      "capital": 104125.31,
+      "cumulativeProfit": 4125.31,
+      "drawdownPct": 1.64
+    },
+    {
+      "date": "2023-03-06",
+      "capital": 104113.06,
+      "cumulativeProfit": 4113.06,
+      "drawdownPct": 1.65
+    },
+    {
+      "date": "2023-03-08",
+      "capital": 103590.53,
+      "cumulativeProfit": 3590.53,
+      "drawdownPct": 2.14
+    },
+    {
+      "date": "2023-03-09",
+      "capital": 103065.51,
+      "cumulativeProfit": 3065.51,
+      "drawdownPct": 2.64
+    },
+    {
+      "date": "2023-03-15",
+      "capital": 102551.06,
+      "cumulativeProfit": 2551.06,
+      "drawdownPct": 3.12
+    },
+    {
+      "date": "2023-03-16",
+      "capital": 104091.35,
+      "cumulativeProfit": 4091.35,
+      "drawdownPct": 1.67
+    },
+    {
+      "date": "2023-03-17",
+      "capital": 103570.78,
+      "cumulativeProfit": 3570.78,
+      "drawdownPct": 2.16
+    },
+    {
+      "date": "2023-03-21",
+      "capital": 105077.61,
+      "cumulativeProfit": 5077.61,
+      "drawdownPct": 0.74
+    },
+    {
+      "date": "2023-03-22",
+      "capital": 105075.78,
+      "cumulativeProfit": 5075.78,
+      "drawdownPct": 0.74
+    },
+    {
+      "date": "2023-03-23",
+      "capital": 106685.83,
+      "cumulativeProfit": 6685.83,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2023-03-27",
+      "capital": 106152.22,
+      "cumulativeProfit": 6152.22,
+      "drawdownPct": 0.5
+    },
+    {
+      "date": "2023-03-29",
+      "capital": 105601.97,
+      "cumulativeProfit": 5601.97,
+      "drawdownPct": 1.02
+    },
+    {
+      "date": "2023-03-30",
+      "capital": 105052.92,
+      "cumulativeProfit": 5052.92,
+      "drawdownPct": 1.53
+    },
+    {
+      "date": "2023-04-04",
+      "capital": 106392.23,
+      "cumulativeProfit": 6392.23,
+      "drawdownPct": 0.28
+    },
+    {
+      "date": "2023-04-04",
+      "capital": 105848.73,
+      "cumulativeProfit": 5848.73,
+      "drawdownPct": 0.78
+    },
+    {
+      "date": "2023-04-14",
+      "capital": 105320.05,
+      "cumulativeProfit": 5320.05,
+      "drawdownPct": 1.28
+    },
+    {
+      "date": "2023-04-18",
+      "capital": 104752.46,
+      "cumulativeProfit": 4752.46,
+      "drawdownPct": 1.81
+    },
+    {
+      "date": "2023-04-27",
+      "capital": 106335.37,
+      "cumulativeProfit": 6335.37,
+      "drawdownPct": 0.33
+    },
+    {
+      "date": "2023-05-02",
+      "capital": 106142.71,
+      "cumulativeProfit": 6142.71,
+      "drawdownPct": 0.51
+    },
+    {
+      "date": "2023-05-03",
+      "capital": 105616.72,
+      "cumulativeProfit": 5616.72,
+      "drawdownPct": 1.0
+    },
+    {
+      "date": "2023-05-09",
+      "capital": 105529.86,
+      "cumulativeProfit": 5529.86,
+      "drawdownPct": 1.08
+    },
+    {
+      "date": "2023-05-09",
+      "capital": 104954.23,
+      "cumulativeProfit": 4954.23,
+      "drawdownPct": 1.62
+    },
+    {
+      "date": "2023-05-10",
+      "capital": 104421.01,
+      "cumulativeProfit": 4421.01,
+      "drawdownPct": 2.12
+    },
+    {
+      "date": "2023-05-12",
+      "capital": 103831.98,
+      "cumulativeProfit": 3831.98,
+      "drawdownPct": 2.68
+    },
+    {
+      "date": "2023-05-15",
+      "capital": 103820.84,
+      "cumulativeProfit": 3820.84,
+      "drawdownPct": 2.69
+    },
+    {
+      "date": "2023-05-18",
+      "capital": 105297.52,
+      "cumulativeProfit": 5297.52,
+      "drawdownPct": 1.3
+    },
+    {
+      "date": "2023-05-18",
+      "capital": 106876.57,
+      "cumulativeProfit": 6876.57,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2023-05-23",
+      "capital": 106296.34,
+      "cumulativeProfit": 6296.34,
+      "drawdownPct": 0.54
+    },
+    {
+      "date": "2023-05-23",
+      "capital": 105775.99,
+      "cumulativeProfit": 5775.99,
+      "drawdownPct": 1.03
+    },
+    {
+      "date": "2023-05-26",
+      "capital": 107335.56,
+      "cumulativeProfit": 7335.56,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2023-05-29",
+      "capital": 108958.11,
+      "cumulativeProfit": 8958.11,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2023-05-31",
+      "capital": 108413.17,
+      "cumulativeProfit": 8413.17,
+      "drawdownPct": 0.5
+    },
+    {
+      "date": "2023-06-01",
+      "capital": 110053.14,
+      "cumulativeProfit": 10053.14,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2023-06-05",
+      "capital": 109487.44,
+      "cumulativeProfit": 9487.44,
+      "drawdownPct": 0.51
+    },
+    {
+      "date": "2023-06-07",
+      "capital": 109416.49,
+      "cumulativeProfit": 9416.49,
+      "drawdownPct": 0.58
+    },
+    {
+      "date": "2023-06-09",
+      "capital": 108869.27,
+      "cumulativeProfit": 8869.27,
+      "drawdownPct": 1.08
+    },
+    {
+      "date": "2023-06-12",
+      "capital": 110503.44,
+      "cumulativeProfit": 10503.44,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2023-06-15",
+      "capital": 112159.88,
+      "cumulativeProfit": 12159.88,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2023-06-26",
+      "capital": 111600.59,
+      "cumulativeProfit": 11600.59,
+      "drawdownPct": 0.5
+    },
+    {
+      "date": "2023-07-05",
+      "capital": 111301.85,
+      "cumulativeProfit": 11301.85,
+      "drawdownPct": 0.77
+    },
+    {
+      "date": "2023-07-06",
+      "capital": 110703.82,
+      "cumulativeProfit": 10703.82,
+      "drawdownPct": 1.3
+    },
+    {
+      "date": "2023-07-12",
+      "capital": 110186.68,
+      "cumulativeProfit": 10186.68,
+      "drawdownPct": 1.76
+    },
+    {
+      "date": "2023-07-14",
+      "capital": 111784.48,
+      "cumulativeProfit": 11784.48,
+      "drawdownPct": 0.33
+    },
+    {
+      "date": "2023-07-14",
+      "capital": 111224.98,
+      "cumulativeProfit": 11224.98,
+      "drawdownPct": 0.83
+    },
+    {
+      "date": "2023-07-19",
+      "capital": 110671.97,
+      "cumulativeProfit": 10671.97,
+      "drawdownPct": 1.33
+    },
+    {
+      "date": "2023-08-01",
+      "capital": 111081.81,
+      "cumulativeProfit": 11081.81,
+      "drawdownPct": 0.96
+    },
+    {
+      "date": "2023-10-03",
+      "capital": 110486.43,
+      "cumulativeProfit": 10486.43,
+      "drawdownPct": 1.49
+    },
+    {
+      "date": "2023-10-03",
+      "capital": 109943.16,
+      "cumulativeProfit": 9943.16,
+      "drawdownPct": 1.98
+    },
+    {
+      "date": "2023-10-10",
+      "capital": 111548.86,
+      "cumulativeProfit": 11548.86,
+      "drawdownPct": 0.54
+    },
+    {
+      "date": "2023-10-12",
+      "capital": 110985.25,
+      "cumulativeProfit": 10985.25,
+      "drawdownPct": 1.05
+    },
+    {
+      "date": "2023-10-24",
+      "capital": 110429.57,
+      "cumulativeProfit": 10429.57,
+      "drawdownPct": 1.54
+    },
+    {
+      "date": "2023-11-01",
+      "capital": 110428.53,
+      "cumulativeProfit": 10428.53,
+      "drawdownPct": 1.54
+    },
+    {
+      "date": "2023-11-03",
+      "capital": 112004.28,
+      "cumulativeProfit": 12004.28,
+      "drawdownPct": 0.14
+    },
+    {
+      "date": "2023-11-06",
+      "capital": 113479.37,
+      "cumulativeProfit": 13479.37,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2023-11-09",
+      "capital": 113339.73,
+      "cumulativeProfit": 13339.73,
+      "drawdownPct": 0.12
+    },
+    {
+      "date": "2023-11-10",
+      "capital": 115048.0,
+      "cumulativeProfit": 15048.0,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2023-11-14",
+      "capital": 116719.57,
+      "cumulativeProfit": 16719.57,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2023-11-15",
+      "capital": 116641.33,
+      "cumulativeProfit": 16641.33,
+      "drawdownPct": 0.07
+    },
+    {
+      "date": "2023-11-16",
+      "capital": 116045.67,
+      "cumulativeProfit": 16045.67,
+      "drawdownPct": 0.58
+    },
+    {
+      "date": "2023-11-17",
+      "capital": 115466.36,
+      "cumulativeProfit": 15466.36,
+      "drawdownPct": 1.07
+    },
+    {
+      "date": "2023-11-21",
+      "capital": 115421.34,
+      "cumulativeProfit": 15421.34,
+      "drawdownPct": 1.11
+    },
+    {
+      "date": "2023-11-24",
+      "capital": 114593.44,
+      "cumulativeProfit": 14593.44,
+      "drawdownPct": 1.82
+    },
+    {
+      "date": "2023-11-28",
+      "capital": 113965.86,
+      "cumulativeProfit": 13965.86,
+      "drawdownPct": 2.36
+    },
+    {
+      "date": "2023-11-28",
+      "capital": 113961.91,
+      "cumulativeProfit": 13961.91,
+      "drawdownPct": 2.36
+    },
+    {
+      "date": "2023-12-06",
+      "capital": 115631.89,
+      "cumulativeProfit": 15631.89,
+      "drawdownPct": 0.93
+    },
+    {
+      "date": "2023-12-08",
+      "capital": 114907.93,
+      "cumulativeProfit": 14907.93,
+      "drawdownPct": 1.55
+    },
+    {
+      "date": "2023-12-11",
+      "capital": 116508.45,
+      "cumulativeProfit": 16508.45,
+      "drawdownPct": 0.18
+    },
+    {
+      "date": "2023-12-14",
+      "capital": 115931.55,
+      "cumulativeProfit": 15931.55,
+      "drawdownPct": 0.68
+    },
+    {
+      "date": "2023-12-15",
+      "capital": 115342.13,
+      "cumulativeProfit": 15342.13,
+      "drawdownPct": 1.18
+    },
+    {
+      "date": "2023-12-19",
+      "capital": 116984.6,
+      "cumulativeProfit": 16984.6,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2023-12-20",
+      "capital": 116910.03,
+      "cumulativeProfit": 16910.03,
+      "drawdownPct": 0.06
+    },
+    {
+      "date": "2023-12-22",
+      "capital": 116315.64,
+      "cumulativeProfit": 16315.64,
+      "drawdownPct": 0.57
+    },
+    {
+      "date": "2023-12-29",
+      "capital": 115992.69,
+      "cumulativeProfit": 15992.69,
+      "drawdownPct": 0.85
+    },
+    {
+      "date": "2024-01-10",
+      "capital": 117663.16,
+      "cumulativeProfit": 17663.16,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2024-01-10",
+      "capital": 119427.24,
+      "cumulativeProfit": 19427.24,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2024-01-16",
+      "capital": 118549.11,
+      "cumulativeProfit": 18549.11,
+      "drawdownPct": 0.74
+    },
+    {
+      "date": "2024-01-16",
+      "capital": 117965.34,
+      "cumulativeProfit": 17965.34,
+      "drawdownPct": 1.22
+    },
+    {
+      "date": "2024-01-18",
+      "capital": 117372.8,
+      "cumulativeProfit": 17372.8,
+      "drawdownPct": 1.72
+    },
+    {
+      "date": "2024-01-19",
+      "capital": 119134.77,
+      "cumulativeProfit": 19134.77,
+      "drawdownPct": 0.24
+    },
+    {
+      "date": "2024-01-24",
+      "capital": 119131.68,
+      "cumulativeProfit": 19131.68,
+      "drawdownPct": 0.25
+    },
+    {
+      "date": "2024-01-25",
+      "capital": 118533.99,
+      "cumulativeProfit": 18533.99,
+      "drawdownPct": 0.75
+    },
+    {
+      "date": "2024-02-05",
+      "capital": 118421.9,
+      "cumulativeProfit": 18421.9,
+      "drawdownPct": 0.84
+    },
+    {
+      "date": "2024-02-09",
+      "capital": 120110.03,
+      "cumulativeProfit": 20110.03,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2024-02-22",
+      "capital": 121917.38,
+      "cumulativeProfit": 21917.38,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2024-02-26",
+      "capital": 121298.62,
+      "cumulativeProfit": 21298.62,
+      "drawdownPct": 0.51
+    },
+    {
+      "date": "2024-02-27",
+      "capital": 120698.42,
+      "cumulativeProfit": 20698.42,
+      "drawdownPct": 1.0
+    },
+    {
+      "date": "2024-03-01",
+      "capital": 122515.45,
+      "cumulativeProfit": 22515.45,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2024-03-07",
+      "capital": 122511.5,
+      "cumulativeProfit": 22511.5,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2024-03-08",
+      "capital": 121889.29,
+      "cumulativeProfit": 21889.29,
+      "drawdownPct": 0.51
+    },
+    {
+      "date": "2024-03-18",
+      "capital": 121285.23,
+      "cumulativeProfit": 21285.23,
+      "drawdownPct": 1.0
+    },
+    {
+      "date": "2024-03-22",
+      "capital": 120670.23,
+      "cumulativeProfit": 20670.23,
+      "drawdownPct": 1.51
+    },
+    {
+      "date": "2024-03-26",
+      "capital": 120608.48,
+      "cumulativeProfit": 20608.48,
+      "drawdownPct": 1.56
+    },
+    {
+      "date": "2024-03-28",
+      "capital": 120000.89,
+      "cumulativeProfit": 20000.89,
+      "drawdownPct": 2.05
+    },
+    {
+      "date": "2024-04-09",
+      "capital": 119356.75,
+      "cumulativeProfit": 19356.75,
+      "drawdownPct": 2.58
+    },
+    {
+      "date": "2024-04-11",
+      "capital": 121146.25,
+      "cumulativeProfit": 21146.25,
+      "drawdownPct": 1.12
+    },
+    {
+      "date": "2024-04-12",
+      "capital": 120542.25,
+      "cumulativeProfit": 20542.25,
+      "drawdownPct": 1.61
+    },
+    {
+      "date": "2024-04-24",
+      "capital": 122372.91,
+      "cumulativeProfit": 22372.91,
+      "drawdownPct": 0.12
+    },
+    {
+      "date": "2024-04-24",
+      "capital": 121762.5,
+      "cumulativeProfit": 21762.5,
+      "drawdownPct": 0.61
+    },
+    {
+      "date": "2024-05-03",
+      "capital": 121140.65,
+      "cumulativeProfit": 21140.65,
+      "drawdownPct": 1.12
+    },
+    {
+      "date": "2024-05-08",
+      "capital": 121001.0,
+      "cumulativeProfit": 21001.0,
+      "drawdownPct": 1.24
+    },
+    {
+      "date": "2024-05-10",
+      "capital": 120945.43,
+      "cumulativeProfit": 20945.43,
+      "drawdownPct": 1.28
+    },
+    {
+      "date": "2024-05-15",
+      "capital": 122686.6,
+      "cumulativeProfit": 22686.6,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2024-05-15",
+      "capital": 124528.78,
+      "cumulativeProfit": 24528.78,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2024-05-16",
+      "capital": 124526.55,
+      "cumulativeProfit": 24526.55,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2024-05-17",
+      "capital": 123879.47,
+      "cumulativeProfit": 23879.47,
+      "drawdownPct": 0.52
+    },
+    {
+      "date": "2024-05-22",
+      "capital": 125635.39,
+      "cumulativeProfit": 25635.39,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2024-05-22",
+      "capital": 124999.74,
+      "cumulativeProfit": 24999.74,
+      "drawdownPct": 0.51
+    },
+    {
+      "date": "2024-05-24",
+      "capital": 126881.26,
+      "cumulativeProfit": 26881.26,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2024-06-05",
+      "capital": 126243.66,
+      "cumulativeProfit": 26243.66,
+      "drawdownPct": 0.5
+    },
+    {
+      "date": "2024-06-07",
+      "capital": 126222.96,
+      "cumulativeProfit": 26222.96,
+      "drawdownPct": 0.52
+    },
+    {
+      "date": "2024-06-11",
+      "capital": 126089.52,
+      "cumulativeProfit": 26089.52,
+      "drawdownPct": 0.62
+    },
+    {
+      "date": "2024-06-11",
+      "capital": 127982.87,
+      "cumulativeProfit": 27982.87,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2024-06-17",
+      "capital": 129640.35,
+      "cumulativeProfit": 29640.35,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2024-06-17",
+      "capital": 131596.26,
+      "cumulativeProfit": 31596.26,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2024-06-26",
+      "capital": 131584.81,
+      "cumulativeProfit": 31584.81,
+      "drawdownPct": 0.01
+    },
+    {
+      "date": "2024-06-27",
+      "capital": 130924.31,
+      "cumulativeProfit": 30924.31,
+      "drawdownPct": 0.51
+    },
+    {
+      "date": "2024-06-28",
+      "capital": 130242.74,
+      "cumulativeProfit": 30242.74,
+      "drawdownPct": 1.03
+    },
+    {
+      "date": "2024-07-03",
+      "capital": 132146.56,
+      "cumulativeProfit": 32146.56,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2024-07-08",
+      "capital": 133896.97,
+      "cumulativeProfit": 33896.97,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2024-07-09",
+      "capital": 135810.85,
+      "cumulativeProfit": 35810.85,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2024-07-10",
+      "capital": 135098.7,
+      "cumulativeProfit": 35098.7,
+      "drawdownPct": 0.52
+    },
+    {
+      "date": "2024-07-15",
+      "capital": 135092.64,
+      "cumulativeProfit": 35092.64,
+      "drawdownPct": 0.53
+    },
+    {
+      "date": "2024-07-23",
+      "capital": 134411.23,
+      "cumulativeProfit": 34411.23,
+      "drawdownPct": 1.03
+    },
+    {
+      "date": "2024-08-01",
+      "capital": 135831.03,
+      "cumulativeProfit": 35831.03,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2024-10-07",
+      "capital": 135151.95,
+      "cumulativeProfit": 35151.95,
+      "drawdownPct": 0.5
+    },
+    {
+      "date": "2024-10-09",
+      "capital": 137194.23,
+      "cumulativeProfit": 37194.23,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2024-10-10",
+      "capital": 137174.58,
+      "cumulativeProfit": 37174.58,
+      "drawdownPct": 0.01
+    },
+    {
+      "date": "2024-10-11",
+      "capital": 139253.35,
+      "cumulativeProfit": 39253.35,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2024-10-14",
+      "capital": 138549.35,
+      "cumulativeProfit": 38549.35,
+      "drawdownPct": 0.51
+    },
+    {
+      "date": "2024-10-21",
+      "capital": 137659.26,
+      "cumulativeProfit": 37659.26,
+      "drawdownPct": 1.14
+    },
+    {
+      "date": "2024-10-21",
+      "capital": 136957.44,
+      "cumulativeProfit": 36957.44,
+      "drawdownPct": 1.65
+    },
+    {
+      "date": "2024-10-23",
+      "capital": 136906.89,
+      "cumulativeProfit": 36906.89,
+      "drawdownPct": 1.69
+    },
+    {
+      "date": "2024-10-30",
+      "capital": 136860.1,
+      "cumulativeProfit": 36860.1,
+      "drawdownPct": 1.72
+    },
+    {
+      "date": "2024-11-06",
+      "capital": 138914.15,
+      "cumulativeProfit": 38914.15,
+      "drawdownPct": 0.24
+    },
+    {
+      "date": "2024-11-12",
+      "capital": 138651.19,
+      "cumulativeProfit": 38651.19,
+      "drawdownPct": 0.43
+    },
+    {
+      "date": "2024-11-26",
+      "capital": 137908.5,
+      "cumulativeProfit": 37908.5,
+      "drawdownPct": 0.97
+    },
+    {
+      "date": "2024-11-29",
+      "capital": 136936.04,
+      "cumulativeProfit": 36936.04,
+      "drawdownPct": 1.66
+    },
+    {
+      "date": "2024-12-04",
+      "capital": 138907.18,
+      "cumulativeProfit": 38907.18,
+      "drawdownPct": 0.25
+    },
+    {
+      "date": "2024-12-12",
+      "capital": 138210.64,
+      "cumulativeProfit": 38210.64,
+      "drawdownPct": 0.75
+    },
+    {
+      "date": "2024-12-13",
+      "capital": 137495.31,
+      "cumulativeProfit": 37495.31,
+      "drawdownPct": 1.26
+    },
+    {
+      "date": "2024-12-16",
+      "capital": 139553.42,
+      "cumulativeProfit": 39553.42,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2024-12-17",
+      "capital": 138856.75,
+      "cumulativeProfit": 38856.75,
+      "drawdownPct": 0.5
+    },
+    {
+      "date": "2024-12-18",
+      "capital": 138115.56,
+      "cumulativeProfit": 38115.56,
+      "drawdownPct": 1.03
+    },
+    {
+      "date": "2024-12-26",
+      "capital": 140140.32,
+      "cumulativeProfit": 40140.32,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2024-12-27",
+      "capital": 139216.28,
+      "cumulativeProfit": 39216.28,
+      "drawdownPct": 0.66
+    },
+    {
+      "date": "2025-01-06",
+      "capital": 138517.64,
+      "cumulativeProfit": 38517.64,
+      "drawdownPct": 1.16
+    },
+    {
+      "date": "2025-01-16",
+      "capital": 138479.68,
+      "cumulativeProfit": 38479.68,
+      "drawdownPct": 1.18
+    },
+    {
+      "date": "2025-01-23",
+      "capital": 137734.78,
+      "cumulativeProfit": 37734.78,
+      "drawdownPct": 1.72
+    },
+    {
+      "date": "2025-01-24",
+      "capital": 139737.08,
+      "cumulativeProfit": 39737.08,
+      "drawdownPct": 0.29
+    },
+    {
+      "date": "2025-01-24",
+      "capital": 139029.56,
+      "cumulativeProfit": 39029.56,
+      "drawdownPct": 0.79
+    },
+    {
+      "date": "2025-01-30",
+      "capital": 138321.17,
+      "cumulativeProfit": 38321.17,
+      "drawdownPct": 1.3
+    },
+    {
+      "date": "2025-01-31",
+      "capital": 138312.58,
+      "cumulativeProfit": 38312.58,
+      "drawdownPct": 1.3
+    },
+    {
+      "date": "2025-02-06",
+      "capital": 140309.98,
+      "cumulativeProfit": 40309.98,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2025-02-12",
+      "capital": 139446.87,
+      "cumulativeProfit": 39446.87,
+      "drawdownPct": 0.62
+    },
+    {
+      "date": "2025-02-18",
+      "capital": 141365.33,
+      "cumulativeProfit": 41365.33,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2025-03-14",
+      "capital": 140648.36,
+      "cumulativeProfit": 40648.36,
+      "drawdownPct": 0.51
+    },
+    {
+      "date": "2025-03-19",
+      "capital": 142759.0,
+      "cumulativeProfit": 42759.0,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2025-03-21",
+      "capital": 141998.69,
+      "cumulativeProfit": 41998.69,
+      "drawdownPct": 0.53
+    },
+    {
+      "date": "2025-03-25",
+      "capital": 144062.66,
+      "cumulativeProfit": 44062.66,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2025-04-02",
+      "capital": 144059.78,
+      "cumulativeProfit": 44059.78,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2025-04-08",
+      "capital": 143340.16,
+      "cumulativeProfit": 43340.16,
+      "drawdownPct": 0.5
+    },
+    {
+      "date": "2025-04-11",
+      "capital": 142623.81,
+      "cumulativeProfit": 42623.81,
+      "drawdownPct": 1.0
+    },
+    {
+      "date": "2025-04-15",
+      "capital": 141896.14,
+      "cumulativeProfit": 41896.14,
+      "drawdownPct": 1.5
+    },
+    {
+      "date": "2025-04-23",
+      "capital": 141156.4,
+      "cumulativeProfit": 41156.4,
+      "drawdownPct": 2.02
+    },
+    {
+      "date": "2025-04-24",
+      "capital": 143273.13,
+      "cumulativeProfit": 43273.13,
+      "drawdownPct": 0.55
+    },
+    {
+      "date": "2025-04-25",
+      "capital": 142559.45,
+      "cumulativeProfit": 42559.45,
+      "drawdownPct": 1.04
+    },
+    {
+      "date": "2025-04-28",
+      "capital": 141837.37,
+      "cumulativeProfit": 41837.37,
+      "drawdownPct": 1.54
+    },
+    {
+      "date": "2025-04-29",
+      "capital": 141826.71,
+      "cumulativeProfit": 41826.71,
+      "drawdownPct": 1.55
+    },
+    {
+      "date": "2025-05-01",
+      "capital": 141118.79,
+      "cumulativeProfit": 41118.79,
+      "drawdownPct": 2.04
+    },
+    {
+      "date": "2025-05-05",
+      "capital": 140944.39,
+      "cumulativeProfit": 40944.39,
+      "drawdownPct": 2.16
+    },
+    {
+      "date": "2025-05-05",
+      "capital": 140941.22,
+      "cumulativeProfit": 40941.22,
+      "drawdownPct": 2.17
+    },
+    {
+      "date": "2025-05-20",
+      "capital": 140236.65,
+      "cumulativeProfit": 40236.65,
+      "drawdownPct": 2.66
+    },
+    {
+      "date": "2025-05-21",
+      "capital": 140235.17,
+      "cumulativeProfit": 40235.17,
+      "drawdownPct": 2.66
+    },
+    {
+      "date": "2025-06-05",
+      "capital": 142260.86,
+      "cumulativeProfit": 42260.86,
+      "drawdownPct": 1.25
+    },
+    {
+      "date": "2025-06-05",
+      "capital": 141542.59,
+      "cumulativeProfit": 41542.59,
+      "drawdownPct": 1.75
+    },
+    {
+      "date": "2025-06-06",
+      "capital": 140818.36,
+      "cumulativeProfit": 40818.36,
+      "drawdownPct": 2.25
+    },
+    {
+      "date": "2025-06-11",
+      "capital": 140102.6,
+      "cumulativeProfit": 40102.6,
+      "drawdownPct": 2.75
+    },
+    {
+      "date": "2025-06-17",
+      "capital": 139341.62,
+      "cumulativeProfit": 39341.62,
+      "drawdownPct": 3.28
+    },
+    {
+      "date": "2025-06-17",
+      "capital": 138625.52,
+      "cumulativeProfit": 38625.52,
+      "drawdownPct": 3.77
+    },
+    {
+      "date": "2025-06-18",
+      "capital": 137917.22,
+      "cumulativeProfit": 37917.22,
+      "drawdownPct": 4.27
+    },
+    {
+      "date": "2025-06-25",
+      "capital": 139916.61,
+      "cumulativeProfit": 39916.61,
+      "drawdownPct": 2.88
+    },
+    {
+      "date": "2025-06-27",
+      "capital": 141952.64,
+      "cumulativeProfit": 41952.64,
+      "drawdownPct": 1.46
+    },
+    {
+      "date": "2025-07-01",
+      "capital": 141218.77,
+      "cumulativeProfit": 41218.77,
+      "drawdownPct": 1.97
+    },
+    {
+      "date": "2025-07-07",
+      "capital": 140881.58,
+      "cumulativeProfit": 40881.58,
+      "drawdownPct": 2.21
+    },
+    {
+      "date": "2025-07-09",
+      "capital": 140136.65,
+      "cumulativeProfit": 40136.65,
+      "drawdownPct": 2.73
+    },
+    {
+      "date": "2025-07-14",
+      "capital": 139079.36,
+      "cumulativeProfit": 39079.36,
+      "drawdownPct": 3.46
+    },
+    {
+      "date": "2025-07-16",
+      "capital": 139000.39,
+      "cumulativeProfit": 39000.39,
+      "drawdownPct": 3.51
+    },
+    {
+      "date": "2025-07-18",
+      "capital": 141026.69,
+      "cumulativeProfit": 41026.69,
+      "drawdownPct": 2.11
+    },
+    {
+      "date": "2025-07-28",
+      "capital": 143239.93,
+      "cumulativeProfit": 43239.93,
+      "drawdownPct": 0.57
+    },
+    {
+      "date": "2025-07-28",
+      "capital": 142518.95,
+      "cumulativeProfit": 42518.95,
+      "drawdownPct": 1.07
+    },
+    {
+      "date": "2025-07-30",
+      "capital": 141804.38,
+      "cumulativeProfit": 41804.38,
+      "drawdownPct": 1.57
+    },
+    {
+      "date": "2025-10-09",
+      "capital": 143882.0,
+      "cumulativeProfit": 43882.0,
+      "drawdownPct": 0.13
+    },
+    {
+      "date": "2025-10-10",
+      "capital": 143105.68,
+      "cumulativeProfit": 43105.68,
+      "drawdownPct": 0.66
+    },
+    {
+      "date": "2025-10-15",
+      "capital": 142354.47,
+      "cumulativeProfit": 42354.47,
+      "drawdownPct": 1.19
+    },
+    {
+      "date": "2025-10-16",
+      "capital": 141649.97,
+      "cumulativeProfit": 41649.97,
+      "drawdownPct": 1.67
+    },
+    {
+      "date": "2025-10-20",
+      "capital": 143689.82,
+      "cumulativeProfit": 43689.82,
+      "drawdownPct": 0.26
+    },
+    {
+      "date": "2025-10-22",
+      "capital": 142860.73,
+      "cumulativeProfit": 42860.73,
+      "drawdownPct": 0.83
+    },
+    {
+      "date": "2025-10-24",
+      "capital": 144979.65,
+      "cumulativeProfit": 44979.65,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2025-10-27",
+      "capital": 147016.63,
+      "cumulativeProfit": 47016.63,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2025-10-28",
+      "capital": 149155.33,
+      "cumulativeProfit": 49155.33,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2025-10-29",
+      "capital": 148413.06,
+      "cumulativeProfit": 48413.06,
+      "drawdownPct": 0.5
+    },
+    {
+      "date": "2025-10-30",
+      "capital": 147640.56,
+      "cumulativeProfit": 47640.56,
+      "drawdownPct": 1.02
+    },
+    {
+      "date": "2025-11-10",
+      "capital": 146907.85,
+      "cumulativeProfit": 46907.85,
+      "drawdownPct": 1.51
+    },
+    {
+      "date": "2025-11-20",
+      "capital": 146154.14,
+      "cumulativeProfit": 46154.14,
+      "drawdownPct": 2.01
+    },
+    {
+      "date": "2025-11-26",
+      "capital": 148284.25,
+      "cumulativeProfit": 48284.25,
+      "drawdownPct": 0.58
+    },
+    {
+      "date": "2025-12-01",
+      "capital": 147383.36,
+      "cumulativeProfit": 47383.36,
+      "drawdownPct": 1.19
+    },
+    {
+      "date": "2025-12-02",
+      "capital": 149570.12,
+      "cumulativeProfit": 49570.12,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2025-12-02",
+      "capital": 148827.49,
+      "cumulativeProfit": 48827.49,
+      "drawdownPct": 0.5
+    },
+    {
+      "date": "2025-12-04",
+      "capital": 148769.28,
+      "cumulativeProfit": 48769.28,
+      "drawdownPct": 0.54
+    },
+    {
+      "date": "2025-12-05",
+      "capital": 148006.33,
+      "cumulativeProfit": 48006.33,
+      "drawdownPct": 1.05
+    },
+    {
+      "date": "2025-12-10",
+      "capital": 147214.09,
+      "cumulativeProfit": 47214.09,
+      "drawdownPct": 1.58
+    },
+    {
+      "date": "2025-12-31",
+      "capital": 146907.11,
+      "cumulativeProfit": 46907.11,
+      "drawdownPct": 1.78
+    },
+    {
+      "date": "2026-01-02",
+      "capital": 146103.98,
+      "cumulativeProfit": 46103.98,
+      "drawdownPct": 2.32
+    },
+    {
+      "date": "2026-01-06",
+      "capital": 145334.18,
+      "cumulativeProfit": 45334.18,
+      "drawdownPct": 2.83
+    },
+    {
+      "date": "2026-01-07",
+      "capital": 147464.67,
+      "cumulativeProfit": 47464.67,
+      "drawdownPct": 1.41
+    },
+    {
+      "date": "2026-01-08",
+      "capital": 146679.43,
+      "cumulativeProfit": 46679.43,
+      "drawdownPct": 1.93
+    },
+    {
+      "date": "2026-01-12",
+      "capital": 145853.89,
+      "cumulativeProfit": 45853.89,
+      "drawdownPct": 2.48
+    },
+    {
+      "date": "2026-01-14",
+      "capital": 145057.95,
+      "cumulativeProfit": 45057.95,
+      "drawdownPct": 3.02
+    },
+    {
+      "date": "2026-01-28",
+      "capital": 147148.64,
+      "cumulativeProfit": 47148.64,
+      "drawdownPct": 1.62
+    },
+    {
+      "date": "2026-02-11",
+      "capital": 147099.74,
+      "cumulativeProfit": 47099.74,
+      "drawdownPct": 1.65
+    },
+    {
+      "date": "2026-02-19",
+      "capital": 146343.28,
+      "cumulativeProfit": 46343.28,
+      "drawdownPct": 2.16
+    },
+    {
+      "date": "2026-02-23",
+      "capital": 145564.67,
+      "cumulativeProfit": 45564.67,
+      "drawdownPct": 2.68
+    },
+    {
+      "date": "2026-02-26",
+      "capital": 145520.74,
+      "cumulativeProfit": 45520.74,
+      "drawdownPct": 2.71
+    },
+    {
+      "date": "2026-03-05",
+      "capital": 145482.32,
+      "cumulativeProfit": 45482.32,
+      "drawdownPct": 2.73
+    },
+    {
+      "date": "2026-03-05",
+      "capital": 144740.18,
+      "cumulativeProfit": 44740.18,
+      "drawdownPct": 3.23
+    },
+    {
+      "date": "2026-03-11",
+      "capital": 144002.04,
+      "cumulativeProfit": 44002.04,
+      "drawdownPct": 3.72
+    },
+    {
+      "date": "2026-03-17",
+      "capital": 143280.61,
+      "cumulativeProfit": 43280.61,
+      "drawdownPct": 4.21
+    },
+    {
+      "date": "2026-03-23",
+      "capital": 142553.63,
+      "cumulativeProfit": 42553.63,
+      "drawdownPct": 4.69
+    },
+    {
+      "date": "2026-04-02",
+      "capital": 141802.35,
+      "cumulativeProfit": 41802.35,
+      "drawdownPct": 5.19
+    },
+    {
+      "date": "2026-04-06",
+      "capital": 141052.72,
+      "cumulativeProfit": 41052.72,
+      "drawdownPct": 5.69
+    },
+    {
+      "date": "2026-04-10",
+      "capital": 143119.81,
+      "cumulativeProfit": 43119.81,
+      "drawdownPct": 4.31
+    },
+    {
+      "date": "2026-04-10",
+      "capital": 142405.22,
+      "cumulativeProfit": 42405.22,
+      "drawdownPct": 4.79
+    },
+    {
+      "date": "2026-04-13",
+      "capital": 144580.22,
+      "cumulativeProfit": 44580.22,
+      "drawdownPct": 3.34
+    },
+    {
+      "date": "2026-04-15",
+      "capital": 146722.95,
+      "cumulativeProfit": 46722.95,
+      "drawdownPct": 1.9
+    },
+    {
+      "date": "2026-04-15",
+      "capital": 148927.96,
+      "cumulativeProfit": 48927.96,
+      "drawdownPct": 0.43
+    },
+    {
+      "date": "2026-04-21",
+      "capital": 148175.39,
+      "cumulativeProfit": 48175.39,
+      "drawdownPct": 0.93
+    },
+    {
+      "date": "2026-04-22",
+      "capital": 150432.02,
+      "cumulativeProfit": 50432.02,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2026-04-23",
+      "capital": 149753.92,
+      "cumulativeProfit": 49753.92,
+      "drawdownPct": 0.45
+    },
+    {
+      "date": "2026-04-27",
+      "capital": 151826.6,
+      "cumulativeProfit": 51826.6,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2026-04-29",
+      "capital": 151812.53,
+      "cumulativeProfit": 51812.53,
+      "drawdownPct": 0.01
+    },
+    {
+      "date": "2026-05-06",
+      "capital": 154038.2,
+      "cumulativeProfit": 54038.2,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2026-05-07",
+      "capital": 156314.67,
+      "cumulativeProfit": 56314.67,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2026-05-07",
+      "capital": 155524.95,
+      "cumulativeProfit": 55524.95,
+      "drawdownPct": 0.51
+    },
+    {
+      "date": "2026-05-12",
+      "capital": 154713.38,
+      "cumulativeProfit": 54713.38,
+      "drawdownPct": 1.02
+    },
+    {
+      "date": "2026-05-14",
+      "capital": 157008.3,
+      "cumulativeProfit": 57008.3,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2026-05-15",
+      "capital": 156210.02,
+      "cumulativeProfit": 56210.02,
+      "drawdownPct": 0.51
+    },
+    {
+      "date": "2026-05-21",
+      "capital": 156155.15,
+      "cumulativeProfit": 56155.15,
+      "drawdownPct": 0.54
+    },
+    {
+      "date": "2026-05-21",
+      "capital": 155356.02,
+      "cumulativeProfit": 55356.02,
+      "drawdownPct": 1.05
+    },
+    {
+      "date": "2026-05-25",
+      "capital": 154587.38,
+      "cumulativeProfit": 54587.38,
+      "drawdownPct": 1.54
+    },
+    {
+      "date": "2026-05-26",
+      "capital": 154585.62,
+      "cumulativeProfit": 54585.62,
+      "drawdownPct": 1.54
+    },
+    {
+      "date": "2026-06-01",
+      "capital": 156827.76,
+      "cumulativeProfit": 56827.76,
+      "drawdownPct": 0.11
+    },
+    {
+      "date": "2026-06-03",
+      "capital": 156791.2,
+      "cumulativeProfit": 56791.2,
+      "drawdownPct": 0.14
+    },
+    {
+      "date": "2026-06-15",
+      "capital": 159078.48,
+      "cumulativeProfit": 59078.48,
+      "drawdownPct": 0.0
+    },
+    {
+      "date": "2026-06-16",
+      "capital": 159036.85,
+      "cumulativeProfit": 59036.85,
+      "drawdownPct": 0.03
+    },
+    {
+      "date": "2026-06-17",
+      "capital": 158235.06,
+      "cumulativeProfit": 58235.06,
+      "drawdownPct": 0.53
+    },
+    {
+      "date": "2026-06-19",
+      "capital": 157417.6,
+      "cumulativeProfit": 57417.6,
+      "drawdownPct": 1.04
+    },
+    {
+      "date": "2026-06-22",
+      "capital": 155842.59,
+      "cumulativeProfit": 55842.59,
+      "drawdownPct": 2.03
+    },
+    {
+      "date": "2026-06-22",
+      "capital": 155058.74,
+      "cumulativeProfit": 55058.74,
+      "drawdownPct": 2.53
+    },
+    {
+      "date": "2026-06-29",
+      "capital": 154286.12,
+      "cumulativeProfit": 54286.12,
+      "drawdownPct": 3.01
+    }
+  ],
+  "monthly": [
+    {
+      "year": 2023,
+      "month": 1,
+      "gainEUR": 4344.71,
+      "gainPct": 4.34,
+      "drawdownPct": 0.56
+    },
+    {
+      "year": 2023,
+      "month": 2,
+      "gainEUR": -1762.34,
+      "gainPct": -1.69,
+      "drawdownPct": 3.09
+    },
+    {
+      "year": 2023,
+      "month": 3,
+      "gainEUR": 2470.55,
+      "gainPct": 2.41,
+      "drawdownPct": 3.12
+    },
+    {
+      "year": 2023,
+      "month": 4,
+      "gainEUR": 1282.45,
+      "gainPct": 1.22,
+      "drawdownPct": 1.81
+    },
+    {
+      "year": 2023,
+      "month": 5,
+      "gainEUR": 2077.8,
+      "gainPct": 1.95,
+      "drawdownPct": 2.69
+    },
+    {
+      "year": 2023,
+      "month": 6,
+      "gainEUR": 3187.42,
+      "gainPct": 2.94,
+      "drawdownPct": 1.08
+    },
+    {
+      "year": 2023,
+      "month": 7,
+      "gainEUR": -928.62,
+      "gainPct": -0.83,
+      "drawdownPct": 1.76
+    },
+    {
+      "year": 2023,
+      "month": 8,
+      "gainEUR": 409.84,
+      "gainPct": 0.37,
+      "drawdownPct": 0.96
+    },
+    {
+      "year": 2023,
+      "month": 10,
+      "gainEUR": -652.24,
+      "gainPct": -0.59,
+      "drawdownPct": 1.98
+    },
+    {
+      "year": 2023,
+      "month": 11,
+      "gainEUR": 3532.34,
+      "gainPct": 3.2,
+      "drawdownPct": 2.36
+    },
+    {
+      "year": 2023,
+      "month": 12,
+      "gainEUR": 2030.78,
+      "gainPct": 1.78,
+      "drawdownPct": 1.55
+    },
+    {
+      "year": 2024,
+      "month": 1,
+      "gainEUR": 2541.3,
+      "gainPct": 2.19,
+      "drawdownPct": 1.72
+    },
+    {
+      "year": 2024,
+      "month": 2,
+      "gainEUR": 2164.43,
+      "gainPct": 1.83,
+      "drawdownPct": 1.0
+    },
+    {
+      "year": 2024,
+      "month": 3,
+      "gainEUR": -697.53,
+      "gainPct": -0.58,
+      "drawdownPct": 2.05
+    },
+    {
+      "year": 2024,
+      "month": 4,
+      "gainEUR": 1761.61,
+      "gainPct": 1.47,
+      "drawdownPct": 2.58
+    },
+    {
+      "year": 2024,
+      "month": 5,
+      "gainEUR": 5118.76,
+      "gainPct": 4.2,
+      "drawdownPct": 1.28
+    },
+    {
+      "year": 2024,
+      "month": 6,
+      "gainEUR": 3361.48,
+      "gainPct": 2.65,
+      "drawdownPct": 1.03
+    },
+    {
+      "year": 2024,
+      "month": 7,
+      "gainEUR": 4168.49,
+      "gainPct": 3.2,
+      "drawdownPct": 1.03
+    },
+    {
+      "year": 2024,
+      "month": 8,
+      "gainEUR": 1419.8,
+      "gainPct": 1.06,
+      "drawdownPct": 0.0
+    },
+    {
+      "year": 2024,
+      "month": 10,
+      "gainEUR": 1029.07,
+      "gainPct": 0.76,
+      "drawdownPct": 1.72
+    },
+    {
+      "year": 2024,
+      "month": 11,
+      "gainEUR": 75.94,
+      "gainPct": 0.06,
+      "drawdownPct": 1.66
+    },
+    {
+      "year": 2024,
+      "month": 12,
+      "gainEUR": 2280.24,
+      "gainPct": 1.67,
+      "drawdownPct": 1.26
+    },
+    {
+      "year": 2025,
+      "month": 1,
+      "gainEUR": -903.7,
+      "gainPct": -0.65,
+      "drawdownPct": 1.72
+    },
+    {
+      "year": 2025,
+      "month": 2,
+      "gainEUR": 3052.75,
+      "gainPct": 2.21,
+      "drawdownPct": 0.62
+    },
+    {
+      "year": 2025,
+      "month": 3,
+      "gainEUR": 2697.33,
+      "gainPct": 1.91,
+      "drawdownPct": 0.53
+    },
+    {
+      "year": 2025,
+      "month": 4,
+      "gainEUR": -2235.95,
+      "gainPct": -1.55,
+      "drawdownPct": 2.02
+    },
+    {
+      "year": 2025,
+      "month": 5,
+      "gainEUR": -1591.54,
+      "gainPct": -1.12,
+      "drawdownPct": 2.66
+    },
+    {
+      "year": 2025,
+      "month": 6,
+      "gainEUR": 1717.47,
+      "gainPct": 1.22,
+      "drawdownPct": 4.27
+    },
+    {
+      "year": 2025,
+      "month": 7,
+      "gainEUR": -148.26,
+      "gainPct": -0.1,
+      "drawdownPct": 3.51
+    },
+    {
+      "year": 2025,
+      "month": 10,
+      "gainEUR": 5836.18,
+      "gainPct": 4.12,
+      "drawdownPct": 1.67
+    },
+    {
+      "year": 2025,
+      "month": 11,
+      "gainEUR": 643.69,
+      "gainPct": 0.44,
+      "drawdownPct": 2.01
+    },
+    {
+      "year": 2025,
+      "month": 12,
+      "gainEUR": -1377.14,
+      "gainPct": -0.93,
+      "drawdownPct": 1.78
+    },
+    {
+      "year": 2026,
+      "month": 1,
+      "gainEUR": 241.53,
+      "gainPct": 0.16,
+      "drawdownPct": 3.02
+    },
+    {
+      "year": 2026,
+      "month": 2,
+      "gainEUR": -1627.9,
+      "gainPct": -1.11,
+      "drawdownPct": 2.71
+    },
+    {
+      "year": 2026,
+      "month": 3,
+      "gainEUR": -2967.11,
+      "gainPct": -2.04,
+      "drawdownPct": 4.69
+    },
+    {
+      "year": 2026,
+      "month": 4,
+      "gainEUR": 9258.9,
+      "gainPct": 6.5,
+      "drawdownPct": 5.69
+    },
+    {
+      "year": 2026,
+      "month": 5,
+      "gainEUR": 2773.09,
+      "gainPct": 1.83,
+      "drawdownPct": 1.54
+    },
+    {
+      "year": 2026,
+      "month": 6,
+      "gainEUR": -299.5,
+      "gainPct": -0.19,
+      "drawdownPct": 3.01
+    }
+  ]
+}

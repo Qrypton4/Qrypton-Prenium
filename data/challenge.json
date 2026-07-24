@@ -1,0 +1,174 @@
+{
+  "_comment": "Source de données du Challenge Prop Firm. Mise à jour manuelle à partir des captures MT5 envoyées. Les 6 premiers trades, initialement listés comme positions ouvertes, ont été confirmés clôturés le 16/07/2026 — déplacés dans closedTrades. Le point final de equityCurve intègre l'ajustement swap (-19,30 €) pour correspondre exactement à la balance réelle. Aucune valeur inventée.",
+  "config": {
+    "brokerName": "FTMO",
+    "platform": "MetaTrader 5",
+    "robotName": "OPR Edge™",
+    "accountSize": 80000,
+    "startDate": "2026-06-23",
+    "status": "in_progress"
+  },
+  "lastUpdated": "2026-07-22T22:55:06",
+  "snapshot": {
+    "balance": 77926.08,
+    "equity": 77926.08,
+    "floatingPL": 0,
+    "swap": -19.3,
+    "commission": 0,
+    "openPositionsCount": 0
+  },
+  "openPositions": [],
+  "closedTrades": [
+    {
+      "date": "2026-06-29T17:00:25",
+      "symbol": "US100.cash",
+      "direction": "buy",
+      "volume": 1.93,
+      "entryPrice": 29502.48,
+      "exitPrice": 29263.33,
+      "slPrice": 29267.38,
+      "tpPrice": 30212.38,
+      "profit": -404.45
+    },
+    {
+      "date": "2026-07-01T22:57:10",
+      "symbol": "US100.cash",
+      "direction": "buy",
+      "volume": 2.66,
+      "entryPrice": 29988.48,
+      "exitPrice": 29821.23,
+      "slPrice": 29821.68,
+      "tpPrice": 30501.88,
+      "profit": -391.0
+    },
+    {
+      "date": "2026-07-02T17:27:13",
+      "symbol": "US100.cash",
+      "direction": "buy",
+      "volume": 2.54,
+      "entryPrice": 29930.48,
+      "exitPrice": 29742.03,
+      "slPrice": 29748.48,
+      "tpPrice": 30462.28,
+      "profit": -418.19
+    },
+    {
+      "date": "2026-07-09T17:20:18",
+      "symbol": "US100.cash",
+      "direction": "buy",
+      "volume": 2.26,
+      "entryPrice": 29652.08,
+      "exitPrice": 29444.13,
+      "slPrice": 29453.88,
+      "tpPrice": 30248.08,
+      "profit": -410.89
+    },
+    {
+      "date": "2026-07-10T17:32:59",
+      "symbol": "US100.cash",
+      "direction": "buy",
+      "volume": 3.25,
+      "entryPrice": 29723.28,
+      "exitPrice": 29573.43,
+      "slPrice": 29586.78,
+      "tpPrice": 30136.98,
+      "profit": -426.48
+    },
+    {
+      "date": "2026-07-15T16:46:26",
+      "symbol": "US100.cash",
+      "direction": "buy",
+      "volume": 3.5,
+      "entryPrice": 29605.63,
+      "exitPrice": 29605.13,
+      "slPrice": 29605.63,
+      "tpPrice": 29988.58,
+      "profit": -1.53
+    },
+    {
+      "date": "2026-07-22T22:55:06",
+      "symbol": "US100.cash",
+      "direction": "buy",
+      "volume": 5.21,
+      "entryPrice": 29017.98,
+      "exitPrice": 29017.58,
+      "slPrice": 29018.0,
+      "tpPrice": 29305.38,
+      "profit": -2.08
+    }
+  ],
+  "equityCurve": [
+    {
+      "date": "2026-06-29T17:00:25",
+      "capital": 79595.55,
+      "cumulativeProfit": -404.45,
+      "drawdownPct": 0.51
+    },
+    {
+      "date": "2026-07-01T22:57:10",
+      "capital": 79204.55,
+      "cumulativeProfit": -795.45,
+      "drawdownPct": 0.99
+    },
+    {
+      "date": "2026-07-02T17:27:13",
+      "capital": 78786.36,
+      "cumulativeProfit": -1213.64,
+      "drawdownPct": 1.52
+    },
+    {
+      "date": "2026-07-09T17:20:18",
+      "capital": 78375.47,
+      "cumulativeProfit": -1624.53,
+      "drawdownPct": 2.03
+    },
+    {
+      "date": "2026-07-10T17:32:59",
+      "capital": 77948.99,
+      "cumulativeProfit": -2051.01,
+      "drawdownPct": 2.56
+    },
+    {
+      "date": "2026-07-15T16:46:26",
+      "capital": 77928.16,
+      "cumulativeProfit": -2071.84,
+      "drawdownPct": 2.59
+    },
+    {
+      "date": "2026-07-22T22:55:06",
+      "capital": 77926.08,
+      "cumulativeProfit": -2073.92,
+      "drawdownPct": 2.1
+    }
+  ],
+  "monthly": [
+    {
+      "year": 2026,
+      "month": 6,
+      "gainEUR": -404.45
+    },
+    {
+      "year": 2026,
+      "month": 7,
+      "gainEUR": -1669.47
+    }
+  ],
+  "weekly": [
+    {
+      "weekStart": "2026-06-28",
+      "gainEUR": -1213.64
+    },
+    {
+      "weekStart": "2026-07-05",
+      "gainEUR": -837.37
+    },
+    {
+      "weekStart": "2026-07-12",
+      "gainEUR": -1.53
+    },
+    {
+      "weekStart": "2026-07-19",
+      "gainEUR": -2.08
+    }
+  ]
+}
