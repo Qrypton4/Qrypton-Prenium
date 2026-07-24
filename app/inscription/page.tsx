@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase-browser";
 import PasswordInput from "@/components/PasswordInput";
 
-export default function Inscription() {
+function InscriptionForm() {
   const params = useSearchParams();
   const next = params.get("next") || "/mon-espace";
   const [firstName, setFirstName] = useState("");
@@ -173,7 +173,13 @@ export default function Inscription() {
     </div>
   );
 }
-
+export default function InscriptionPage() {
+  return (
+    <Suspense fallback={<div>Chargement...</div>}>
+      <InscriptionForm />
+    </Suspense>
+  );
+}
 function GoogleIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 48 48">
