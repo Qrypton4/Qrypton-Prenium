@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 const RISK_PCT = 0.005;
 const RR = 3;
-const MIN_CAPITAL = 10000;
+const MIN_CAPITAL = 1000;
 const MAX_CAPITAL = 500000;
 
 function useSmoothNumber(target: number, duration = 350) {
