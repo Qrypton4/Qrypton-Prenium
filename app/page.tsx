@@ -94,7 +94,7 @@ export default async function Home() {
               Une discipline, pas un pari.
             </h2>
             <p className="text-muted mt-3.5">
-              Six règles fixes, appliquées sans exception, à chaque trade.
+              Sept règles fixes, appliquées sans exception, à chaque trade.
             </p>
           </div>
           <Reveal>
