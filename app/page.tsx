@@ -40,7 +40,7 @@ export default async function Home() {
           disciplinée, une gestion du risque rigoureuse et une performance transparente.
         </p>
         <div className="flex gap-3.5 mt-9 flex-wrap justify-center fade-up">
-          <Link href="/#opr-edge" className="px-6 py-3.5 rounded-lg text-[14.5px] font-semibold bg-blue text-white hover:bg-[#5279ff] hover:shadow-[0_8px_30px_-6px_rgba(61,107,255,0.35)] hover:-translate-y-px transition">
+          <Link href="/performance" className="px-6 py-3.5 rounded-lg text-[14.5px] font-semibold bg-blue text-white hover:bg-[#5279ff] hover:shadow-[0_8px_30px_-6px_rgba(61,107,255,0.35)] hover:-translate-y-px transition">
             Découvrir OPR Edge™
           </Link>
           <Link href="/challenge-prop-firm" className="px-6 py-3.5 rounded-lg text-[14.5px] font-semibold border border-line-strong hover:bg-white/5 hover:border-muted transition">
