@@ -5,6 +5,7 @@ import ScrollProgressBar from "@/components/ScrollProgressBar";
 import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 import InstallPromptAndroid from "@/components/InstallPromptAndroid";
 import InstallPromptIOS from "@/components/InstallPromptIOS";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Qrypton — Trading algorithmique, conçu avec précision.",
@@ -77,6 +78,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <InstallPromptAndroid />
         <InstallPromptIOS />
         {children}
+        <Footer />
       </body>
     </html>
   );
