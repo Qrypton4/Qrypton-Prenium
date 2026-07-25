@@ -7,6 +7,7 @@ import SyncBadge from "@/components/SyncBadge";
 import { RiskCardsCompact } from "@/components/RiskCards";
 import RiskSimulator from "@/components/RiskSimulator";
 import SiteNav from "@/components/SiteNav";
+import ScrollToHash from "@/components/ScrollToHash";
 
 export default async function Home() {
   const supabase = createClient();
@@ -16,6 +17,7 @@ export default async function Home() {
   return (
     <>
       <SiteNav isLoggedIn={!!user} />
+      <ScrollToHash />
 
       {/* HERO */}
       <section className="relative z-10 max-w-[1200px] mx-auto px-6 md:px-12 pt-10 md:pt-14 pb-10 md:pb-14 text-center flex flex-col items-center">
