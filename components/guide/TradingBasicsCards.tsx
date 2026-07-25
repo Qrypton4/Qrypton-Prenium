@@ -1,4 +1,4 @@
-import { ShieldAlert, Target, ShieldCheck, Scale, Percent, TrendingUp, Activity } from "lucide-react";
+import { ShieldAlert, Target, ShieldCheck, Scale, Percent, TrendingUp, Activity, Ban } from "lucide-react";
 
 const BASICS = [
   {
@@ -43,6 +43,12 @@ const BASICS = [
     text: "La baisse du capital depuis son plus haut niveau atteint — un indicateur surveillé en continu par le système.",
     example: "Un drawdown maîtrisé est un signe de robustesse — bien plus qu'un rendement spectaculaire mais irrégulier.",
   },
+    {
+  icon: Ban,
+  title: "L'overtrading",
+  text: "Le fait de multiplier les trades par excès de confiance ou d'impatience, au-delà de toute logique de stratégie.",
+  example: "Le robot Qrypton applique une seule position par jour — aucune sursollicitation du marché, aucune décision émotionnelle.",
+},
 ];
 
 export default function TradingBasicsCards() {
