@@ -105,11 +105,7 @@ export default async function Home() {
               <RiskSimulator />
             </Reveal>
           </div>
-          <div className="text-center mt-10">
-            <Link href="/performance" className="text-sm text-blue-soft hover:underline font-medium">
-              Voir le détail complet sur la page Performance →
-            </Link>
-          </div>
+         
         </div>
       </section>
 
