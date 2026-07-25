@@ -27,10 +27,7 @@ export default function Methodology({
           </li>
         ))}
       </ul>
-      <p className="text-xs text-muted-2 leading-relaxed border-t border-line pt-5">
-        Les performances passées, y compris les résultats de backtest, ne garantissent pas les
-        performances futures.
-      </p>
+      
     </div>
   );
 }
