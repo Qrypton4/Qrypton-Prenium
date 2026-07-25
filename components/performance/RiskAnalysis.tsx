@@ -21,7 +21,7 @@ export default function RiskAnalysis({ s }: { s: PerformanceSummary }) {
         </p><div className="flex justify-end mt-5">
   <Link
     href="/#risk-simulator"
-    className="px-4 py-2 rounded-lg text-[12.5px] font-medium border border-line-strong text-muted hover:bg-white/5 hover:border-blue-soft hover:text-blue-soft transition"
+    className="px-4 py-2 rounded-lg text-[12.5px] font-medium bg-blue/10 border border-blue/20 text-blue-soft hover:bg-blue/20 hover:border-blue/40 transition"
   >
     Calculer votre risque
   </Link>
