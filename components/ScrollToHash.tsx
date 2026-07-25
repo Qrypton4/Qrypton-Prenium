@@ -16,3 +16,4 @@ export default function ScrollToHash() {
   }, []);
 
   return null;
+  }
