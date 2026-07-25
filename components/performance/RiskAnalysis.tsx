@@ -1,4 +1,5 @@
 import { PerformanceSummary } from "@/lib/performance";
+import Link from "next/link";
 
 export default function RiskAnalysis({ s }: { s: PerformanceSummary }) {
   const worstCaseLoss = s.initialCapital * 0.005 * s.maxConsecutiveLosses;
@@ -17,7 +18,14 @@ export default function RiskAnalysis({ s }: { s: PerformanceSummary }) {
           {s.initialCapital.toLocaleString("fr-FR")} €). Le dimensionnement du risque n&apos;est pas
           arbitraire : il est calibré pour que même le pire scénario historique reste largement
           gérable.
-        </p>
+        </p><div className="flex justify-end mt-5">
+  <Link
+    href="/#risk-simulator"
+    className="px-4 py-2 rounded-lg text-[12.5px] font-medium border border-line-strong text-muted hover:bg-white/5 hover:border-blue-soft hover:text-blue-soft transition"
+  >
+    Calculer votre risque
+  </Link>
+</div>
       </div>
 
       {/* Chiffres clés */}
