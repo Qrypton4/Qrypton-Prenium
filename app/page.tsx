@@ -100,7 +100,7 @@ export default async function Home() {
           <Reveal>
             <RiskCardsCompact />
           </Reveal>
-          <div className="mt-10">
+          <div id="risk-simulator" className="mt-10">
             <Reveal delay={0.05}>
               <RiskSimulator />
             </Reveal>
