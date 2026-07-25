@@ -115,7 +115,7 @@ export default function RiskSimulator() {
           }}
         />
         <div className="flex justify-between text-[11px] text-muted-2 font-mono mt-2">
-          <span>10 000 €</span>
+          <span>1 000 €</span>
           <span>500 000 €</span>
         </div>
       </div>
