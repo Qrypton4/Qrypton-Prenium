@@ -56,14 +56,20 @@ export async function POST(req: NextRequest) {
 
     case "customer.subscription.updated": {
       const sub = event.data.object as Stripe.Subscription;
-      await supabase
-        .from("subscriptions")
-        .update({
-          status: sub.status,
-          current_period_end: new Date(sub.current_period_end * 1000).toISOString(),
-          cancel_at_period_end: sub.cancel_at_period_end,
-        })
-        .eq("stripe_subscription_id", sub.id);
+      // Selon la version de l'API Stripe, ce champ peut se trouver soit sur
+      // l'abonnement directement, soit sur sa première ligne (items.data[0]).
+      const rawPeriodEnd =
+        sub.current_period_end ?? (sub as any).items?.data?.[0]?.current_period_end;
+      const periodEndISO =
+        typeof rawPeriodEnd === "number" ? new Date(rawPeriodEnd * 1000).toISOString() : null;
+
+      const updatePayload: Record<string, unknown> = {
+        status: sub.status,
+        cancel_at_period_end: sub.cancel_at_period_end,
+      };
+      if (periodEndISO) updatePayload.current_period_end = periodEndISO;
+
+      await supabase.from("subscriptions").update(updatePayload).eq("stripe_subscription_id", sub.id);
       break;
     }
 
@@ -133,7 +139,9 @@ async function sendRenewalConfirmedEmail(invoice: Stripe.Invoice) {
   if (!sub) return;
   const contact = await getUserContact(sub.user_id);
   if (!contact) return;
-  const nextDate = new Date(sub.current_period_end).toLocaleDateString("fr-FR");
+  const nextDate = sub.current_period_end
+    ? new Date(sub.current_period_end).toLocaleDateString("fr-FR")
+    : "prochaine échéance";
   const { subject, html } = renewalConfirmedEmail(contact.firstName, nextDate);
   const sent = await sendEmail({ to: contact.email, subject, html });
   if (sent) await supabase.from("email_log").insert({ user_id: sub.user_id, email_type: "renewal_confirmed" });
@@ -183,7 +191,7 @@ async function activateNewSubscription(session: Stripe.Checkout.Session) {
 
   await supabase.from("profiles").update({ stripe_customer_id: session.customer as string }).eq("id", userId);
 
-  const { data: subscription } = await supabase
+  const { data: subscription, error: subError } = await supabase
     .from("subscriptions")
     .insert({
       user_id: userId,
@@ -194,6 +202,11 @@ async function activateNewSubscription(session: Stripe.Checkout.Session) {
     .select()
     .single();
 
+  if (subError || !subscription) {
+    console.error("[webhook] Échec insertion subscriptions:", subError);
+    throw new Error(`subscription_insert_failed: ${subError?.message}`);
+  }
+
   // Pour les offres 6 et 12 mois, la licence dure plus longtemps que la simple
   // période de facturation Stripe, pour compenser la pause saisonnière
   // août/septembre. Reste NULL pour le mensuel (renouvellement Stripe suffit).
@@ -201,13 +214,18 @@ async function activateNewSubscription(session: Stripe.Checkout.Session) {
     plan.billingMonths > 1 ? computeLicenseEndDate(new Date(), plan).toISOString() : null;
 
   const licenseKey = generateLicenseKey();
-  await supabase.from("licenses").insert({
+  const { error: licError } = await supabase.from("licenses").insert({
     user_id: userId,
-    subscription_id: subscription!.id,
+    subscription_id: subscription.id,
     license_key: licenseKey,
     status: "active",
     active_license_until: activeLicenseUntil,
   });
+
+  if (licError) {
+    console.error("[webhook] Échec insertion licenses:", licError);
+    throw new Error(`license_insert_failed: ${licError.message}`);
+  }
 }
 
 async function setLicenseStatusBySubscription(
