@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
   }
 
   const now = new Date();
-  const month = now.getMonth(); // 0 = janvier, 7 = août, 9 = octobre
+  const month = now.getMonth();
   const day = now.getDate();
 
   if (month === 7 && day === 1) {
@@ -50,7 +50,7 @@ async function pauseMonthlySubscriptions() {
       });
       paused++;
     } catch (err) {
-      console.error(`[seasonal-pause] Échec pause abonnement ${sub.stripe_subscription_id}:`, err);
+      console.error("[seasonal-pause] Échec pause abonnement " + sub.stripe_subscription_id + ":", err);
     }
   }
   return { ok: true, action: "paused", count: paused };
@@ -59,4 +59,20 @@ async function pauseMonthlySubscriptions() {
 async function resumeMonthlySubscriptions() {
   const { data: subs } = await supabase
     .from("subscriptions")
-    .selec
+    .select("id, stripe_subscription_id")
+    .eq("plan", "monthly")
+    .eq("status", "active");
+
+  let resumed = 0;
+  for (const sub of subs ?? []) {
+    try {
+      await stripe.subscriptions.update(sub.stripe_subscription_id, {
+        pause_collection: "",
+      } as Stripe.SubscriptionUpdateParams);
+      resumed++;
+    } catch (err) {
+      console.error("[seasonal-pause] Échec reprise abonnement " + sub.stripe_subscription_id + ":", err);
+    }
+  }
+  return { ok: true, action: "resumed", count: resumed };
+}
