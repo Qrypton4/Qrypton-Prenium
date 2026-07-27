@@ -37,9 +37,10 @@ export default async function Home() {
             précision.
           </span>
         </h1>
+        
         <p className="mt-6 text-lg leading-relaxed text-muted max-w-[600px] fade-up">
-          Des solutions de trading algorithmique professionnelles, pensées pour une exécution
-          disciplinée, une gestion du risque rigoureuse et une performance transparente.
+  Des solutions de trading algorithmique 100 % automatisées, conçues pour une exécution
+  disciplinée, une gestion du risque rigoureuse et une performance transparente.
         </p>
         <div className="flex gap-3.5 mt-9 flex-wrap justify-center fade-up">
           <Link href="/performance" className="px-6 py-3.5 rounded-lg text-[14.5px] font-semibold bg-blue text-white hover:bg-[#5279ff] hover:shadow-[0_8px_30px_-6px_rgba(61,107,255,0.35)] hover:-translate-y-px transition">
