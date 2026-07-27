@@ -128,7 +128,11 @@ export default async function MonEspace() {
                 <Row k="Statut" v={<span className="text-positive">{subscription.status}</span>} />
                 <Row
                   k="Prochain renouvellement"
-                  v={new Date(subscription.current_period_end).toLocaleDateString("fr-FR")}
+                  v={
+                    subscription.current_period_end
+                      ? new Date(subscription.current_period_end).toLocaleDateString("fr-FR")
+                      : "À confirmer"
+                  }
                 />
                 <a
                   href="/api/stripe/portal"
