@@ -161,7 +161,7 @@ export default function MonEspaceClient({
           {tab === "license" && <LicenseTab license={license} />}
           {tab === "robot" && <RobotTab license={license} />}
           {tab === "subscription" && <SubscriptionTab subscription={subscription} />}
-          {tab === "invoices" && <InvoicesTab invoices={invoices} />}
+        
           {tab === "guide" && <GuideTab />}
           {tab === "settings" && <SettingsTab email={userEmail} />}
         </div>
