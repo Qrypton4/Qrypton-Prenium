@@ -45,21 +45,21 @@ export default function MonEspaceClient({
     <div className="min-h-screen relative z-10">
       <header className="border-b border-line px-4 sm:px-8 py-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-3">
-          <Image
-         src="/assets/qrypton-mark.png"
-         alt="Qrypton"
-          width={36}
-        height={36}
-         className="rounded-lg"
-        />
-          </div>
-          <div>
-            <h1 className="font-display font-semibold text-lg leading-tight">Mon espace</h1>
-            <p className="text-muted-2 text-xs mt-0.5">
-              Bienvenue dans votre espace client sécurisé.
-            </p>
-          </div>
-        </div>
+  <Image
+    src="/assets/qrypton-mark.png"
+    alt="Qrypton"
+    width={36}
+    height={36}
+    className="rounded-lg"
+  />
+  <div>
+    <h1 className="font-display font-semibold text-lg leading-tight">Mon espace</h1>
+    <p className="text-muted-2 text-xs mt-0.5">
+      Bienvenue dans votre espace client sécurisé.
+    </p>
+  </div>
+</div>
+      
         <span className="font-mono text-xs text-positive border border-line-strong rounded-full px-3 py-1.5 whitespace-nowrap self-start sm:self-auto">
           🟢 Licence {license.status === "active" ? "active" : license.status}
         </span>
