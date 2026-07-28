@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Card, Row, Kpi } from "./ui";
+import Image from "next/image";
 
 const TABS = [
   { id: "dashboard", label: "📊 Tableau de bord" },
@@ -44,8 +45,13 @@ export default function MonEspaceClient({
     <div className="min-h-screen relative z-10">
       <header className="border-b border-line px-4 sm:px-8 py-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-blue-soft/10 border border-blue-soft/30 flex items-center justify-center text-blue-soft font-display font-bold">
-            Q
+          <Image
+         src="/assets/qrypton-mark.png"
+         alt="Qrypton"
+          width={36}
+        height={36}
+         className="rounded-lg"
+        />
           </div>
           <div>
             <h1 className="font-display font-semibold text-lg leading-tight">Mon espace</h1>
