@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase-browser";
 import type { LicenseStatus } from "@/lib/license";
+import {User} from "lucide-react";
 
 type ProfileMenuProps = {
   firstName: string;
@@ -41,18 +42,17 @@ export function ProfileMenu({ firstName, license }: ProfileMenuProps) {
   return (
     <div className="relative justify-self-end" ref={menuRef}>
       <button
-        onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-2 rounded-full border border-line-strong px-2.5 py-1.5 hover:border-blue-soft hover:bg-blue/10 transition"
-      >
-        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#3D6BFF]/15 text-xs font-semibold text-[#6C8CFF]">
-          {firstName.charAt(0).toUpperCase()}
-        </span>
-        <span
-          className={`hidden sm:inline h-1.5 w-1.5 rounded-full ${
-            active ? "bg-emerald-400" : "bg-amber-400"
-          }`}
-        />
-      </button>
+  onClick={() => setOpen((v) => !v)}
+  aria-label="Mon compte"
+  className="relative w-9 h-9 flex items-center justify-center rounded-full border border-line-strong hover:border-blue-soft hover:bg-blue/10 transition"
+>
+  <User className="w-4 h-4" strokeWidth={1.8} />
+  <span
+    className={`absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-bg ${
+      active ? "bg-emerald-400" : "bg-amber-400"
+    }`}
+  />
+</button>
 
       {open && (
         <div className="absolute right-0 mt-2 w-64 overflow-hidden rounded-2xl border border-line bg-bg-2 shadow-xl shadow-black/40 z-[80]">
