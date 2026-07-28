@@ -6,7 +6,7 @@ import { getChallengeData } from "@/lib/challenge";
 import SyncBadge from "@/components/SyncBadge";
 import { RiskCardsCompact } from "@/components/RiskCards";
 import RiskSimulator from "@/components/RiskSimulator";
-import SiteNav from "@/components/SiteNav";
+import SiteNavContainer from "@/components/SiteNavContainer";
 import ScrollToHash from "@/components/ScrollToHash";
 
 export default async function Home() {
@@ -16,7 +16,7 @@ export default async function Home() {
 
   return (
     <>
-      <SiteNav isLoggedIn={!!user} />
+      <SiteNavContainer isLoggedIn={!!user} />
       <ScrollToHash />
 
       {/* HERO */}
