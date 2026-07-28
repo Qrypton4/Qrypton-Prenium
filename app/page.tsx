@@ -16,7 +16,7 @@ export default async function Home() {
 
   return (
     <>
-      <SiteNavContainer isLoggedIn={!!user} />
+      <SiteNavContainer />
       <ScrollToHash />
 
       {/* HERO */}
