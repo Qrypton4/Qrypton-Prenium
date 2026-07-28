@@ -72,9 +72,7 @@ export default function MonEspaceClient({
             </p>
           </div>
         </div>
-        <span className="font-mono text-xs text-positive border border-line-strong rounded-full px-3 py-1.5 whitespace-nowrap self-start sm:self-auto">
-          🟢 Licence {license.status === "active" ? "active" : license.status}
-        </span>
+      
       </header>
 
       <div className="border-b border-line px-4 sm:px-8 py-3 sm:py-0">
