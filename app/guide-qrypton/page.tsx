@@ -1,4 +1,4 @@
-import SiteNav from "@/components/SiteNav";
+import SiteNavContainer from "@/components/SiteNavContainer";
 import TradingBasicsCards from "@/components/guide/TradingBasicsCards";
 import PathCard from "@/components/guide/PathCard";
 import { Reveal } from "@/components/Animated";
@@ -15,7 +15,7 @@ export default async function GuideQrypton() {
 
   return (
     <>
-      <SiteNav isLoggedIn={!!user} />
+      <SiteNavContainer />
 
       <main className="max-w-[1100px] mx-auto px-6 md:px-12 py-16">
         <Reveal>
