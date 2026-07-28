@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { Card, Row, Kpi } from "./ui";
 import Image from "next/image";
@@ -10,9 +10,9 @@ const TABS = [
   { id: "performance", label: "📈 Performances" },
   { id: "license", label: "🔑 Licence MT5" },
   { id: "robot", label: "🤖 Robot" },
-  { id: "subscription", label: "🧾 Abonnement" },
+  { id: "subscription", label: "💳 Abonnement" },
   { id: "invoices", label: "📄 Factures" },
-  { id: "guide", label: "📚 Guide" },
+  { id: "guide", label: "📚 Guide de démarrage" },
   { id: "settings", label: "⚙️ Paramètres" },
 ] as const;
 
@@ -40,48 +40,106 @@ export default function MonEspaceClient({
   userEmail?: string | null;
 }) {
   const [tab, setTab] = useState<TabId>("dashboard");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const activeLabel = TABS.find((t) => t.id === tab)?.label ?? "";
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <div className="min-h-screen relative z-10">
       <header className="border-b border-line px-4 sm:px-8 py-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-3">
-  <Image
-    src="/assets/qrypton-mark.png"
-    alt="Qrypton"
-    width={36}
-    height={36}
-    className="rounded-lg"
-  />
-  <div>
-    <h1 className="font-display font-semibold text-lg leading-tight">Mon espace</h1>
-    <p className="text-muted-2 text-xs mt-0.5">
-      Bienvenue dans votre espace client sécurisé.
-    </p>
-  </div>
-</div>
-      
+          <Image
+            src="/assets/qrypton-mark.png"
+            alt="Qrypton"
+            width={36}
+            height={36}
+            className="rounded-lg"
+          />
+          <div>
+            <h1 className="font-display font-semibold text-lg leading-tight">Mon espace</h1>
+            <p className="text-muted-2 text-xs mt-0.5">
+              Bienvenue dans votre espace client sécurisé.
+            </p>
+          </div>
+        </div>
         <span className="font-mono text-xs text-positive border border-line-strong rounded-full px-3 py-1.5 whitespace-nowrap self-start sm:self-auto">
           🟢 Licence {license.status === "active" ? "active" : license.status}
         </span>
       </header>
 
-      <nav className="border-b border-line px-4 sm:px-8 overflow-x-auto">
-        <div className="flex gap-1 min-w-max">
-          {TABS.map((t) => (
-            <button
-              key={t.id}
-              onClick={() => setTab(t.id)}
-              className={`px-4 py-3.5 text-sm whitespace-nowrap border-b-2 transition-colors ${
-                tab === t.id
-                  ? "border-blue-soft text-white"
-                  : "border-transparent text-muted hover:text-white"
+      <div className="border-b border-line px-4 sm:px-8 py-3 sm:py-0">
+        <div className="relative sm:hidden" ref={menuRef}>
+          <button
+            onClick={() => setMenuOpen((o) => !o)}
+            className={`w-full flex items-center justify-between gap-2 px-4 py-3 rounded-xl border bg-bg-2 text-sm font-medium transition-shadow duration-200 ${
+              menuOpen
+                ? "border-blue-soft shadow-[0_0_0_3px_rgba(59,130,246,0.18)]"
+                : "border-blue-soft/30"
+            }`}
+          >
+            <span>{activeLabel}</span>
+            <span
+              className={`text-blue-soft transition-transform duration-200 ${
+                menuOpen ? "rotate-180" : ""
               }`}
             >
-              {t.label}
-            </button>
-          ))}
+              ▼
+            </span>
+          </button>
+          <div
+            className={`absolute z-20 mt-2 w-full rounded-xl border border-blue-soft/30 bg-bg-2 overflow-hidden origin-top transition-all duration-200 ${
+              menuOpen
+                ? "opacity-100 scale-100 pointer-events-auto"
+                : "opacity-0 scale-95 pointer-events-none"
+            }`}
+          >
+            {TABS.map((t) => (
+              <button
+                key={t.id}
+                onClick={() => {
+                  setTab(t.id);
+                  setMenuOpen(false);
+                }}
+                className={`w-full text-left px-4 py-3 text-sm transition-colors ${
+                  tab === t.id
+                    ? "bg-blue-soft/10 text-white"
+                    : "text-muted hover:bg-white/5 hover:text-white"
+                }`}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
         </div>
-      </nav>
+
+        <nav className="hidden sm:block overflow-x-auto">
+          <div className="flex gap-1 min-w-max">
+            {TABS.map((t) => (
+              <button
+                key={t.id}
+                onClick={() => setTab(t.id)}
+                className={`px-4 py-3.5 text-sm whitespace-nowrap border-b-2 transition-colors ${
+                  tab === t.id
+                    ? "border-blue-soft text-white"
+                    : "border-transparent text-muted hover:text-white"
+                }`}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
+        </nav>
+      </div>
 
       <main className="max-w-[1160px] mx-auto px-4 sm:px-8 py-10">
         <div key={tab} className="tab-fade">
