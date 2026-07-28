@@ -1,7 +1,7 @@
 import { getChallengeData, computeChallengeStats } from "@/lib/challenge";
 import { Reveal } from "@/components/Animated";
 import SyncBadge from "@/components/SyncBadge";
-import SiteNav from "@/components/SiteNav";
+import SiteNavContainer from "@/components/SiteNavContainer";
 import PositionsTable from "@/components/challenge/PositionsTable";
 import LiveStatusBadge from "@/components/challenge/LiveStatusBadge";
 import { createClient } from "@/lib/supabase-server";
@@ -26,7 +26,7 @@ export default async function ChallengePropFirm() {
 
   return (
     <>
-      <SiteNav isLoggedIn={!!user} />
+      <SiteNavContainer />
 
       <header
         className="border-b border-line px-6 md:px-12 py-10"
