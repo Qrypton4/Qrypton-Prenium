@@ -4,15 +4,13 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { Card, Row, Kpi } from "./ui";
 import Image from "next/image";
-
 const TABS = [
   { id: "dashboard", label: "📊 Tableau de bord" },
   { id: "performance", label: "📈 Performances" },
   { id: "license", label: "🔑 Licence MT5" },
   { id: "robot", label: "🤖 Robot" },
-  { id: "subscription", label: "💳 Abonnement" },
-  { id: "invoices", label: "📄 Factures" },
-  { id: "guide", label: "📚 Guide de démarrage" },
+  { id: "subscription", label: "💳 Abonnement & Factures" },
+  { id: "guide", label: "📘 Guide de démarrage" },
   { id: "settings", label: "⚙️ Paramètres" },
 ] as const;
 
@@ -310,9 +308,9 @@ function RobotTab({ license }: any) {
   );
 }
 
-function SubscriptionTab({ subscription }: any) {
+function SubscriptionTab({ subscription, invoices }: any) {
   return (
-    <Card title="Abonnement">
+    <Card title="Abonnement & Factures">
       {subscription ? (
         <>
           <Row k="Statut" v={<span className="text-positive">{subscription.status}</span>} />
@@ -334,36 +332,34 @@ function SubscriptionTab({ subscription }: any) {
       ) : (
         <p className="text-muted text-sm">Aucun abonnement actif.</p>
       )}
+
+      <div className="mt-6 pt-6 border-t border-line">
+        <h3 className="text-sm font-semibold mb-3">Factures</h3>
+        {invoices && invoices.length > 0 ? (
+          <div className="flex flex-col gap-3">
+            {invoices.map((inv: any) => (
+              <div
+                key={inv.id}
+                className="flex justify-between items-center text-sm border-b border-line pb-3 last:border-0"
+              >
+                <span className="font-mono text-muted">
+                  {new Date(inv.issued_at).toLocaleDateString("fr-FR")}
+                </span>
+                <span className="font-mono">{(inv.amount_paid / 100).toFixed(2)} €</span>
+                <a href={inv.pdf_url} className="text-blue-soft hover:underline">
+                  PDF
+                </a>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-muted text-sm">Aucune facture pour le moment.</p>
+        )}
+      </div>
     </Card>
   );
 }
 
-function InvoicesTab({ invoices }: any) {
-  return (
-    <Card title="Factures">
-      {invoices && invoices.length > 0 ? (
-        <div className="flex flex-col gap-3">
-          {invoices.map((inv: any) => (
-            <div
-              key={inv.id}
-              className="flex justify-between items-center text-sm border-b border-line pb-3 last:border-0"
-            >
-              <span className="font-mono text-muted">
-                {new Date(inv.issued_at).toLocaleDateString("fr-FR")}
-              </span>
-              <span className="font-mono">{(inv.amount_paid / 100).toFixed(2)} €</span>
-              <a href={inv.pdf_url} className="text-blue-soft hover:underline">
-                PDF
-              </a>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p className="text-muted text-sm">Aucune facture pour le moment.</p>
-      )}
-    </Card>
-  );
-}
 
 function GuideTab() {
   return (
