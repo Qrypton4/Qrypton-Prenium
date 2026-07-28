@@ -5,8 +5,10 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X, User } from "lucide-react";
+import { ProfileMenu } from "./navbar/ProfileMenu";
+import type { LicenseStatus } from "@/lib/license";
 
-const LINKS = [
+const BASE_LINKS = [
   { href: "/", label: "Accueil" },
   { href: "/performance", label: "Performance Backtest" },
   { href: "/challenge-prop-firm", label: "Résultats en direct" },
@@ -38,10 +40,20 @@ function consumePendingSwipeBack(): boolean {
   }
 }
 
-export default function SiteNav({ isLoggedIn }: { isLoggedIn: boolean }) {
+type SiteNavProps = {
+  isLoggedIn: boolean;
+  firstName?: string | null;
+  license?: LicenseStatus | null;
+};
+
+export default function SiteNav({ isLoggedIn, firstName, license }: SiteNavProps) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const touchStart = useRef<{ x: number; y: number } | null>(null);
+
+  const LINKS = isLoggedIn
+    ? [{ href: "/mon-espace", label: "⭐ Dashboard" }, ...BASE_LINKS]
+    : BASE_LINKS;
 
   useEffect(() => {
     function onTouchStart(e: TouchEvent) {
@@ -110,13 +122,17 @@ export default function SiteNav({ isLoggedIn }: { isLoggedIn: boolean }) {
           QRYPTON
         </Link>
 
-        <Link
-          href={isLoggedIn ? "/mon-espace" : "/connexion"}
-          aria-label={isLoggedIn ? "Mon espace" : "Connexion"}
-          className="justify-self-end w-9 h-9 flex items-center justify-center rounded-full border border-line-strong hover:border-blue-soft hover:bg-blue/10 transition"
-        >
-          <User className="w-4 h-4" strokeWidth={1.8} />
-        </Link>
+        {isLoggedIn && firstName ? (
+          <ProfileMenu firstName={firstName} license={license ?? null} />
+        ) : (
+          <Link
+            href="/connexion"
+            aria-label="Connexion"
+            className="justify-self-end w-9 h-9 flex items-center justify-center rounded-full border border-line-strong hover:border-blue-soft hover:bg-blue/10 transition"
+          >
+            <User className="w-4 h-4" strokeWidth={1.8} />
+          </Link>
+        )}
       </header>
 
       {/* Overlay */}
