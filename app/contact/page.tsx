@@ -1,4 +1,4 @@
-import SiteNav from "@/components/SiteNav";
+import SiteNavContainer from "@/components/SiteNavContainer";
 import { Reveal } from "@/components/Animated";
 import { createClient } from "@/lib/supabase-server";
 import { Mail } from "lucide-react";
@@ -14,7 +14,7 @@ export default async function Contact() {
 
   return (
     <>
-      <SiteNav isLoggedIn={!!user} />
+      <SiteNavContainer />
 
       <main className="max-w-[640px] mx-auto px-6 md:px-12 py-20 text-center">
         <Reveal>
