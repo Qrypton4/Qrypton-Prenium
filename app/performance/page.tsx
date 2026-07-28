@@ -5,7 +5,7 @@ import MonthlyTable from "@/components/performance/MonthlyTable";
 import Methodology from "@/components/performance/Methodology";
 import RiskAnalysis from "@/components/performance/RiskAnalysis";
 import { Reveal } from "@/components/Animated";
-import SiteNav from "@/components/SiteNav";
+import SiteNavContainer from "@/components/SiteNavContainer";
 import { createClient } from "@/lib/supabase-server";
 
 export const metadata = {
@@ -20,7 +20,7 @@ export default async function Performance() {
 
   return (
     <>
-      <SiteNav isLoggedIn={!!user} />
+      <SiteNavContainer />
 
       <main className="max-w-[1000px] mx-auto px-6 md:px-12 py-16">
         <Reveal>
