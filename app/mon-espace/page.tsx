@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase-server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { EmptyPage } from "./ui";
 import MonEspaceClient from "./MonEspaceClient";
+import SiteNavContainer from "@/components/SiteNavContainer";
 
 export const metadata = { title: "Mon espace — Qrypton" };
 
@@ -12,7 +13,12 @@ export default async function MonEspace() {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return <EmptyPage title="Session expirée" text="Merci de vous reconnecter." />;
+    return (
+  <>
+    <SiteNavContainer />
+    <EmptyPage title="Session expirée" text="Merci de vous reconnecter." />
+  </>
+);
   }
 
   const { data: license } = await supabaseAdmin
@@ -34,14 +40,17 @@ export default async function MonEspace() {
     .order("issued_at", { ascending: false });
 
   if (!license) {
-    return (
+  return (
+    <>
+      <SiteNavContainer />
       <EmptyPage
         title="Aucun abonnement actif"
         text="Souscrivez à OPR Edge™ pour accéder à votre espace : dashboard, licence et téléchargement du robot."
         cta={{ href: "/tarifs", label: "Voir les tarifs" }}
       />
-    );
-  }
+    </>
+  );
+}
 
   const { data: trades } = await supabaseAdmin
     .from("live_trades")
@@ -58,6 +67,8 @@ export default async function MonEspace() {
   const lastBalance = hasTrades ? trades![0]?.balance_after ?? 0 : 0;
 
   return (
+  <>
+    <SiteNavContainer />
     <MonEspaceClient
       license={license}
       subscription={subscription}
@@ -69,5 +80,6 @@ export default async function MonEspace() {
       lastBalance={lastBalance}
       userEmail={user.email}
     />
-  );
+  </>
+);
 }
