@@ -1,5 +1,5 @@
 import FaqAccordion from "@/components/FaqAccordion";
-import SiteNav from "@/components/SiteNav";
+import SiteNavContainer from "@/components/SiteNavContainer";
 import { createClient } from "@/lib/supabase-server";
 
 export const metadata = {
@@ -13,7 +13,7 @@ export default async function Faq() {
 
   return (
     <>
-      <SiteNav isLoggedIn={!!user} />
+      <SiteNavContainer />
       <main className="max-w-[1000px] mx-auto px-6 md:px-12 py-16">
         <div className="text-center max-w-[600px] mx-auto mb-14">
           <span className="font-mono text-xs text-blue-soft uppercase tracking-widest block mb-3.5">FAQ</span>
