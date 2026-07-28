@@ -242,24 +242,40 @@ async function setLicenseStatusBySubscription(
 }
 
 async function recordInvoice(invoice: Stripe.Invoice) {
-  const { data: sub } = await supabase
-    .from("subscriptions")
-    .select("user_id")
-    .eq("stripe_subscription_id", invoice.subscription as string)
-    .single();
+  let userId: string | null = null;
 
-  if (!sub) {
-    console.error("[webhook] Impossible de trouver user_id pour la facture", invoice.id);
+  for (let attempt = 0; attempt < 5; attempt++) {
+    const { data: sub } = await supabase
+      .from("subscriptions")
+      .select("user_id")
+      .eq("stripe_subscription_id", invoice.subscription as string)
+      .single();
+
+    if (sub) {
+      userId = sub.user_id;
+      break;
+    }
+
+    console.error(
+      `[webhook] Tentative ${attempt + 1}/5 : abonnement introuvable pour la facture`,
+      invoice.id
+    );
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  }
+
+  if (!userId) {
+    console.error("[webhook] Échec définitif : impossible de trouver user_id pour la facture", invoice.id);
     return;
   }
 
   await supabase.from("invoices").insert({
-    user_id: sub.user_id,
+    user_id: userId,
     stripe_invoice_id: invoice.id,
     amount_paid: invoice.amount_paid,
     pdf_url: invoice.invoice_pdf,
   });
 }
+
 
 function generateLicenseKey(): string {
   const block = () => Math.random().toString(16).slice(2, 6).toUpperCase();
