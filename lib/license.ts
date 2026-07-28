@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase-server";
+import { supabaseAdmin } from "@/lib/supabase";
 
 export type LicenseStatus = {
   active: boolean;
@@ -8,7 +8,7 @@ export type LicenseStatus = {
 };
 
 export async function getLicenseStatus(userId: string): Promise<LicenseStatus> {
-  const supabase = createClient();
+  const supabase = supabaseAdmin;
 
   const { data, error } = await supabase
     .from("licenses")
