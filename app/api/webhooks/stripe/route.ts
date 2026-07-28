@@ -242,8 +242,19 @@ async function setLicenseStatusBySubscription(
 }
 
 async function recordInvoice(invoice: Stripe.Invoice) {
+  const { data: sub } = await supabase
+    .from("subscriptions")
+    .select("user_id")
+    .eq("stripe_subscription_id", invoice.subscription as string)
+    .single();
+
+  if (!sub) {
+    console.error("[webhook] Impossible de trouver user_id pour la facture", invoice.id);
+    return;
+  }
+
   await supabase.from("invoices").insert({
-    user_id: invoice.metadata?.user_id,
+    user_id: sub.user_id,
     stripe_invoice_id: invoice.id,
     amount_paid: invoice.amount_paid,
     pdf_url: invoice.invoice_pdf,
