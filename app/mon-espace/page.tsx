@@ -54,20 +54,20 @@ export default async function MonEspace() {
 
   return (
     <div className="min-h-screen relative z-10">
-      <header className="border-b border-line px-8 py-5 flex justify-between items-center">
-        <h1 className="font-display font-semibold text-lg">Mon espace — OPR Edge™</h1>
-        <div className="flex items-center gap-4">
-          <Link href="/guide-demarrage" className="text-sm text-blue-soft hover:underline">
-            📘 Guide de démarrage
-          </Link>
-          <span className="font-mono text-xs text-positive border border-line-strong rounded-full px-3 py-1">
-            ● Licence {license.status === "active" ? "active" : license.status}
-          </span>
-          <form action="/api/auth/signout" method="post">
-            <button className="text-sm text-muted hover:text-white transition">Déconnexion</button>
-          </form>
-        </div>
-      </header>
+      <header className="border-b border-line px-4 sm:px-8 py-5 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+  <h1 className="font-display font-semibold text-lg">Mon espace — OPR Edge™</h1>
+  <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+    <Link href="/guide-demarrage" className="text-sm text-blue-soft hover:underline whitespace-nowrap">
+      📘 Guide de démarrage
+    </Link>
+    <span className="font-mono text-xs text-positive border border-line-strong rounded-full px-3 py-1 whitespace-nowrap">
+      • Licence {license.status === "active" ? "active" : license.status}
+    </span>
+    <form action="/api/auth/signout" method="post">
+      <button className="text-sm text-muted hover:text-white transition">Déconnexion</button>
+    </form>
+  </div>
+</header>
 
       <main className="max-w-[1160px] mx-auto px-8 py-10 flex flex-col gap-10">
         {/* --- DASHBOARD : vue par défaut --- */}
