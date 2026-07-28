@@ -1,5 +1,5 @@
 import Link from "next/link";
-import SiteNav from "@/components/SiteNav";
+import SiteNavContainer from "@/components/SiteNavContainer";
 import StepList from "@/components/guide/StepList";
 import ExampleFirmsList from "@/components/guide/ExampleFirmsList";
 import PricingCTAButton from "@/components/guide/PricingCTAButton";
@@ -17,7 +17,7 @@ export default async function GuidePropFirm() {
 
   return (
     <>
-      <SiteNav isLoggedIn={!!user} />
+      <SiteNavContainer />
 
       <main className="max-w-[760px] mx-auto px-6 md:px-12 py-16">
         <Reveal>
