@@ -35,5 +35,70 @@ export function ProfileMenu({ firstName, license }: ProfileMenuProps) {
   }
 
   const expiresLabel = license?.expiresAt
-    ? new Date(license.expiresAt).toLocaleDateString("fr-FR", {
-        day: "
+    ? new Date(license.expiresAt).toLocaleDateString("fr-FR", { day: "2-digit", month: "long", year: "numeric" })
+    : null;
+
+  return (
+    <div className="relative justify-self-end" ref={menuRef}>
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="flex items-center gap-2 rounded-full border border-line-strong px-2.5 py-1.5 hover:border-blue-soft hover:bg-blue/10 transition"
+      >
+        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#3D6BFF]/15 text-xs font-semibold text-[#6C8CFF]">
+          {firstName.charAt(0).toUpperCase()}
+        </span>
+        <span
+          className={`hidden sm:inline h-1.5 w-1.5 rounded-full ${
+            active ? "bg-emerald-400" : "bg-amber-400"
+          }`}
+        />
+      </button>
+
+      {open && (
+        <div className="absolute right-0 mt-2 w-64 overflow-hidden rounded-2xl border border-line bg-bg-2 shadow-xl shadow-black/40 z-[80]">
+          <div className="border-b border-line p-4">
+            <p className="text-sm font-medium text-white/90">{firstName}</p>
+            <span
+              className={`mt-2 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium ${
+                active ? "bg-emerald-500/10 text-emerald-400" : "bg-amber-500/10 text-amber-400"
+              }`}
+            >
+              <span className={`h-1.5 w-1.5 rounded-full ${active ? "bg-emerald-400" : "bg-amber-400"}`} />
+              {active ? "Licence active" : "Licence inactive"}
+            </span>
+
+            {active && (
+              <div className="mt-3 space-y-1 text-xs text-white/50">
+                <p>Robot : {license?.robotName}</p>
+                {expiresLabel && <p>Expire le {expiresLabel}</p>}
+              </div>
+            )}
+          </div>
+
+          <nav className="p-1.5 text-sm">
+            <Link
+              href="/mon-espace"
+              className="block rounded-lg px-3 py-2 text-white/80 transition hover:bg-white/[0.06]"
+              onClick={() => setOpen(false)}
+            >
+              Mon profil
+            </Link>
+            <Link
+              href="/mon-espace"
+              className="block rounded-lg px-3 py-2 text-white/80 transition hover:bg-white/[0.06]"
+              onClick={() => setOpen(false)}
+            >
+              Paramètres
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="block w-full rounded-lg px-3 py-2 text-left text-red-400 transition hover:bg-red-500/10"
+            >
+              Déconnexion
+            </button>
+          </nav>
+        </div>
+      )}
+    </div>
+  );
+}
