@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase-server";
 import { supabaseAdmin } from "@/lib/supabase";
-import SiteNav from "@/components/SiteNav";
+import SiteNavContainer from "@/components/SiteNavContainer";
 import { PLANS, PlanKey } from "@/lib/plans";
 
 export const metadata = {
@@ -38,7 +38,7 @@ export default async function Tarifs() {
 
   return (
     <>
-      <SiteNav isLoggedIn={isLoggedIn} />
+      <SiteNavContainer />
 
       <main className="max-w-[1100px] mx-auto px-6 md:px-12 py-16">
         <div className="text-center max-w-[620px] mx-auto mb-14">
