@@ -76,27 +76,13 @@ export function ProfileMenu({ firstName, license }: ProfileMenuProps) {
           </div>
 
           <nav className="p-1.5 text-sm">
-            <Link
-              href="/mon-espace"
-              className="block rounded-lg px-3 py-2 text-white/80 transition hover:bg-white/[0.06]"
-              onClick={() => setOpen(false)}
-            >
-              Mon profil
-            </Link>
-            <Link
-              href="/mon-espace"
-              className="block rounded-lg px-3 py-2 text-white/80 transition hover:bg-white/[0.06]"
-              onClick={() => setOpen(false)}
-            >
-              Paramètres
-            </Link>
-            <button
-              onClick={handleLogout}
-              className="block w-full rounded-lg px-3 py-2 text-left text-red-400 transition hover:bg-red-500/10"
-            >
-              Déconnexion
-            </button>
-          </nav>
+  <button
+    onClick={handleLogout}
+    className="block w-full rounded-lg px-3 py-2 text-left text-red-400 transition hover:bg-red-500/10"
+  >
+    Déconnexion
+  </button>
+</nav>
         </div>
       )}
     </div>
