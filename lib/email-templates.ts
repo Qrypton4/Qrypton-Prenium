@@ -9,9 +9,10 @@ function wrapper(title: string, bodyHtml: string, ctaLabel?: string, ctaUrl?: st
   return `
   <div style="background:#f4f5f7;padding:32px 16px;font-family:-apple-system,Segoe UI,Roboto,sans-serif;">
     <div style="max-width:520px;margin:0 auto;background:#ffffff;border-radius:16px;overflow:hidden;border:1px solid #e5e7eb;">
-      <div style="background:#080B14;padding:24px 32px;">
-        <span style="color:#ffffff;font-weight:700;font-size:15px;letter-spacing:0.5px;">QRYPTON</span>
-      </div>
+     <div style="background:#080B14;padding:24px 32px;display:flex;align-items:center;gap:10px;">
+  <img src="${SITE_URL}/assets/qrypton-mark.png" alt="Qrypton" width="24" height="24" style="border-radius:6px;display:block;" />
+  <span style="color:#ffffff;font-weight:700;font-size:15px;letter-spacing:0.5px;">QRYPTON</span>
+</div>
       <div style="padding:32px;">
         <h1 style="font-size:19px;font-weight:600;color:#111827;margin:0 0 16px;">${title}</h1>
         <div style="font-size:14px;line-height:1.7;color:#4b5563;">${bodyHtml}</div>
