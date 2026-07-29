@@ -46,23 +46,24 @@ export function welcomeEmail(firstName: string) {
   };
 }
 
-export function paymentConfirmationEmail(firstName: string, planName: string, amount: string) {
+export function paymentConfirmationEmail(firstName: string, planName: string, amount: string, invoiceUrl?: string) {
   return {
     subject: "Votre abonnement Qrypton est confirmé",
     html: wrapper(
       `Merci, ${firstName} !`,
       `<p>Votre paiement a bien été confirmé.</p>
-       <table style="width:100%;border-collapse:collapse;margin:16px 0;">
-         <tr><td style="padding:8px 0;color:#6b7280;">Abonnement</td><td style="padding:8px 0;text-align:right;font-weight:600;color:#111827;">${planName}</td></tr>
-         <tr><td style="padding:8px 0;color:#6b7280;">Montant</td><td style="padding:8px 0;text-align:right;font-weight:600;color:#111827;">${amount}</td></tr>
-       </table>
-       <p><strong>Prochaines étapes :</strong></p>
-       <ol style="padding-left:18px;margin:8px 0;">
-         <li>Installer MetaTrader 5</li>
-         <li>Installer OPR Edge™ (fichier disponible dans votre espace client)</li>
-         <li>Suivre le Guide de démarrage, étape par étape</li>
-       </ol>
-       <p>Notre support reste disponible si vous avez la moindre question.</p>`,
+      <table style="width:100%;border-collapse:collapse;margin:16px 0;">
+        <tr><td style="padding:8px 0;color:#6b7280;">Abonnement</td><td style="padding:8px 0;text-align:right;font-weight:600;color:#111827;">${planName}</td></tr>
+        <tr><td style="padding:8px 0;color:#6b7280;">Montant</td><td style="padding:8px 0;text-align:right;font-weight:600;color:#111827;">${amount}</td></tr>
+      </table>
+      ${invoiceUrl ? `<p><a href="${invoiceUrl}" style="color:#3D6BFF;text-decoration:underline;">📄 Télécharger ma facture (PDF)</a></p>` : ""}
+      <p><strong>Prochaines étapes :</strong></p>
+      <ol style="padding-left:18px;margin:8px 0;">
+        <li>Installer MetaTrader 5</li>
+        <li>Installer OPR Edge™ (fichier disponible dans votre espace client)</li>
+        <li>Suivre le Guide de démarrage, étape par étape</li>
+      </ol>
+      <p>Notre support reste disponible si vous avez la moindre question.</p>`,
       "Accéder à mon espace client",
       `${SITE_URL}/mon-espace`
     ),
