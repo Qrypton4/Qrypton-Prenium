@@ -20,7 +20,7 @@ export default async function Home() {
       <ScrollToHash />
 
       {/* HERO */}
-      <section className="relative z-10 max-w-[1200px] mx-auto px-6 md:px-12 pt-10 md:pt-14 pb-10 md:pb-14 text-center flex flex-col items-center">
+      <section className="relative z-10 max-w-[1200px] mx-auto px-6 md:px-12 pt-10 md:pt-14 pb-4 md:pb-6 text-center flex flex-col items-center">
         <Image src="/assets/qrypton-mark.png" alt="Qrypton" width={88} height={88} className="mb-8 fade-up" />
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 border border-line-strong rounded-full text-[12.5px] text-muted font-mono mb-4 fade-up">
           <span className="w-1.5 h-1.5 rounded-full bg-blue shadow-[0_0_8px_#3D6BFF]" />
@@ -50,7 +50,7 @@ export default async function Home() {
       </section>
 
       {/* WHY QRYPTON */}
-      <section className="py-12 md:py-16">
+      <section className="pt-4 md:pt-6 pb-12 md:pb-16">
         <div className="max-w-[1160px] mx-auto px-6 md:px-12">
           <div className="text-center max-w-[640px] mx-auto mb-14">
             <span className="font-mono text-xs text-blue-soft uppercase tracking-widest block mb-3.5">
