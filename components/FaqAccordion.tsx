@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const FAQS = [
   { q: "Est-ce compatible avec MT5 ?", a: "Oui. OPR Edge™ fonctionne nativement en tant qu'Expert Advisor sur MetaTrader 5." },
   { q: "Est-ce compatible avec FTMO ?", a: "Oui, OPR Edge™ fonctionne dans l'environnement MT5 de FTMO et respecte les règles de risque standards des challenges." },
   { q: "Compatible avec d'autres Prop Firms ?", a: "Oui, toute prop firm utilisant MetaTrader 5 est compatible." },
   { q: "Comment installer le robot ?", a: "Après l'abonnement, vous recevez un guide d'installation pas à pas ainsi que le fichier .ex5 sous licence pour MT5, directement depuis votre espace client." },
+  { id: "mobile-tablette", q: "Le robot fonctionne-t-il sur mobile ou tablette ?", a: "Non. OPR Edge™ s'installe uniquement sur un PC ou un Mac, sur lequel vous installez au préalable le logiciel gratuit MetaTrader 5. Pour que le robot puisse trader chaque jour, votre ordinateur doit rester allumé, avec MetaTrader 5 ouvert, entre 15h et 19h (heure française) — la plage horaire correspondant à l'ouverture du marché américain. Si vous ne souhaitez pas garder votre ordinateur allumé, vous pouvez utiliser un VPS (un petit serveur en ligne qui reste actif 24h/24) à partir de 10€/mois, disponible directement depuis MetaTrader 5. Le robot tourne alors en continu, sans dépendre de votre propre ordinateur." },
   { q: "Quel broker utiliser ?", a: "Tout broker MT5 proposant le Nasdaq (NAS100) avec une exécution fiable et des spreads réduits convient." },
   { q: "Puis-je annuler à tout moment ?", a: "Oui, la résiliation se fait en un clic depuis votre espace client (portail Stripe), sans engagement ni frais cachés." },
   { q: "La licence peut-elle changer de compte MT5 ?", a: "Une licence est liée à un seul compte MT5. Un changement (nouveau PC, nouveau broker) se fait depuis l'espace client, avec une limite raisonnable pour éviter le partage de licence." },
@@ -19,10 +20,23 @@ const FAQS = [
 
 export default function FaqAccordion() {
   const [open, setOpen] = useState<number | null>(null);
+
+  useEffect(() => {
+    const hash = window.location.hash.replace("#", "");
+    if (!hash) return;
+    const index = FAQS.findIndex((item: any) => item.id === hash);
+    if (index !== -1) {
+      setOpen(index);
+      setTimeout(() => {
+        document.getElementById(hash)?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 100);
+    }
+  }, []);
+
   return (
     <div className="max-w-[760px] mx-auto border-t border-line">
-      {FAQS.map((item, i) => (
-        <div key={item.q} className="border-b border-line">
+      {FAQS.map((item: any, i) => (
+        <div key={item.q} id={item.id} className="border-b border-line">
           <button
             onClick={() => setOpen(open === i ? null : i)}
             className="w-full bg-transparent border-none text-white text-left py-6 px-1 text-base font-medium font-display flex justify-between items-center cursor-pointer"
