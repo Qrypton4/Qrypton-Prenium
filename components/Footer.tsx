@@ -11,6 +11,12 @@ export default function Footer() {
 >
   🛡️ Risques et responsabilités →
 </Link>
+        <Link
+          href="/mention-legales"
+          className="inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5 text-[12.5px] text-muted-2 transition hover:border-blue-soft hover:bg-white/[0.06] hover:text-white"
+        >
+          📋 Mentions légales →
+        </Link>
         <p className="font-mono text-[12.5px] text-muted-2">Precision. Discipline. Performance.</p>
       </div>
     </footer>
