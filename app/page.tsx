@@ -46,9 +46,6 @@ export default async function Home() {
           <Link href="/performance" className="px-6 py-3.5 rounded-lg text-[14.5px] font-semibold bg-blue text-white hover:bg-[#5279ff] hover:shadow-[0_8px_30px_-6px_rgba(61,107,255,0.35)] hover:-translate-y-px transition">
             Découvrir OPR Edge™
           </Link>
-          <Link href="/challenge-prop-firm" className="px-6 py-3.5 rounded-lg text-[14.5px] font-semibold border border-line-strong hover:bg-white/5 hover:border-muted transition">
-            Voir résultat en direct
-          </Link>
         </div>
       </section>
 
