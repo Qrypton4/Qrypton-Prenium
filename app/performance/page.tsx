@@ -33,7 +33,7 @@ export default async function Performance() {
               Performance d&apos;OPR Edge™.
             </h1>
             <p className="text-muted mt-3.5 text-[15px] leading-relaxed">
-              Capital initial de 100 000 € — résultats simulés du 01/01/2023 au 30/06/2026.
+              Historique des performances de 01/01/2023 au 30/06/2026.
             </p>
           </div>
         </Reveal>
