@@ -51,6 +51,14 @@ export default async function Tarifs() {
             d&apos;engagement change, avec une économie à la clé pour un paiement anticipé.
           </p>
         </div>
+        <div className="max-w-[620px] mx-auto rounded-2xl border border-blue-soft/30 px-5 py-3 text-center mb-8">
+  <p className="text-sm text-white/80">
+    Le robot nécessite un PC.{" "}
+    <Link href="/faq#mobile-tablette" className="text-blue-soft hover:underline">
+      En savoir plus →
+    </Link>
+  </p>
+</div>
 
         <div className="max-w-[720px] mx-auto flex flex-col gap-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -59,14 +67,7 @@ export default async function Tarifs() {
           </div>
           <PlanCard plan={PLANS.twelve_months} href={ctaHrefFor("twelve_months", isLoggedIn, hasActiveSub)} />
         </div>
-        <div className="rounded-2xl border border-blue-soft/30 px-5 py-4 text-center">
-  <p className="text-sm text-white/80">
-    Le robot nécessite un PC (Windows ou Mac) pour fonctionner.
-  </p>
-  <Link href="/faq#mobile-tablette" className="text-blue-soft hover:underline text-sm mt-1 inline-block">
-    En savoir plus →
-  </Link>
-</div>
+       
         <div className="max-w-[720px] mx-auto mt-14 border-t border-line pt-10 text-center">
           <h2 className="font-display text-base font-semibold mb-4">Incluses dans les 3 formules</h2>
           <ul className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-[13.5px] text-muted">
