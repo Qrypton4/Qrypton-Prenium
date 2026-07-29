@@ -67,22 +67,29 @@ export default async function Home() {
               seulement à générer de la performance.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-line border border-line rounded-2xl overflow-hidden">
-            {[
-              { title: "Entièrement automatisé", desc: "Exécute les entrées, le stop-loss, le break-even et les sorties sans intervention manuelle." },
-              { title: "Gestion du risque", desc: "Risque fixe de 0,5 % par trade, avec une règle stricte d'une seule position par jour." },
-              { title: "Performance transparente", desc: "Backtest et résultats réels séparés et publiés intégralement — rien n'est caché." },
-              { title: "Compatible MT5 & Prop Firms", desc: "Fonctionne nativement sur MetaTrader 5 et compatible avec les principales prop firms." },
-            ].map((f, i) => (
-              <Reveal key={f.title} delay={i * 0.08}>
-                <div className="bg-bg-2 p-8 hover:bg-[#111a2e] transition h-full">
-                  <div className="w-9 h-9 rounded-lg border border-line-strong bg-blue/5 mb-5" />
-                  <h3 className="font-semibold mb-2.5">{f.title}</h3>
-                  <p className="text-sm text-muted leading-relaxed">{f.desc}</p>
-                </div>
-              </Reveal>
-            ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-line border border-line rounded-2xl overflow-hidden">
+  {[
+    { title: "Entièrement automatisé", desc: "Exécute les entrées, le stop-loss, le break-even et les sorties sans intervention manuelle." },
+    { title: "Gestion du risque", desc: "Risque fixe de 0,5 % par trade, avec une règle stricte d'une seule position par jour." },
+    { title: "Performance transparente", desc: "Backtest et résultats réels séparés et publiés intégralement — rien n'est caché." },
+    { title: "Compatible MT5 & Prop Firms", desc: "Fonctionne nativement sur MetaTrader 5 et compatible avec les principales prop firms.", link: "/challenge-prop-firm" },
+  ].map((f, i) => (
+    <Reveal key={f.title} delay={i * 0.08}>
+      <div className="bg-bg-2 p-8 hover:bg-[#111a2e] transition h-full flex flex-col">
+        <div className="w-9 h-9 rounded-lg border border-line-strong bg-blue/5 mb-5" />
+        <h3 className="font-semibold mb-2.5">{f.title}</h3>
+        <p className="text-sm text-muted leading-relaxed">{f.desc}</p>
+        {f.link && (
+          <div className="flex justify-end mt-auto pt-4">
+            <Link href={f.link} className="text-blue-soft hover:underline text-xs">
+              Qu'est-ce qu'une Prop Firm ? →
+            </Link>
           </div>
+        )}
+      </div>
+    </Reveal>
+  ))}
+</div> 
         </div>
       </section>
 
