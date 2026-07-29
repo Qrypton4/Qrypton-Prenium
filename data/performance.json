@@ -3,7 +3,7 @@
   "meta": {
     "backtestStart": "2023-01-01",
     "backtestEnd": "2026-06-30",
-    "lastUpdated": "2026-07-14",
+    "lastUpdated": "2026/07/29",
     "dataComplete": true,
     "sourceReport": "ReportTester-1513781594_BacktTest_NAS100.html",
     "symbol": "US100.cash",
