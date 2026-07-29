@@ -87,9 +87,11 @@ export default function MonthlyTable({ rows }: { rows: MonthlyRow[] }) {
                           <td className="p-3.5 pr-6 font-mono text-muted">{r.drawdownPct.toFixed(2)} %</td>
                         </tr>
                       ))}
-                      {!isCurrentYear && (
+                    {(
   <tr className="border-t-2 border-line font-semibold">
-    <td className="p-3.5 pl-6">Total {year}</td>
+    <td className="p-3.5 pl-6">
+      {isCurrentYear ? "Résultats en cours" : `Total ${year}`}
+    </td>
     <td className={`p-3.5 font-mono ${totalEUR >= 0 ? "text-positive" : "text-red-400"}`}>
       {totalEUR >= 0 ? "+" : ""}
       {totalEUR.toLocaleString("fr-FR")} €
@@ -98,9 +100,13 @@ export default function MonthlyTable({ rows }: { rows: MonthlyRow[] }) {
       {totalPct >= 0 ? "+" : ""}
       {totalPct.toFixed(2)} %
     </td>
-    <td className="p-3.5 pr-6"></td>
+    <td className="p-3.5 pr-6 font-mono text-muted">
+      {isCurrentYear
+        ? `${Math.max(...yearRows.map((r) => r.drawdownPct)).toFixed(2)} %`
+        : ""}
+    </td>
   </tr>
-)}
+)} 
                     </tbody>
                   </table>
                 </div>
