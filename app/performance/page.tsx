@@ -7,6 +7,7 @@ import RiskAnalysis from "@/components/performance/RiskAnalysis";
 import { Reveal } from "@/components/Animated";
 import SiteNavContainer from "@/components/SiteNavContainer";
 import { createClient } from "@/lib/supabase-server";
+import SyncBadge from "@/components/SyncBadge";
 
 export const metadata = {
   title: "Performance — Qrypton",
@@ -40,12 +41,13 @@ export default async function Performance() {
         <div className="h-10" />
 
        <Reveal delay={0.05}>
-  <div className="flex justify-end mb-3">
-    <span className="inline-flex items-center gap-1.5 rounded-full border border-positive/30 bg-positive/10 px-3 py-1.5 text-[12.5px] font-medium text-positive">
-      <span className="w-1.5 h-1.5 rounded-full bg-positive animate-pulse" />
-      Algorithme actif
-    </span>
-  </div>
+ <div className="flex justify-end items-center gap-3 mb-3">
+  <SyncBadge date={data.meta.lastUpdated} />
+  <span className="inline-flex items-center gap-1.5 rounded-full border border-positive/30 bg-positive/10 px-3 py-1.5 text-[12.5px] font-medium text-positive">
+    <span className="w-1.5 h-1.5 rounded-full bg-positive animate-pulse" />
+    Algorithme actif
+  </span>
+</div>
   <StatCards s={data.summary} />
 </Reveal> 
 
