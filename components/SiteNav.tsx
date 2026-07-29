@@ -10,7 +10,7 @@ import type { LicenseStatus } from "@/lib/license";
 
 const BASE_LINKS = [
   { href: "/", label: "Accueil" },
-  { href: "/performance", label: "Performance d'OPR Edge" },
+  { href: "/performance", label: "Performance du robot" },
   { href: "/tarifs", label: "Tarifs" },
   { href: "/guide-qrypton", label: "Guide Qrypton" },
   { href: "/contact", label: "Contact" },
