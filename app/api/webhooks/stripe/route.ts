@@ -29,12 +29,17 @@ export async function POST(req: NextRequest) {
 
   switch (event.type) {
     case "checkout.session.completed": {
-      const session = event.data.object as Stripe.Checkout.Session;
-      await activateNewSubscription(session);
-      await markCheckoutCompleted(session.id);
-      await sendPaymentConfirmationEmail(session.client_reference_id!);
-      break;
-    }
+  const session = event.data.object as Stripe.Checkout.Session;
+  await activateNewSubscription(session);
+  await markCheckoutCompleted(session.id);
+  let invoiceUrl: string | undefined;
+  if (session.invoice) {
+    const invoice = await stripe.invoices.retrieve(session.invoice as string);
+    invoiceUrl = invoice.hosted_invoice_url ?? undefined;
+  }
+  await sendPaymentConfirmationEmail(session.client_reference_id!, invoiceUrl);
+  break;
+}
 
     case "invoice.upcoming": {
       const invoice = event.data.object as Stripe.Invoice;
@@ -106,10 +111,10 @@ async function getUserContact(userId: string): Promise<{ email: string; firstNam
   };
 }
 
-async function sendPaymentConfirmationEmail(userId: string) {
+async function sendPaymentConfirmationEmail(userId: string, invoiceUrl?: string) {
   const contact = await getUserContact(userId);
   if (!contact) return;
-  const { subject, html } = paymentConfirmationEmail(contact.firstName, "OPR Edge™", "79,00 €");
+  const { subject, html } = paymentConfirmationEmail(contact.firstName, "OPR Edge™", "79,00 €", invoiceUrl);
   const sent = await sendEmail({ to: contact.email, subject, html });
   if (sent) await supabase.from("email_log").insert({ user_id: userId, email_type: "payment_confirmation" });
 }
