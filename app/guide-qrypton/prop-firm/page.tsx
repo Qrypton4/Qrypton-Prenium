@@ -45,6 +45,7 @@ export default async function GuidePropFirm() {
               exécuter automatiquement une stratégie sur un compte financé, sans que vous ayez besoin
               de trader manuellement.
             </Field>
+            
 
             <Field title="Comment fonctionne un challenge ?">
               Un objectif de gain doit être atteint sur un compte de démonstration, dans le respect
@@ -58,7 +59,14 @@ export default async function GuidePropFirm() {
               minimum de jours de trading actif. Le robot Qrypton applique un risque fixe compatible
               avec ces règles.
             </Field>
-
+        
+            <Field title="Si je perds le compte financé, dois-je rembourser ?">
+               Non. Le capital appartient à la Prop Firm, pas à vous. En cas de
+               liquidation du compte (drawdown dépassé), vous perdez simplement
+             l&apos;accès à ce compte financé — vous ne devez rien à personne.
+              Rien ne vous empêche ensuite de retenter un nouveau challenge.
+             </Field>
+ 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6 py-6 border-t border-b border-line my-6">
               <div>
                 <div className="text-[10.5px] text-positive uppercase tracking-wide font-mono mb-2">Avantages</div>
