@@ -8,14 +8,13 @@ export default function PricingCTAButton() {
   const router = useRouter();
   const pathname = usePathname();
 
-  function handleClick() {
-    if (pathname === "/") {
-      document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" });
-    } else {
-      sessionStorage.setItem(SCROLL_TARGET_KEY, "pricing");
-      router.push("/");
-    }
+ function handleClick() {
+  if (pathname === "/") {
+    document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" });
+  } else {
+    router.push("/#pricing");
   }
+}
 
   return (
     <button
