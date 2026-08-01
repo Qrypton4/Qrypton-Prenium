@@ -1946,6 +1946,7 @@
       "gainEUR": -299.5,
       "gainPct": -0.19,
       "drawdownPct": 3.01
-    }
+    },
+    { "year": 2026, "month": 7, "gainEUR": -2033.58, "gainPct": 0, "drawdownPct": 2.03 }
   ]
 }
