@@ -11,7 +11,7 @@ import SyncBadge from "@/components/SyncBadge";
 
 export const metadata = {
   title: "Performance — Qrypton",
-  description: "Résultats de backtest d'OPR Edge™, 01/01/2023 au 30/06/2026, capital initial 100 000 €.",
+  description: "Résultats de backtest d'OPR Edge™, 01/01/2023 au 31/07/2026, capital initial 100 000 €.",
 };
 
 export default async function Performance() {
@@ -33,7 +33,7 @@ export default async function Performance() {
               Performance d&apos;OPR Edge™.
             </h1>
             <p className="text-muted mt-3.5 text-[15px] leading-relaxed">
-              Historique des performances de 01/01/2023 au 30/06/2026.
+              Historique des performances.
             </p>
           </div>
         </Reveal>
