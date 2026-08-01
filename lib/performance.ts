@@ -52,13 +52,35 @@ export function getPerformanceData(): PerformanceData {
     (a, b) => a.year - b.year || a.month - b.month
   );
 
-  // Recalcule gainPct de chaque mois à partir du capital réel cumulé
+  // Recalcule gainPct de chaque mois + génère la courbe de capital automatiquement
   let capital = raw.summary.initialCapital;
-  const monthly: MonthlyRow[] = sortedMonthly.map((r) => {
+  const monthly: MonthlyRow[] = [];
+  const equityCurve: EquityPoint[] = [
+    {
+      date: `${raw.meta.backtestStart}`,
+      capital: raw.summary.initialCapital,
+      cumulativeProfit: 0,
+      drawdownPct: 0,
+    },
+  ];
+
+  for (const r of sortedMonthly) {
     const gainPct = (r.gainEUR / capital) * 100;
     capital += r.gainEUR;
-    return { ...r, gainPct: Math.round(gainPct * 100) / 100 };
-  });
+
+    monthly.push({ ...r, gainPct: Math.round(gainPct * 100) / 100 });
+
+    const lastDay = new Date(r.year, r.month, 0).getDate();
+    const dateStr = `${r.year}-${String(r.month).padStart(2, "0")}-${String(lastDay).padStart(2, "0")}`;
+
+    equityCurve.push({
+      date: dateStr,
+      capital: Math.round(capital * 100) / 100,
+      cumulativeProfit:
+        Math.round((capital - raw.summary.initialCapital) * 100) / 100,
+      drawdownPct: r.drawdownPct,
+    });
+  }
 
   const finalCapital = Math.round(capital * 100) / 100;
   const netProfitEUR =
@@ -70,5 +92,6 @@ export function getPerformanceData(): PerformanceData {
     ...raw,
     summary: { ...raw.summary, finalCapital, netProfitEUR, netProfitPct },
     monthly,
+    equityCurve,
   };
 }
