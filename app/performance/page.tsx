@@ -43,10 +43,28 @@ export default async function Performance() {
        <Reveal delay={0.05}>
  <div className="flex justify-end items-center gap-3 mb-3">
   <SyncBadge date={data.meta.lastUpdated} />
-  <span className="inline-flex items-center gap-1.5 rounded-full border border-positive/30 bg-positive/10 px-3 py-1.5 text-[12.5px] font-medium text-positive">
-    <span className="w-1.5 h-1.5 rounded-full bg-positive animate-pulse" />
-    Algorithme actif
-  </span>
+  {(() => {
+  const now = new Date();
+  const day = now.getDay();
+  const month = now.getMonth() + 1;
+  const isPaused = day === 0 || day === 6 || month === 8 || month === 9;
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[12.5px] font-medium ${
+        isPaused
+          ? "border-red-400/30 bg-red-400/10 text-red-400"
+          : "border-positive/30 bg-positive/10 text-positive"
+      }`}
+    >
+      <span
+        className={`w-1.5 h-1.5 rounded-full ${
+          isPaused ? "bg-red-400" : "bg-positive animate-pulse"
+        }`}
+      />
+      {isPaused ? "Robot inactif" : "Robot actif"}
+    </span>
+  );
+})()}
 </div>
   <StatCards s={data.summary} />
 </Reveal> 
