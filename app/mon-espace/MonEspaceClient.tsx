@@ -46,11 +46,45 @@ export default function MonEspaceClient({
   const bottomTabs = TABS.filter((t) => BOTTOM_IDS.includes(t.id));
   const moreTabs = TABS.filter((t) => !BOTTOM_IDS.includes(t.id));
 
-  function iconOf(label: string) {
-    return label.split(" ")[0];
-  }
-  function textOf(label: string) {
+ function textOf(label: string) {
     return label.split(" ").slice(1).join(" ");
+  }
+
+  function BottomIcon({ id }: { id: TabId }) {
+    const common = {
+      width: 20,
+      height: 20,
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "currentColor",
+      strokeWidth: 1.8,
+      strokeLinecap: "round" as const,
+      strokeLinejoin: "round" as const,
+    };
+    if (id === "dashboard") {
+      return (
+        <svg {...common}>
+          <path d="m3 12 9-9 9 9" />
+          <path d="M5 10v10h14V10" />
+        </svg>
+      );
+    }
+    if (id === "performance") {
+      return (
+        <svg {...common}>
+          <path d="M3 3v18h18" />
+          <path d="m19 9-5 5-4-4-3 3" />
+        </svg>
+      );
+    }
+    return (
+      <svg {...common}>
+        <circle cx="7.5" cy="15.5" r="4.5" />
+        <path d="m11 12 8.5-8.5" />
+        <path d="m16.5 6.5 2 2" />
+        <path d="m14.5 8.5 2 2" />
+      </svg>
+    );
   }
 
   return (
@@ -158,30 +192,54 @@ export default function MonEspaceClient({
         </button>
       </div>
 
-      {/* Barre de navigation du bas */}
+     {/* Barre de navigation du bas */}
       <nav className="sm:hidden fixed bottom-0 left-0 right-0 z-20 bg-bg-2/95 backdrop-blur border-t border-line flex justify-around px-2 py-2 pb-safe">
-        {bottomTabs.map((t) => (
-          <button
-            key={t.id}
-            onClick={() => {
-              setTab(t.id);
-              setMoreOpen(false);
-            }}
-            className={`flex flex-col items-center gap-1 px-3 py-2 text-[10px] rounded-xl transition-colors ${
-              tab === t.id && !moreOpen ? "text-blue-soft" : "text-muted-2"
-            }`}
-          >
-            <span className="text-lg leading-none">{iconOf(t.label)}</span>
-            <span>{textOf(t.label)}</span>
-          </button>
-        ))}
+        {bottomTabs.map((t) => {
+          const active = tab === t.id && !moreOpen;
+          return (
+            <button
+              key={t.id}
+              onClick={() => {
+                setTab(t.id);
+                setMoreOpen(false);
+              }}
+              className={`flex flex-col items-center gap-1 px-3 py-1.5 text-[10px] transition-colors ${
+                active ? "text-blue-soft" : "text-muted-2"
+              }`}
+            >
+              <span
+                className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all ${
+                  active
+                    ? "bg-blue-soft/15 shadow-[0_0_16px_2px_rgba(61,107,255,0.35)] border border-blue-soft/30"
+                    : "border border-transparent"
+                }`}
+              >
+                <BottomIcon id={t.id} />
+              </span>
+              <span>{textOf(t.label)}</span>
+            </button>
+          );
+        })}
         <button
           onClick={() => setMoreOpen((o) => !o)}
-          className={`flex flex-col items-center gap-1 px-3 py-2 text-[10px] rounded-xl transition-colors ${
+          className={`flex flex-col items-center gap-1 px-3 py-1.5 text-[10px] transition-colors ${
             moreOpen || moreTabs.some((t) => t.id === tab) ? "text-blue-soft" : "text-muted-2"
           }`}
         >
-          <span className="text-lg leading-none">⋯</span>
+          <span
+            className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all ${
+              moreOpen || moreTabs.some((t) => t.id === tab)
+                ? "bg-blue-soft/15 shadow-[0_0_16px_2px_rgba(61,107,255,0.35)] border border-blue-soft/30"
+                : "border border-transparent"
+            }`}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="3" width="7" height="7" rx="1.5" />
+              <rect x="14" y="3" width="7" height="7" rx="1.5" />
+              <rect x="3" y="14" width="7" height="7" rx="1.5" />
+              <rect x="14" y="14" width="7" height="7" rx="1.5" />
+            </svg>
+          </span>
           <span>Menu</span>
         </button>
       </nav>
