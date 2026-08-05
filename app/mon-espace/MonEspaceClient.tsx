@@ -272,13 +272,54 @@ function PerformanceTab({ hasTrades, trades, netProfit, winRate, lastBalance }: 
 }
 
 function LicenseTab({ license }: any) {
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
+
+  async function handleReset() {
+    if (
+      !window.confirm(
+        "Ça va déconnecter ton compte MT5 actuel de cette licence. Tu pourras ensuite l'activer sur un nouveau compte. Continuer ?"
+      )
+    ) {
+      return;
+    }
+
+    setLoading(true);
+    setMessage(null);
+
+    try {
+      const res = await fetch("/api/license/reset", { method: "POST" });
+      const data = await res.json();
+
+      if (data.ok) {
+        setMessage("Compte MT5 réinitialisé. Tu peux maintenant activer ta licence sur un nouveau compte.");
+        setTimeout(() => window.location.reload(), 1500);
+      } else if (data.message === "already_unlinked") {
+        setMessage("Aucun compte MT5 n'est actuellement lié à ta licence.");
+      } else {
+        setMessage("Une erreur est survenue. Réessaie ou contacte le support.");
+      }
+    } catch {
+      setMessage("Une erreur est survenue. Réessaie ou contacte le support.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <Card title="Ma licence">
       <Row k="Clé de licence" v={license.license_key} />
       <Row k="Compte MT5 lié" v={license.mt5_account_login ?? "Pas encore activée"} />
-      <button className="mt-4 text-sm text-blue-soft hover:underline">
-        Réinitialiser mon compte MT5
-      </button>
+      {license.mt5_account_login && (
+        <button
+          onClick={handleReset}
+          disabled={loading}
+          className="mt-4 text-sm text-blue-soft hover:underline disabled:opacity-50"
+        >
+          {loading ? "Réinitialisation..." : "Réinitialiser mon compte MT5"}
+        </button>
+      )}
+      {message && <p className="text-muted text-xs mt-3">{message}</p>}
     </Card>
   );
 }
