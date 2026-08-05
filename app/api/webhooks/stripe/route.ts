@@ -212,9 +212,8 @@ async function activateNewSubscription(session: Stripe.Checkout.Session) {
     throw new Error(`subscription_insert_failed: ${subError?.message}`);
   }
 
-  // Pour les offres 6 et 12 mois, la licence dure plus longtemps que la simple
-  // période de facturation Stripe, pour compenser la pause saisonnière
-  // août/septembre. Reste NULL pour le mensuel (renouvellement Stripe suffit).
+  // Pour les offres 6 et 12 mois, on fige la date de fin de licence.
+// Reste NULL pour le mensuel (renouvellement Stripe suffit).
   const activeLicenseUntil =
     plan.billingMonths > 1 ? computeLicenseEndDate(new Date(), plan).toISOString() : null;
 
