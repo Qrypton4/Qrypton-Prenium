@@ -126,13 +126,6 @@ function PlanCard({
         {plan.savingsEUR ? `Économie de ${plan.savingsEUR}€` : "Sans engagement"}
       </div>
 
-      {plan.bonusMonths > 0 && (
-        <div className="text-[12px] text-muted-2 leading-relaxed border-t border-line pt-4 mb-5">
-          + {plan.bonusMonths} mois offerts pour compenser la pause saisonnière
-          d&apos;août et septembre.
-        </div>
-      )}
-
       <div className="flex-1" />
 
       <Link
