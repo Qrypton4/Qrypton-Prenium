@@ -1,4 +1,4 @@
-import { Percent, CalendarClock, ShieldCheck, Target, Ban, Bot, Pause } from "lucide-react";
+import { Percent, CalendarClock, ShieldCheck, Target, Ban, Bot } from "lucide-react";
 
 export const RISK_POINTS = [
   {
@@ -31,12 +31,7 @@ export const RISK_POINTS = [
     title: "Exécution",
     value: "100 % automatique",
   },
-  {
-    icon: Pause,
-    title: "Période de trading",
-    value: "Pause en août - septembre",
-    desc: "Aucun trade en août et en septembre.",
-  },
+  
 ];
 
 // Version condensée — homepage uniquement (la page Performance a sa propre analyse détaillée
