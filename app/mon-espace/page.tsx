@@ -57,7 +57,6 @@ export default async function MonEspace() {
     .select("*")
     .eq("license_id", license.id)
     .order("close_time", { ascending: false })
-    .limit(20);
 
   const hasTrades = !!(trades && trades.length > 0);
   const netProfit = hasTrades ? trades!.reduce((s, t) => s + Number(t.profit), 0) : 0;
