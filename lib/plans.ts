@@ -49,7 +49,7 @@ export const PLANS: Record<PlanKey, PlanConfig> = {
     priceEUR: 699,
     billingMonths: 12,
     activeMonths: 12,
-    bonusMonths: 2,
+    bonusMonths: 0,
     compareToMonthly: 948,
     savingsEUR: 249,
     highlight: true,
@@ -62,33 +62,11 @@ export function getPlan(key: string): PlanConfig | null {
 }
 
 /**
- * Calcule la date de fin de licence réelle, en tenant compte de la pause
- * saisonnière du robot (août et septembre, inactifs). Chaque mois qui tombe
- * dans cette période ne compte pas dans les mois "actifs" garantis — la
- * licence est prolongée d'autant pour que l'utilisateur bénéficie bien du
- * nombre de mois actifs annoncé. Les mois bonus (offre 12 mois) sont ajoutés
- * ensuite, sans ajustement supplémentaire.
+ * Calcule la date de fin de licence (mois actifs + mois de facturation).
  */
 export function computeLicenseEndDate(startDate: Date, plan: PlanConfig): Date {
-  let current = new Date(startDate);
-  let activeMonthsCounted = 0;
-
-  while (activeMonthsCounted < plan.activeMonths) {
-    current = addMonths(current, 1);
-    const monthIndex = current.getMonth(); // 0 = janvier, 7 = août, 8 = septembre
-    const isSeasonalPause = monthIndex === 7 || monthIndex === 8;
-    if (!isSeasonalPause) {
-      activeMonthsCounted++;
-    }
-  }
-
-  if (plan.bonusMonths > 0) {
-    current = addMonths(current, plan.bonusMonths);
-  }
-
-  return current;
+  return addMonths(new Date(startDate), plan.activeMonths + plan.bonusMonths);
 }
-
 function addMonths(date: Date, months: number): Date {
   const result = new Date(date);
   result.setMonth(result.getMonth() + months);
