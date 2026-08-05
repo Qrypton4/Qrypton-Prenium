@@ -18,11 +18,6 @@ function computeStatus(now: Date): Status {
   const weekday = get("weekday"); // "Mon".."Sun"
   const hour = Number(get("hour"));
 
-  // Priorité 1 : pause saisonnière (août à septembre), quel que soit le jour/heure
-  if (month === 8 || month === 9) {
-    return { level: "closed", label: "Pause saisonnière" };
-  }
-
   // Priorité 2 : marché fermé le week-end (vendredi 23h → dimanche 23h, heure de Paris)
   const isFridayNight = weekday === "Fri" && hour >= 23;
   const isSaturday = weekday === "Sat";
