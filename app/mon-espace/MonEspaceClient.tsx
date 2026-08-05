@@ -73,7 +73,25 @@ export default function MonEspaceClient({
         </div>
       </header>
 
-      <main className="max-w-[1160px] mx-auto px-4 sm:px-8 py-10 pb-28">
+      <nav className="hidden sm:block border-b border-line px-4 sm:px-8">
+        <div className="flex gap-1 min-w-max">
+          {TABS.map((t) => (
+            <button
+              key={t.id}
+              onClick={() => setTab(t.id)}
+              className={`px-4 py-3.5 text-sm whitespace-nowrap border-b-2 transition-colors ${
+                tab === t.id
+                  ? "border-blue-soft text-white"
+                  : "border-transparent text-muted hover:text-white"
+              }`}
+            >
+              {t.label}
+            </button>
+          ))}
+        </div>
+      </nav>
+
+      <main className="max-w-[1160px] mx-auto px-4 sm:px-8 pt-10 pb-28 sm:pb-10">
         <div key={tab} className="tab-fade">
           {tab === "dashboard" && (
             <DashboardTab
@@ -108,13 +126,13 @@ export default function MonEspaceClient({
 
       {/* Overlay + tiroir "Menu" */}
       <div
-        className={`fixed inset-0 z-30 bg-black/60 transition-opacity ${
+        className={`sm:hidden fixed inset-0 z-30 bg-black/60 transition-opacity ${
           moreOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setMoreOpen(false)}
       />
       <div
-        className={`fixed bottom-0 left-0 right-0 z-40 bg-bg-2 border-t border-line rounded-t-2xl transition-transform duration-200 ${
+        className={`sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-bg-2 border-t border-line rounded-t-2xl transition-transform duration-200 ${
           moreOpen ? "translate-y-0" : "translate-y-full"
         }`}
       >
@@ -141,7 +159,7 @@ export default function MonEspaceClient({
       </div>
 
       {/* Barre de navigation du bas */}
-      <nav className="fixed bottom-0 left-0 right-0 z-20 bg-bg-2/95 backdrop-blur border-t border-line flex justify-around px-2 py-2 pb-safe">
+      <nav className="sm:hidden fixed bottom-0 left-0 right-0 z-20 bg-bg-2/95 backdrop-blur border-t border-line flex justify-around px-2 py-2 pb-safe">
         {bottomTabs.map((t) => (
           <button
             key={t.id}
@@ -253,7 +271,6 @@ function PerformanceTabRich({
   const perfPct = startCapital > 0 ? (netProfit / startCapital) * 100 : 0;
   const perfPositive = netProfit >= 0;
 
-  // Points de la mini-courbe : balance_after de chaque trade, du plus ancien au plus récent
   const chrono = [...trades].reverse();
   const balances: number[] = chrono.map((t: any) => Number(t.balance_after ?? lastBalance));
   const firstDate = chrono[0]?.close_time;
@@ -267,7 +284,6 @@ function PerformanceTabRich({
     <div className="flex flex-col gap-5">
       <h2 className="text-xs text-muted uppercase tracking-wide">Performances</h2>
 
-      {/* Hero */}
       <div className="rounded-[22px] p-6 border border-blue-soft/25 bg-gradient-to-br from-[#101B33] to-[#0A0D14] relative overflow-hidden">
         <div className="flex justify-between items-start relative z-10">
           <div className="flex items-center gap-3">
@@ -305,7 +321,6 @@ function PerformanceTabRich({
         </div>
       </div>
 
-      {/* KPI */}
       <div className="grid grid-cols-2 gap-3">
         <KpiRich label="Capital" value={`${Math.round(lastBalance).toLocaleString("fr-FR")} €`} sub="Compte connecté" />
         <KpiRich
@@ -319,7 +334,6 @@ function PerformanceTabRich({
         <KpiRich label="Win rate" value={`${winRate} %`} sub={`${wins} gagnants / ${losses} perdants`} />
       </div>
 
-      {/* État du robot */}
       <Card title="État du robot">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <StatusItem
@@ -340,7 +354,6 @@ function PerformanceTabRich({
         </div>
       </Card>
 
-      {/* Activité récente */}
       <Card title="Activité récente">
         <div className="flex flex-col">
           {recentTrades.map((t: any) => {
