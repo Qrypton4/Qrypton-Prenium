@@ -204,7 +204,7 @@ export default function MonEspaceClient({
                 setMoreOpen(false);
               }}
               className={`flex flex-col items-center gap-1 px-3 py-1.5 text-[10px] transition-colors ${
-                active ? "text-blue-soft" : "text-muted-2"
+                active ? "text-blue-soft" : "text-muted"
               }`}
             >
               <span
@@ -223,7 +223,7 @@ export default function MonEspaceClient({
         <button
           onClick={() => setMoreOpen((o) => !o)}
           className={`flex flex-col items-center gap-1 px-3 py-1.5 text-[10px] transition-colors ${
-            moreOpen || moreTabs.some((t) => t.id === tab) ? "text-blue-soft" : "text-muted-2"
+            moreOpen || moreTabs.some((t) => t.id === tab) ? "text-blue-soft" : "text-muted"
           }`}
         >
           <span
