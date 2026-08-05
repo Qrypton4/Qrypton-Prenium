@@ -193,7 +193,7 @@ export default function MonEspaceClient({
       </div>
 
      {/* Barre de navigation du bas */}
-      <nav className="sm:hidden fixed bottom-0 left-0 right-0 z-20 bg-bg-2/95 backdrop-blur border-t border-line flex justify-around px-2 py-2 pb-safe">
+      <nav className="sm:hidden fixed bottom-0 left-0 right-0 z-20 bg-bg-2 backdrop-blur border-t border-line-strong shadow-[0_-8px_24px_rgba(0,0,0,0.45)] flex justify-around px-2 py-2 pb-safe">
         {bottomTabs.map((t) => {
           const active = tab === t.id && !moreOpen;
           return (
