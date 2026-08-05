@@ -44,11 +44,6 @@ export function RiskCardsCompact() {
           <p.icon className="w-5 h-5 text-blue-soft mb-3" strokeWidth={1.6} />
           <div className="text-[13px] font-semibold mb-1">{p.value}</div>
           <div className="text-[11px] text-muted uppercase tracking-wide">{p.title}</div>
-          {p.desc && (
-            <p className="text-[11px] text-muted-2 leading-relaxed mt-2 normal-case tracking-normal">
-              {p.desc}
-            </p>
-          )}
         </div>
       ))}
     </div>
