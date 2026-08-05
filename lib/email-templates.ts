@@ -170,3 +170,27 @@ export function checkIn7DaysEmail(firstName: string) {
     ),
   };
 }
+export function seasonalNoticeEmail(firstName: string) {
+  return {
+    subject: "Qrypton pendant l'été : ce qui change (et ce qui ne change pas)",
+    html: wrapper(
+      `Bonjour ${firstName},`,
+      `<p>Comme chaque année, les mois d'août et de septembre s'accompagnent souvent
+       de conditions de marché différentes sur le Nasdaq. Cette période est généralement
+       marquée par une activité moins régulière et des opportunités parfois moins nombreuses.</p>
+       <p>Qrypton reste toutefois pleinement opérationnel et continue d'appliquer sa
+       stratégie de manière automatique, avec la même rigueur et la même discipline.
+       Lorsque les conditions sont réunies, le robot intervient. Dans le cas contraire,
+       il préfère rester à l'écart plutôt que de prendre des positions qui ne correspondent
+       pas à ses critères.</p>
+       <p>Notre philosophie n'est pas de multiplier les transactions, mais de privilégier
+       la qualité des opportunités afin de respecter la stratégie sur le long terme.</p>
+       <p>Comme toujours, vous pourrez suivre l'ensemble de l'activité et des performances
+       directement depuis votre espace client.</p>
+       <p>Nous vous remercions pour votre confiance et vous souhaitons un excellent été.</p>
+       <p>L'équipe Qrypton</p>`,
+      "Accéder à mon espace client",
+      `${SITE_URL}/mon-espace`
+    ),
+  };
+}
