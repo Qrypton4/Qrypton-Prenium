@@ -23,7 +23,7 @@ export default async function MonEspace() {
 
   const { data: license } = await supabaseAdmin
     .from("licenses")
-    .select("id, license_key, status, mt5_account_login")
+    .select("id, license_key, status, mt5_account_login, active_license_until, last_verified_at")
     .eq("user_id", user.id)
     .single();
 
