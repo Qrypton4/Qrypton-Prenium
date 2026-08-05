@@ -1,295 +1,329 @@
 {
-  "_comment": "Source unique de vérité pour la section Performances. Généré à partir du vrai rapport MT5 (ReportTester-1513781594_BacktTest_NAS100.html) fourni le 14/07/2026. Aucune valeur inventée.",
+  "_comment": "Source unique de vérité pour la section Performances. Généré à partir du vrai rapport MT5 (ReportTester-1514051879_VARIANTE.xlsx) fourni le 05/08/2026, avec la version débloquée du robot (trading actif toute l'année, y compris août/septembre). Aucune valeur inventée.",
   "meta": {
     "backtestStart": "2023-01-01",
-    "backtestEnd": "2026-06-30",
-    "lastUpdated": "2026/08/01",
+    "backtestEnd": "2026-07-31",
+    "lastUpdated": "2026/08/05",
     "dataComplete": true,
-    "sourceReport": "ReportTester-1513781594_BacktTest_NAS100.html",
+    "sourceReport": "ReportTester-1514051879_VARIANTE.xlsx",
     "symbol": "US100.cash",
     "timeframe": "M15"
   },
   "summary": {
     "initialCapital": 100000,
-    "finalCapital": 154286.12,
-    "netProfitEUR": 54286.12,
-    "netProfitPct": 54.29,
-    "profitFactor": 1.54,
-    "winRate": 30.43,
-    "totalTrades": 276,
-    "maxDrawdownPct": 5.69,
-    "maxDrawdownEquityPct": 6.33,
+    "finalCapital": 152936.2,
+    "netProfitEUR": 52936.2,
+    "netProfitPct": 52.94,
+    "profitFactor": 1.45,
+    "winRate": 29.15,
+    "totalTrades": 319,
+    "maxDrawdownPct": 5.66,
+    "maxDrawdownEquityPct": 6.17,
     "maxConsecutiveLosses": 11,
-    "avgRiskReward": 3.52
+    "avgRiskReward": 3.53
   },
   "equityCurve": [],
   "monthly": [
     {
       "year": 2023,
       "month": 1,
-      "gainEUR": 4344.71,
-      "gainPct": 4.34,
+      "gainEUR": 4378.16,
+      "gainPct": 0,
       "drawdownPct": 0.56
     },
     {
       "year": 2023,
       "month": 2,
-      "gainEUR": -1762.34,
-      "gainPct": -1.69,
-      "drawdownPct": 3.09
+      "gainEUR": -1737.16,
+      "gainPct": 0,
+      "drawdownPct": 3.08
     },
     {
       "year": 2023,
       "month": 3,
-      "gainEUR": 2470.55,
-      "gainPct": 2.41,
-      "drawdownPct": 3.12
+      "gainEUR": 2481.23,
+      "gainPct": 0,
+      "drawdownPct": 3.11
     },
     {
       "year": 2023,
       "month": 4,
-      "gainEUR": 1282.45,
-      "gainPct": 1.22,
-      "drawdownPct": 1.81
+      "gainEUR": 1295.53,
+      "gainPct": 0,
+      "drawdownPct": 1.8
     },
     {
       "year": 2023,
       "month": 5,
-      "gainEUR": 2077.8,
-      "gainPct": 1.95,
-      "drawdownPct": 2.69
+      "gainEUR": 2077.37,
+      "gainPct": 0,
+      "drawdownPct": 2.66
     },
     {
       "year": 2023,
       "month": 6,
-      "gainEUR": 3187.42,
-      "gainPct": 2.94,
-      "drawdownPct": 1.08
+      "gainEUR": 3203.24,
+      "gainPct": 0,
+      "drawdownPct": 1.07
     },
     {
       "year": 2023,
       "month": 7,
-      "gainEUR": -928.62,
-      "gainPct": -0.83,
-      "drawdownPct": 1.76
+      "gainEUR": -913.61,
+      "gainPct": 0,
+      "drawdownPct": 1.75
     },
     {
       "year": 2023,
       "month": 8,
-      "gainEUR": 409.84,
-      "gainPct": 0.37,
-      "drawdownPct": 0.96
+      "gainEUR": -1322.25,
+      "gainPct": 0,
+      "drawdownPct": 2.49
+    },
+    {
+      "year": 2023,
+      "month": 9,
+      "gainEUR": -384.66,
+      "gainPct": 0,
+      "drawdownPct": 3.56
     },
     {
       "year": 2023,
       "month": 10,
-      "gainEUR": -652.24,
-      "gainPct": -0.59,
-      "drawdownPct": 1.98
+      "gainEUR": -624.33,
+      "gainPct": 0,
+      "drawdownPct": 3.82
     },
     {
       "year": 2023,
       "month": 11,
-      "gainEUR": 3532.34,
-      "gainPct": 3.2,
-      "drawdownPct": 2.36
+      "gainEUR": 3512.68,
+      "gainPct": 0,
+      "drawdownPct": 3.39
     },
     {
       "year": 2023,
       "month": 12,
-      "gainEUR": 2030.78,
-      "gainPct": 1.78,
-      "drawdownPct": 1.55
+      "gainEUR": 2096.53,
+      "gainPct": 0,
+      "drawdownPct": 1.54
     },
     {
       "year": 2024,
       "month": 1,
-      "gainEUR": 2541.3,
-      "gainPct": 2.19,
+      "gainEUR": 2510.55,
+      "gainPct": 0,
       "drawdownPct": 1.72
     },
     {
       "year": 2024,
       "month": 2,
-      "gainEUR": 2164.43,
-      "gainPct": 1.83,
+      "gainEUR": 2137.66,
+      "gainPct": 0,
       "drawdownPct": 1.0
     },
     {
       "year": 2024,
       "month": 3,
-      "gainEUR": -697.53,
-      "gainPct": -0.58,
+      "gainEUR": -680.72,
+      "gainPct": 0,
       "drawdownPct": 2.05
     },
     {
       "year": 2024,
       "month": 4,
-      "gainEUR": 1761.61,
-      "gainPct": 1.47,
+      "gainEUR": 1739.68,
+      "gainPct": 0,
       "drawdownPct": 2.58
     },
     {
       "year": 2024,
       "month": 5,
-      "gainEUR": 5118.76,
-      "gainPct": 4.2,
-      "drawdownPct": 1.28
+      "gainEUR": 5054.38,
+      "gainPct": 0,
+      "drawdownPct": 1.27
     },
     {
       "year": 2024,
       "month": 6,
-      "gainEUR": 3361.48,
-      "gainPct": 2.65,
+      "gainEUR": 3325.69,
+      "gainPct": 0,
       "drawdownPct": 1.03
     },
     {
       "year": 2024,
       "month": 7,
-      "gainEUR": 4168.49,
-      "gainPct": 3.2,
+      "gainEUR": 4121.89,
+      "gainPct": 0,
       "drawdownPct": 1.03
     },
     {
       "year": 2024,
       "month": 8,
-      "gainEUR": 1419.8,
-      "gainPct": 1.06,
-      "drawdownPct": 0.0
+      "gainEUR": 330.42,
+      "gainPct": 0,
+      "drawdownPct": 2.67
+    },
+    {
+      "year": 2024,
+      "month": 9,
+      "gainEUR": -1472.39,
+      "gainPct": 0,
+      "drawdownPct": 3.75
     },
     {
       "year": 2024,
       "month": 10,
-      "gainEUR": 1029.07,
-      "gainPct": 0.76,
-      "drawdownPct": 1.72
+      "gainEUR": 995.63,
+      "gainPct": 0,
+      "drawdownPct": 4.23
     },
     {
       "year": 2024,
       "month": 11,
-      "gainEUR": 75.94,
-      "gainPct": 0.06,
-      "drawdownPct": 1.66
+      "gainEUR": 61.23,
+      "gainPct": 0,
+      "drawdownPct": 2.98
     },
     {
       "year": 2024,
       "month": 12,
-      "gainEUR": 2280.24,
-      "gainPct": 1.67,
-      "drawdownPct": 1.26
+      "gainEUR": 2251.99,
+      "gainPct": 0,
+      "drawdownPct": 2.57
     },
     {
       "year": 2025,
       "month": 1,
-      "gainEUR": -903.7,
-      "gainPct": -0.65,
-      "drawdownPct": 1.72
+      "gainEUR": -860.8,
+      "gainPct": 0,
+      "drawdownPct": 2.37
     },
     {
       "year": 2025,
       "month": 2,
-      "gainEUR": 3052.75,
-      "gainPct": 2.21,
-      "drawdownPct": 0.62
+      "gainEUR": 2965.59,
+      "gainPct": 0,
+      "drawdownPct": 1.14
     },
     {
       "year": 2025,
       "month": 3,
-      "gainEUR": 2697.33,
-      "gainPct": 1.91,
+      "gainEUR": 2610.77,
+      "gainPct": 0,
       "drawdownPct": 0.53
     },
     {
       "year": 2025,
       "month": 4,
-      "gainEUR": -2235.95,
-      "gainPct": -1.55,
+      "gainEUR": -2154.59,
+      "gainPct": 0,
       "drawdownPct": 2.02
     },
     {
       "year": 2025,
       "month": 5,
-      "gainEUR": -1591.54,
-      "gainPct": -1.12,
-      "drawdownPct": 2.66
+      "gainEUR": -1534.06,
+      "gainPct": 0,
+      "drawdownPct": 2.65
     },
     {
       "year": 2025,
       "month": 6,
-      "gainEUR": 1717.47,
-      "gainPct": 1.22,
-      "drawdownPct": 4.27
+      "gainEUR": 1683.57,
+      "gainPct": 0,
+      "drawdownPct": 4.25
     },
     {
       "year": 2025,
       "month": 7,
-      "gainEUR": -148.26,
-      "gainPct": -0.1,
-      "drawdownPct": 3.51
+      "gainEUR": -102.43,
+      "gainPct": 0,
+      "drawdownPct": 3.48
+    },
+    {
+      "year": 2025,
+      "month": 8,
+      "gainEUR": -1721.1,
+      "gainPct": 0,
+      "drawdownPct": 2.75
+    },
+    {
+      "year": 2025,
+      "month": 9,
+      "gainEUR": 5037.4,
+      "gainPct": 0,
+      "drawdownPct": 1.81
     },
     {
       "year": 2025,
       "month": 10,
-      "gainEUR": 5836.18,
-      "gainPct": 4.12,
-      "drawdownPct": 1.67
+      "gainEUR": 7799.93,
+      "gainPct": 0,
+      "drawdownPct": 1.55
     },
     {
       "year": 2025,
       "month": 11,
-      "gainEUR": 643.69,
-      "gainPct": 0.44,
+      "gainEUR": 662.73,
+      "gainPct": 0,
       "drawdownPct": 2.01
     },
     {
       "year": 2025,
       "month": 12,
-      "gainEUR": -1377.14,
-      "gainPct": -0.93,
-      "drawdownPct": 1.78
+      "gainEUR": -1373.91,
+      "gainPct": 0,
+      "drawdownPct": 1.77
     },
     {
       "year": 2026,
       "month": 1,
-      "gainEUR": 175.71,
-      "gainPct": 0.16,
-      "drawdownPct": 3.02
+      "gainEUR": 274.62,
+      "gainPct": 0,
+      "drawdownPct": 3.01
     },
     {
       "year": 2026,
       "month": 2,
-      "gainEUR": -1102.18,
-      "gainPct": -1.11,
-      "drawdownPct": 2.71
+      "gainEUR": -1634.43,
+      "gainPct": 0,
+      "drawdownPct": 2.68
     },
     {
       "year": 2026,
       "month": 3,
-      "gainEUR": -2037.07,
-      "gainPct": -2.04,
-      "drawdownPct": 4.69
+      "gainEUR": -2972.55,
+      "gainPct": 0,
+      "drawdownPct": 4.66
     },
     {
       "year": 2026,
       "month": 4,
-      "gainEUR": 6500.15,
-      "gainPct": 6.5,
-      "drawdownPct": 5.69
+      "gainEUR": 9314.13,
+      "gainPct": 0,
+      "drawdownPct": 5.66
     },
     {
       "year": 2026,
       "month": 5,
-      "gainEUR": 2666.46,
-      "gainPct": 1.83,
+      "gainEUR": 2790.93,
+      "gainPct": 0,
       "drawdownPct": 1.54
     },
     {
       "year": 2026,
       "month": 6,
-      "gainEUR": -1628.12,
-      "gainPct": -0.19,
-      "drawdownPct": 3.01
+      "gainEUR": -283.94,
+      "gainPct": 0,
+      "drawdownPct": 3.0
     },
-    { "year": 2026, "month": 7, "gainEUR": -2033.58, "gainPct": 0, "drawdownPct": 2.03 }
+    {
+      "year": 2026,
+      "month": 7,
+      "gainEUR": -3146.58,
+      "gainPct": 0,
+      "drawdownPct": 4.97
+    }
   ]
 }
