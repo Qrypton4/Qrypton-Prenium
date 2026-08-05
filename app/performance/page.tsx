@@ -47,7 +47,7 @@ export default async function Performance() {
   const now = new Date();
   const day = now.getDay();
   const month = now.getMonth() + 1;
-  const isPaused = day === 0 || day === 6 || month === 8 || month === 9;
+  const isPaused = day === 0 || day === 6;
   return (
     <span
       className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[12.5px] font-medium ${
