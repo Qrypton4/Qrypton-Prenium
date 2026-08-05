@@ -1,6 +1,7 @@
 {
   "crons": [
     { "path": "/api/cron/abandoned-checkout?secret=CRON_SECRET_PLACEHOLDER", "schedule": "0 6 * * *" },
-    { "path": "/api/cron/checkin-7d?secret=CRON_SECRET_PLACEHOLDER", "schedule": "0 8 * * *" }
+    { "path": "/api/cron/checkin-7d?secret=CRON_SECRET_PLACEHOLDER", "schedule": "0 8 * * *" },
+    { "path": "/api/cron/seasonal-notice?secret=CRON_SECRET_PLACEHOLDER", "schedule": "0 8 31 7 *" }
   ]
 }
