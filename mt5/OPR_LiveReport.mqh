@@ -6,7 +6,7 @@
 //+------------------------------------------------------------------+
 #property strict
 
-string ReportUrl = "https://api.qrypton.io/v1/trades/report";
+string ReportUrl = "https://qryptonedge.com/api/v1/trades/report";
 
 //+------------------------------------------------------------------+
 //| dealTicket = ticket du deal de clôture (fourni par OnTradeTransaction) |
