@@ -345,6 +345,10 @@ function IconTarget() {
     </svg>
   );
 } 
+function isMarketOpen() {
+  const day = new Date().getDay();
+  return day !== 0 && day !== 6;
+}
 function PerformanceTabRich({
   license,
   subscription,
@@ -403,7 +407,7 @@ function PerformanceTabRich({
                 <div className="font-semibold text-[16px] text-white">OPR Edge™</div>
                 <div className="inline-flex items-center gap-1.5 mt-1 text-[11px] text-blue-300 bg-blue-500/10 rounded-full px-2.5 py-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-                  {license.status === "active" ? "Robot actif" : "Robot inactif"}
+                  {license.status === "active" && isMarketOpen() ? "Robot actif" : "Robot inactif"}
                 </div>
               </div>
             </div>
@@ -460,9 +464,9 @@ function PerformanceTabRich({
       <Card title="État du robot">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <StatusItem
-            label={license.status === "active" ? "Robot actif" : "Robot inactif"}
+            label={license.status === "active" && isMarketOpen() ? "Robot actif" : "Robot inactif"}
             sub="Marché surveillé : NAS100"
-            positive={license.status === "active"}
+            positive={license.status === "active" && isMarketOpen()}
           />
           <StatusItem
             label={license.mt5_account_login ? "Connecté à MT5" : "Non connecté"}
