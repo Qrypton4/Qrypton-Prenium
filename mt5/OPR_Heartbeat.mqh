@@ -8,7 +8,7 @@
 
 input int HeartbeatMinutes = 5; // Fréquence d'envoi du heartbeat
 
-string HeartbeatUrl = "https://api.qrypton.io/v1/account/heartbeat";
+string HeartbeatUrl = "https://qryptonedge.com/api/v1/account/heartbeat";
 
 //+------------------------------------------------------------------+
 //| À appeler dans OnInit() de l'EA :  EventSetTimer(HeartbeatMinutes*60); |
