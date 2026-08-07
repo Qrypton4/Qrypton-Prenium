@@ -1,4 +1,5 @@
 import { ShieldAlert, Target, ShieldCheck, Scale, Percent, TrendingUp, Activity, Wallet, LucideIcon } from "lucide-react";
+import Link from "next/link";
 
 type BasicCard = {
   icon: LucideIcon;
@@ -6,6 +7,8 @@ type BasicCard = {
   text: string;
   example: string;
   highlight?: boolean;
+  linkHref?: string;
+  linkLabel?: string;
 };
 
 const CAPITAL_CARD: BasicCard = {
@@ -14,6 +17,8 @@ const CAPITAL_CARD: BasicCard = {
   text: "Pour une utilisation avec vos fonds propres, nous recommandons un capital de référence de 10 000 € minimum afin de conserver une cohérence entre le capital utilisé et le coût de la licence Qrypton.\n\nAvec une Prop Firm, un compte de 10 000 € peut généralement être accessible pour environ 80 à 150 €, selon la société et les conditions du challenge.",
   example: "Ces montants sont indicatifs. Les conditions varient selon chaque Prop Firm.",
   highlight: true,
+  linkHref: "/guide-qrypton/prop-firm",
+  linkLabel: "Qu'est-ce qu'une Prop Firm ?",
 };
 
 const BASICS: BasicCard[] = [
@@ -87,6 +92,17 @@ export default function TradingBasicsCards() {
           <h3 className="text-[15px] font-semibold mb-2">{b.title}</h3>
           <p className="text-[13px] text-muted leading-relaxed mb-2.5 whitespace-pre-line">{b.text}</p>
           <p className="text-[12px] text-muted-2 leading-relaxed border-t border-line pt-2.5">{b.example}</p>
+          {b.linkHref && (
+            <div className="flex justify-end mt-3">
+              <Link
+                href={b.linkHref}
+                className="group text-blue-soft text-[12px] font-medium hover:underline inline-flex items-center gap-1"
+              >
+                {b.linkLabel}
+                <span className="transition-transform group-hover:translate-x-0.5">→</span>
+              </Link>
+            </div>
+          )}
         </div>
       ))}
     </div>
