@@ -446,7 +446,9 @@ function PerformanceTabRich({
               <div className={`text-[30px] font-bold mt-0.5 ${perfPositive ? "text-blue-300" : "text-red-400"}`}>
                 {perfPositive ? "+" : ""}{perfPct.toFixed(2)} %
               </div>
-              <div className="text-[10px] text-muted mt-0.5">Depuis l'activation</div>
+              <div className="text-[10px] text-muted mt-0.5">{firstDate
+              ? `Depuis le ${new Date(firstDate).toLocaleDateString("fr-FR")}`
+              : "Depuis l'activation"}</div>
             </div>
           </div>
 
@@ -459,13 +461,19 @@ function PerformanceTabRich({
                 : "Historique de trading"}
             </span>
             {liveSnapshot && liveSnapshot.open_positions_count > 0 && (
-                <span
-                  className={`font-semibold text-[13px] ${
-                    liveSnapshot.floating_pl >= 0 ? "text-green-400" : "text-red-400"
-                  }`}
-                >
-                  {liveSnapshot.floating_pl >= 0 ? "+" : ""}
-                  {liveSnapshot.floating_pl.toFixed(2)} €
+                <span className="flex items-center gap-1.5">
+                  <span className="text-[10px] text-muted uppercase tracking-wide">
+                    Position{liveSnapshot.open_positions_count > 1 ? "s" : ""} ouverte{liveSnapshot.open_positions_count > 1 ? "s" : ""}
+                    {liveSnapshot.open_positions_count > 1 ? ` (${liveSnapshot.open_positions_count})` : ""}
+                  </span>
+                  <span
+                    className={`font-semibold text-[13px] ${
+                      liveSnapshot.floating_pl >= 0 ? "text-green-400" : "text-red-400"
+                    }`}
+                  >
+                    {liveSnapshot.floating_pl >= 0 ? "+" : ""}
+                    {liveSnapshot.floating_pl.toFixed(2)} €
+                  </span>
                 </span>
               )}
           </div>
