@@ -1,6 +1,14 @@
-import { ShieldAlert, Target, ShieldCheck, Scale, Percent, TrendingUp, Activity, Wallet } from "lucide-react";
+import { ShieldAlert, Target, ShieldCheck, Scale, Percent, TrendingUp, Activity, Wallet, LucideIcon } from "lucide-react";
 
-const CAPITAL_CARD = {
+type BasicCard = {
+  icon: LucideIcon;
+  title: string;
+  text: string;
+  example: string;
+  highlight?: boolean;
+};
+
+const CAPITAL_CARD: BasicCard = {
   icon: Wallet,
   title: "Quel capital prévoir ?",
   text: "Pour une utilisation avec vos fonds propres, nous recommandons un capital de référence de 10 000 € minimum afin de conserver une cohérence entre le capital utilisé et le coût de la licence Qrypton.\n\nAvec une Prop Firm, un compte de 10 000 € peut généralement être accessible pour environ 80 à 150 €, selon la société et les conditions du challenge.",
@@ -8,7 +16,7 @@ const CAPITAL_CARD = {
   highlight: true,
 };
 
-const BASICS = [
+const BASICS: BasicCard[] = [
   {
     icon: ShieldAlert,
     title: "Le Stop Loss (SL)",
