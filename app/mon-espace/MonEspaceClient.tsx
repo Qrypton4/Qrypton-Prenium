@@ -42,38 +42,6 @@ export default function MonEspaceClient({
 }) {
   const [tab, setTab] = useState<TabId>("dashboard");
   const [moreOpen, setMoreOpen] = useState(false);
-  const [liveSnapshot, setLiveSnapshot] = useState<{
-    balance: number;
-    equity: number;
-    floating_pl: number;
-    open_positions_count: number;
-  } | null>(null);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    async function fetchSnapshot() {
-      try {
-        const res = await fetch("/api/dashboard/live-snapshot");
-        if (!res.ok) return;
-        const data = await res.json();
-        if (!cancelled && data.ok) {
-          setLiveSnapshot(data.snapshot);
-        }
-      } catch {
-        // silencieux : on retentera au prochain cycle
-      }
-    }
-
-    fetchSnapshot();
-    const interval = setInterval(fetchSnapshot, 5000);
-
-    return () => {
-      cancelled = true;
-      clearInterval(interval);
-    };
-  }, []);
-
   const bottomTabs = TABS.filter((t) => BOTTOM_IDS.includes(t.id));
   const moreTabs = TABS.filter((t) => !BOTTOM_IDS.includes(t.id));
 
@@ -389,6 +357,37 @@ function PerformanceTabRich({
   winRate,
   lastBalance,
 }: any) {
+  const [liveSnapshot, setLiveSnapshot] = useState<{
+    balance: number;
+    equity: number;
+    floating_pl: number;
+    open_positions_count: number;
+  } | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function fetchSnapshot() {
+      try {
+        const res = await fetch("/api/dashboard/live-snapshot");
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!cancelled && data.ok) {
+          setLiveSnapshot(data.snapshot);
+        }
+      } catch {
+        // silencieux : on retentera au prochain cycle
+      }
+    }
+
+    fetchSnapshot();
+    const interval = setInterval(fetchSnapshot, 5000);
+
+    return () => {
+      cancelled = true;
+      clearInterval(interval);
+    };
+  }, []);
   if (!hasTrades) {
     return (
       <div className="flex flex-col gap-6">
