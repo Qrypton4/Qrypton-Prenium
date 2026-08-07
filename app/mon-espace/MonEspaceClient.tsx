@@ -42,6 +42,37 @@ export default function MonEspaceClient({
 }) {
   const [tab, setTab] = useState<TabId>("dashboard");
   const [moreOpen, setMoreOpen] = useState(false);
+  const [liveSnapshot, setLiveSnapshot] = useState<{
+    balance: number;
+    equity: number;
+    floating_pl: number;
+    open_positions_count: number;
+  } | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function fetchSnapshot() {
+      try {
+        const res = await fetch("/api/dashboard/live-snapshot");
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!cancelled && data.ok) {
+          setLiveSnapshot(data.snapshot);
+        }
+      } catch {
+        // silencieux : on retentera au prochain cycle
+      }
+    }
+
+    fetchSnapshot();
+    const interval = setInterval(fetchSnapshot, 5000);
+
+    return () => {
+      cancelled = true;
+      clearInterval(interval);
+    };
+  }, []);
 
   const bottomTabs = TABS.filter((t) => BOTTOM_IDS.includes(t.id));
   const moreTabs = TABS.filter((t) => !BOTTOM_IDS.includes(t.id));
@@ -422,12 +453,22 @@ function PerformanceTabRich({
 
           <MiniSpark values={balances} positive={perfPositive} />
 
-          <div className="flex items-center mt-3 text-[11px] text-muted relative z-10">
+          <div className="flex items-center justify-between mt-3 text-[11px] text-muted relative z-10">
             <span>
               {firstDate
                 ? `Depuis le ${new Date(firstDate).toLocaleDateString("fr-FR")}`
                 : "Historique de trading"}
             </span>
+            {liveSnapshot && liveSnapshot.open_positions_count > 0 && (
+                <span
+                  className={`font-semibold text-[13px] ${
+                    liveSnapshot.floating_pl >= 0 ? "text-green-400" : "text-red-400"
+                  }`}
+                >
+                  {liveSnapshot.floating_pl >= 0 ? "+" : ""}
+                  {liveSnapshot.floating_pl.toFixed(2)} €
+                </span>
+              )}
           </div>
         </div>
 
