@@ -1,4 +1,12 @@
-import { ShieldAlert, Target, ShieldCheck, Scale, Percent, TrendingUp, Activity, Ban } from "lucide-react";
+import { ShieldAlert, Target, ShieldCheck, Scale, Percent, TrendingUp, Activity, Wallet } from "lucide-react";
+
+const CAPITAL_CARD = {
+  icon: Wallet,
+  title: "Quel capital prévoir ?",
+  text: "Pour une utilisation avec vos fonds propres, nous recommandons un capital de référence de 10 000 € minimum afin de conserver une cohérence entre le capital utilisé et le coût de la licence Qrypton.\n\nAvec une Prop Firm, un compte de 10 000 € peut généralement être accessible pour environ 80 à 150 €, selon la société et les conditions du challenge.",
+  example: "Ces montants sont indicatifs. Les conditions varient selon chaque Prop Firm.",
+  highlight: true,
+};
 
 const BASICS = [
   {
@@ -43,24 +51,33 @@ const BASICS = [
     text: "La baisse du capital depuis son plus haut niveau atteint — un indicateur surveillé en continu par le système.",
     example: "Un drawdown maîtrisé est un signe de robustesse — bien plus qu'un rendement spectaculaire mais irrégulier.",
   },
-    {
-  icon: Ban,
-  title: "L'overtrading",
-  text: "Le fait de multiplier les trades par excès de confiance ou d'impatience, au-delà de toute logique de stratégie.",
-  example: "Le robot Qrypton applique une seule position par jour — aucune sursollicitation du marché, aucune décision émotionnelle.",
-},
 ];
 
 export default function TradingBasicsCards() {
+  const cards = [CAPITAL_CARD, ...BASICS];
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-      {BASICS.map((b) => (
-        <div key={b.title} className="border border-line rounded-2xl bg-bg-2 p-6">
-          <div className="w-10 h-10 rounded-lg border border-line-strong bg-blue/5 flex items-center justify-center mb-4">
+      {cards.map((b) => (
+        <div
+          key={b.title}
+          className={
+            b.highlight
+              ? "border border-blue/25 rounded-2xl bg-bg-2 p-6 relative"
+              : "border border-line rounded-2xl bg-bg-2 p-6"
+          }
+        >
+          <div
+            className={
+              b.highlight
+                ? "w-10 h-10 rounded-lg border border-blue/30 bg-blue/10 flex items-center justify-center mb-4"
+                : "w-10 h-10 rounded-lg border border-line-strong bg-blue/5 flex items-center justify-center mb-4"
+            }
+          >
             <b.icon className="w-5 h-5 text-blue-soft" strokeWidth={1.6} />
           </div>
           <h3 className="text-[15px] font-semibold mb-2">{b.title}</h3>
-          <p className="text-[13px] text-muted leading-relaxed mb-2.5">{b.text}</p>
+          <p className="text-[13px] text-muted leading-relaxed mb-2.5 whitespace-pre-line">{b.text}</p>
           <p className="text-[12px] text-muted-2 leading-relaxed border-t border-line pt-2.5">{b.example}</p>
         </div>
       ))}
