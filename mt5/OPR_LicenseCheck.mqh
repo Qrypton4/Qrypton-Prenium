@@ -5,7 +5,7 @@
 #property strict
 
 input string LicenseKey = "";              // Clé fournie dans l'espace client
-string       ApiUrl     = "https://api.qrypton.io/v1/license/verify";
+string       ApiUrl     = "https://qryptonedge.com/api/v1/license/verify";
 
 datetime g_lastCheckOK   = 0;
 bool     g_licenseValid  = false;
