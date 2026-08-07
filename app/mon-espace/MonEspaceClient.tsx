@@ -455,11 +455,6 @@ function PerformanceTabRich({
           <MiniSpark values={balances} positive={perfPositive} />
 
           <div className="flex items-center justify-between mt-3 text-[11px] text-muted relative z-10">
-            <span>
-              {firstDate
-                ? `Depuis le ${new Date(firstDate).toLocaleDateString("fr-FR")}`
-                : "Historique de trading"}
-            </span>
             {liveSnapshot && liveSnapshot.open_positions_count > 0 && (
                 <span className="flex items-center gap-1.5">
                   <span className="text-[10px] text-muted uppercase tracking-wide">
