@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { Card, Row, Kpi } from "./ui";
 import Image from "next/image";
+import PWAInstallSettingsCard from "@/components/PWAInstallSettingsCard";
 
 const TABS = [
   { id: "dashboard", label: "📊 Tableau de bord" },
@@ -817,6 +818,9 @@ function SettingsTab({ email }: { email?: string | null }) {
           <button className="text-sm text-red-400 hover:underline">Déconnexion</button>
         </form>
       </Card>
+      <Card title="Application">
+              <PWAInstallSettingsCard />
+     </Card>
     </div>
   );
 }
