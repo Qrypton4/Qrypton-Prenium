@@ -5,7 +5,7 @@ import { usePWAInstall } from "./PWAInstallContext";
 export default function PWAInstallSettingsCard() {
   const { canInstall, isIOS, isStandalone, promptInstall } = usePWAInstall();
 
-  if (isStandalone) {
+ if (isStandalone) {
     return (
       <p className="text-muted text-sm">
         ✅ L&apos;application est déjà installée sur cet appareil.
