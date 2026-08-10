@@ -93,7 +93,7 @@ export default function GuideClient() {
               "Collez votre clé de licence (disponible dans votre espace client) dans le champ « LicenseKey ».",
               "Laissez le risque par défaut à 0,5 %, sauf si vous savez précisément ce que vous faites.",
               "Cochez « Autoriser le trading algorithmique » en haut de MT5 (bouton à activer une seule fois).",
-              "Cliquez sur OK — le robot est actif dès l'apparition d'un smiley 🙂 en haut à droite du graphique.",
+              "Cliquez sur OK — le robot est actif quand une icône colorée apparaît en haut à droite du graphique (un smiley 🙂 ou un chapeau bleu 🎓 selon votre version de MT5).",
             ]} />
           </StepBody>
         )}
@@ -103,7 +103,7 @@ export default function GuideClient() {
             <P>Quelques vérifications simples pour confirmer que tout fonctionne :</P>
             <Ol items={[
               "L'onglet « Journal » de MT5 ne doit afficher aucune erreur rouge après l'installation.",
-              "Un smiley 🙂 (pas triste ☹️) doit apparaître en haut à droite du graphique.",
+              "Une icône colorée (smiley 🙂 ou chapeau bleu 🎓) doit apparaître en haut à droite du graphique — pas grise, pas triste.",
               "Connectez-vous à votre espace client Qrypton : la licence doit apparaître comme « active ».",
               "Le robot ne prendra position qu'à l'ouverture du marché — pas d'inquiétude si rien ne se passe immédiatement.",
             ]} />
@@ -117,11 +117,11 @@ export default function GuideClient() {
                 C'est normal en dehors de l'horaire d'ouverture du marché ciblé, ou si les
                 conditions d'entrée ne sont pas réunies ce jour-là.
               </MiniCard>
-              <MiniCard title="Un smiley triste ☹️ apparaît">
+              <MiniCard title="L'icône reste grise ou triste">
                 Cela signifie que le trading algorithmique n'est pas autorisé — vérifiez le bouton
                 en haut de MT5 et les options de l'EA (onglet Options → Expert Advisors).
               </MiniCard>
-              <MiniCard title="Le smiley disparaît juste après l'installation">
+              <MiniCard title="L'icône redevient grise juste après l'installation">
                 C'est le signe que l'URL https://qryptonedge.com n'est pas autorisée. Allez dans
                 MT5 : Outils → Options → Expert Advisors → cochez « Autoriser WebRequest pour les
                 URL listées » et ajoutez https://qryptonedge.com, puis réattachez le robot.
