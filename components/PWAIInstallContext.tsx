@@ -85,3 +85,5 @@ export function usePWAInstall() {
     throw new Error("usePWAInstall doit être utilisé à l'intérieur de PWAInstallProvider");
   }
   return ctx;
+   }
+  
