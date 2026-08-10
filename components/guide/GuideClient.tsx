@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import {
-  Download, PlugZap, Split, Building2, Wallet, SlidersHorizontal,
-  CheckCircle2, HelpCircle, Check, ShieldAlert, Gauge,
+  Download, PlugZap, Wifi, SlidersHorizontal,
+  CheckCircle2, HelpCircle, Check,
 } from "lucide-react";
 
 const STEPS = [
   { icon: Download, title: "Installer MetaTrader 5" },
   { icon: PlugZap, title: "Installer Qrypton sur MT5" },
-  { icon: Split, title: "Choisir son mode d'utilisation" },
+  { icon: Wifi, title: "Finaliser la connexion" },
   { icon: SlidersHorizontal, title: "Configuration du robot" },
   { icon: CheckCircle2, title: "Vérification" },
   { icon: HelpCircle, title: "Questions fréquentes" },
@@ -17,7 +17,6 @@ const STEPS = [
 
 export default function GuideClient() {
   const [step, setStep] = useState(0);
-  const [mode, setMode] = useState<"propfirm" | "personnel">("propfirm");
 
   return (
     <div className="max-w-[820px] mx-auto">
@@ -73,59 +72,17 @@ export default function GuideClient() {
               "Téléchargez le fichier OPR Edge™ (.ex5) depuis votre espace client, section « Robot ».",
               "Dans MT5 : Fichier → Ouvrir le dossier des données → copiez le fichier dans MQL5/Experts.",
               "Redémarrez MT5, ou clic droit sur « Expert Advisors » dans le navigateur → Actualiser.",
-              "Dans MT5 : Outils → Options → Expert Advisors → cochez « Autoriser WebRequest pour les URL listées » et ajoutez https://qryptonedge.com",
-              "Glissez OPR Edge™ sur le graphique NAS100 / US100.cash.",
             ]} />
           </StepBody>
         )}
 
         {step === 2 && (
           <StepBody>
-            <P>Vous êtes libre d&apos;utiliser Qrypton avec une Prop Firm <strong className="text-white">ou</strong> avec
-            votre propre compte de trading — selon ce qui vous convient le mieux. Choisissez votre
-            parcours :</P>
-            <div className="flex gap-3 mb-6 mt-5">
-              <ModeButton active={mode === "propfirm"} onClick={() => setMode("propfirm")} icon={Building2} label="Prop Firm" />
-              <ModeButton active={mode === "personnel"} onClick={() => setMode("personnel")} icon={Wallet} label="Compte personnel" />
-            </div>
-
-            {mode === "propfirm" ? (
-              <div className="flex flex-col gap-4">
-                <MiniCard title="Qu'est-ce qu'une Prop Firm ?">
-                  Une société qui vous prête un capital de trading (ex. 80 000 €) après réussite
-                  d&apos;un test appelé « challenge ». Vous tradez son argent et gardez une part des
-                  gains, sans risquer le vôtre.
-                </MiniCard>
-                <MiniCard title="Utiliser Qrypton avec une Prop Firm">
-                  Installez OPR Edge™ normalement sur le compte MT5 fourni par la Prop Firm — le
-                  fonctionnement est identique à un compte classique.
-                </MiniCard>
-                <MiniCard title="Précautions" icon={ShieldAlert}>
-                  Vérifiez les règles de drawdown maximal autorisées par votre Prop Firm avant de
-                  démarrer, et assurez-vous que le trading algorithmique est autorisé (c&apos;est le
-                  cas chez la grande majorité des Prop Firms).
-                </MiniCard>
-                <MiniCard title="Paramètres recommandés" icon={Gauge}>
-                  Gardez le risque par défaut à 0,5 % — c&apos;est le réglage validé par le backtest
-                  et compatible avec la plupart des limites de drawdown des challenges.
-                </MiniCard>
-              </div>
-            ) : (
-              <div className="flex flex-col gap-4">
-                <MiniCard title="Utiliser Qrypton avec son propre capital">
-                  Installez OPR Edge™ sur votre compte MT5 personnel, chez le broker de votre choix
-                  proposant le Nasdaq (NAS100 / US100.cash).
-                </MiniCard>
-                <MiniCard title="Paramètres conseillés" icon={Gauge}>
-                  Le réglage par défaut (0,5 % de risque) convient à la majorité des profils. Vous
-                  pouvez l&apos;ajuster, mais nous recommandons de ne jamais dépasser 1 % par trade.
-                </MiniCard>
-                <MiniCard title="Bonnes pratiques" icon={ShieldAlert}>
-                  Ne modifiez pas les paramètres à chaud pendant qu&apos;une position est ouverte, et
-                  laissez le robot tourner en continu (VPS recommandé) pour ne rater aucune clôture.
-                </MiniCard>
-              </div>
-            )}
+            <P>Une dernière étape technique avant de configurer le robot.</P>
+            <Ol items={[
+              "Dans MT5 : Outils → Options → Expert Advisors → cochez « Autoriser WebRequest pour les URL listées » et ajoutez https://qryptonedge.com",
+              "Glissez OPR Edge™ sur le graphique NAS100 / US100.cash — une fenêtre de paramètres va s'ouvrir automatiquement. Ne cliquez pas encore sur OK : passez à l'étape suivante pour savoir quoi y renseigner.",
+            ]} />
           </StepBody>
         )}
 
@@ -231,18 +188,5 @@ function MiniCard({ title, children, icon: Icon }: { title: string; children: Re
       </div>
       <p className="text-[13.5px] text-muted leading-relaxed">{children}</p>
     </div>
-  );
-}
-function ModeButton({ active, onClick, icon: Icon, label }: { active: boolean; onClick: () => void; icon: any; label: string }) {
-  return (
-    <button
-      onClick={onClick}
-      className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl border text-sm font-medium transition ${
-        active ? "bg-blue/10 border-blue text-white" : "border-line-strong text-muted hover:bg-white/5"
-      }`}
-    >
-      <Icon className="w-4 h-4" strokeWidth={1.8} />
-      {label}
-    </button>
   );
 }
