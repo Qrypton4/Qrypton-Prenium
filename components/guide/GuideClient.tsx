@@ -73,6 +73,7 @@ export default function GuideClient() {
               "Téléchargez le fichier OPR Edge™ (.ex5) depuis votre espace client, section « Robot ».",
               "Dans MT5 : Fichier → Ouvrir le dossier des données → copiez le fichier dans MQL5/Experts.",
               "Redémarrez MT5, ou clic droit sur « Expert Advisors » dans le navigateur → Actualiser.",
+              "Dans MT5 : Outils → Options → Expert Advisors → cochez « Autoriser WebRequest pour les URL listées » et ajoutez https://qryptonedge.com",
               "Glissez OPR Edge™ sur le graphique NAS100 / US100.cash.",
             ]} />
           </StepBody>
@@ -162,6 +163,11 @@ export default function GuideClient() {
               <MiniCard title="Un smiley triste ☹️ apparaît">
                 Cela signifie que le trading algorithmique n'est pas autorisé — vérifiez le bouton
                 en haut de MT5 et les options de l'EA (onglet Options → Expert Advisors).
+              </MiniCard>
+              <MiniCard title="Le smiley disparaît juste après l'installation">
+                C'est le signe que l'URL https://qryptonedge.com n'est pas autorisée. Allez dans
+                MT5 : Outils → Options → Expert Advisors → cochez « Autoriser WebRequest pour les
+                URL listées » et ajoutez https://qryptonedge.com, puis réattachez le robot.
               </MiniCard>
               <MiniCard title="Ma licence n'active pas mon compte">
                 Vérifiez que la clé collée est exacte, et que votre abonnement est bien actif dans
