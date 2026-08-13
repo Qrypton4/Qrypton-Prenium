@@ -53,7 +53,7 @@ export default async function Tarifs() {
         </div>
         <div className="max-w-[620px] mx-auto rounded-2xl border border-blue-soft/30 px-5 py-3 text-center mb-8">
   <p className="text-sm text-white/80">
-    Le robot nécessite un PC.{" "}
+    Le robot nécessite un PC allumé de 15h30 à 19h00.{" "}
     <Link href="/faq#mobile-tablette" className="text-blue-soft hover:underline">
       En savoir plus →
     </Link>
