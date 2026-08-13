@@ -620,7 +620,17 @@ function StatusItem({
   );
 }
 
-function MiniSpark({ values, positive }: { values: number[]; positive: boolean }) {
+function MiniSpark({
+  values,
+  dates,
+  positive,
+}: {
+  values: number[];
+  dates: string[];
+  positive: boolean;
+}) {
+  const [hover, setHover] = useState<{ i: number; x: number; y: number } | null>(null);
+
   if (!values || values.length < 2) return null;
   const W = 386;
   const H = 110;
@@ -636,18 +646,87 @@ function MiniSpark({ values, positive }: { values: number[]; positive: boolean }
   const area = `${path} L${W},${H} L0,${H} Z`;
   const color = "#3B82FF";
 
+  function updateHoverFromClientX(clientX: number, rect: DOMRect) {
+    const relX = ((clientX - rect.left) / rect.width) * W;
+    let closest = 0;
+    let closestDist = Infinity;
+    coords.forEach((c, i) => {
+      const d = Math.abs(c.x - relX);
+      if (d < closestDist) {
+        closestDist = d;
+        closest = i;
+      }
+    });
+    setHover({ i: closest, x: coords[closest].x, y: coords[closest].y });
+  }
+
+  function handleMouseMove(e: React.MouseEvent<SVGSVGElement>) {
+    updateHoverFromClientX(e.clientX, e.currentTarget.getBoundingClientRect());
+  }
+
+  function handleTouchMove(e: React.TouchEvent<SVGSVGElement>) {
+    const touch = e.touches[0];
+    if (!touch) return;
+    updateHoverFromClientX(touch.clientX, e.currentTarget.getBoundingClientRect());
+  }
+
+  const h = hover ? { value: values[hover.i], date: dates[hover.i] } : null;
+
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} width="100%" height={H} className="mt-4 relative z-10">
-      <defs>
-        <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor={color} stopOpacity="0.3" />
-          <stop offset="100%" stopColor={color} stopOpacity="0" />
-        </linearGradient>
-      </defs>
-      <path d={area} fill="url(#sparkGrad)" />
-      <path d={path} fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" style={{ filter: "drop-shadow(0 0 6px rgba(59,130,255,0.55))" }} />
-      <circle cx={coords[coords.length - 1].x} cy={coords[coords.length - 1].y} r="3.5" fill={color} />
-    </svg>
+    <div className="relative">
+      <svg
+        viewBox={`0 0 ${W} ${H}`}
+        width="100%"
+        height={H}
+        className="mt-4 relative z-10"
+        onMouseMove={handleMouseMove}
+        onMouseLeave={() => setHover(null)}
+        onTouchStart={handleTouchMove}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={() => setHover(null)}
+      >
+        <defs>
+          <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={color} stopOpacity="0.3" />
+            <stop offset="100%" stopColor={color} stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <path d={area} fill="url(#sparkGrad)" />
+        <path
+          d={path}
+          fill="none"
+          stroke={color}
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          style={{ filter: "drop-shadow(0 0 6px rgba(59,130,255,0.55))" }}
+        />
+        <circle cx={coords[coords.length - 1].x} cy={coords[coords.length - 1].y} r="3.5" fill={color} />
+
+        {hover && (
+          <>
+            <line x1={hover.x} y1={0} x2={hover.x} y2={H} stroke="rgba(255,255,255,0.15)" strokeDasharray="3 4" />
+            <circle cx={hover.x} cy={hover.y} r={4} fill="#7FA1FF" />
+          </>
+        )}
+      </svg>
+
+      {h && (
+        <div
+          className="absolute bg-bg border border-line-strong rounded-lg px-3.5 py-2.5 text-xs pointer-events-none z-20"
+          style={{
+            left: `${(hover!.x / W) * 100}%`,
+            top: 0,
+            transform:
+              hover!.x / W > 0.7 ? "translateX(-100%)" : hover!.x / W < 0.3 ? "translateX(0%)" : "translateX(-50%)",
+          }}
+        >
+          <div className="text-muted-2 font-mono mb-1">
+            {h.date ? new Date(h.date).toLocaleDateString("fr-FR") : "—"}
+          </div>
+          <div className="font-mono">Solde : {Math.round(h.value).toLocaleString("fr-FR")} €</div>
+        </div>
+      )}
+    </div>
   );
 }
 
