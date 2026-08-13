@@ -28,12 +28,29 @@ export default function RiskAnalysis({ s }: { s: PerformanceSummary }) {
 </div>
       </div>
 
-      {/* Chiffres clés */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-line border border-line rounded-2xl overflow-hidden">
-        <AnalysisStat label="Drawdown maximal" value={`${s.maxDrawdownPct} %`} sub={s.maxDrawdownEquityPct ? `${s.maxDrawdownEquityPct} % en équité` : undefined} />
-        <AnalysisStat label="Pertes consécutives max" value={`${s.maxConsecutiveLosses} trades`} />
-        <AnalysisStat label="Ratio rendement / risque" value={`${s.avgRiskReward?.toFixed(2)}`} sub="moyenne réalisée" />
-        <AnalysisStat label="Profit Factor" value={s.profitFactor.toFixed(2)} sub={s.profitFactor > 1 ? "gains > pertes" : undefined} />
+      {/* Ce que les chiffres bruts ne montrent pas */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-line border border-line rounded-2xl overflow-hidden">
+        <div className="bg-bg-2 p-6">
+          <div className="text-[10.5px] text-muted uppercase tracking-wide mb-2">Ratio de Sharpe</div>
+          <div className="font-mono text-2xl font-semibold text-white">
+            {s.sharpeRatio ? s.sharpeRatio.toFixed(2) : "—"}
+          </div>
+          <p className="text-[11.5px] text-muted-2 leading-relaxed mt-3">
+            Mesure la régularité des performances par rapport au risque pris, en faisant une
+            moyenne entre les périodes positives et négatives. Plus il est élevé, plus la
+            performance est régulière : en dessous de 1 c&apos;est faible, autour de 2 c&apos;est
+            considéré comme bon, au-dessus de 3 c&apos;est excellent.
+          </p>
+        </div>
+        <div className="bg-bg-2 p-6">
+          <div className="text-[10.5px] text-muted uppercase tracking-wide mb-2">Effet boule de neige</div>
+          <div className="font-mono text-2xl font-semibold text-white">0,5 % du capital</div>
+          <p className="text-[11.5px] text-muted-2 leading-relaxed mt-3">
+            Le robot risque toujours 0,5 % du capital du moment, pas un montant fixe en euros.
+            Résultat : plus le compte grossit, plus les gains (et les pertes) en euros grossissent
+            avec lui — comme une boule de neige qui prend du volume en roulant.
+          </p>
+        </div>
       </div>
 
       {/* Analyse de stabilité */}
@@ -49,16 +66,6 @@ export default function RiskAnalysis({ s }: { s: PerformanceSummary }) {
           contrôle du risque plutôt que d&apos;un taux de trades gagnants élevé.
         </p>
       </div>
-    </div>
-  );
-}
-
-function AnalysisStat({ label, value, sub }: { label: string; value: string; sub?: string }) {
-  return (
-    <div className="bg-bg-2 p-5">
-      <div className="text-[10.5px] text-muted uppercase tracking-wide mb-2">{label}</div>
-      <div className="font-mono text-xl font-semibold">{value}</div>
-      {sub && <div className="text-[10px] text-muted-2 mt-1">{sub}</div>}
     </div>
   );
 }
