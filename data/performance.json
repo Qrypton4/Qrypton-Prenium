@@ -1,8 +1,8 @@
 {
-  "_comment": "Source unique de vérité pour la section Performances. Généré à partir du vrai rapport MT5 (ReportTester-1514203302_robot_Z.html, export Strategy Tester) fourni le 13/08/2026, robot mis à jour (buy-only, filtre saisonnier SMA H1/H4, breakeven activé). Période étendue à 2022-2026. Calculs mensuels dérivés directement des 700 transactions du rapport (profit + commission + swap). Aucune valeur inventée.",
+  "_comment": "Source unique de vérité pour la section Performances. Généré à partir du vrai rapport MT5 (ReportTester-1514203302_robot_Z.html, export Strategy Tester le 13/08/2026), robot mis à jour (buy-only, filtre saisonnier SMA H1/H4, breakeven activé). Période étendue à 2022-2026. Août 2026 exclu car mois en cours, non terminé. Calculs mensuels dérivés directement des transactions du rapport (profit + commission + swap), stats globales recalculées sur mois complets uniquement (jusqu'au 31/07/2026). Sharpe ratio (4.85) issu du rapport MT5. Aucune valeur inventée.",
   "meta": {
     "backtestStart": "2022-01-01",
-    "backtestEnd": "2026-08-13",
+    "backtestEnd": "2026-07-31",
     "lastUpdated": "2026/08/13",
     "dataComplete": true,
     "sourceReport": "ReportTester-1514203302_robot_Z.html",
@@ -12,16 +12,17 @@
   },
   "summary": {
     "initialCapital": 100000,
-    "finalCapital": 179271.53,
-    "netProfitEUR": 79271.53,
-    "netProfitPct": 79.27,
-    "profitFactor": 1.65,
-    "winRate": 29.14,
-    "totalTrades": 350,
+    "finalCapital": 180226.9,
+    "netProfitEUR": 80226.9,
+    "netProfitPct": 80.23,
+    "profitFactor": 1.66,
+    "winRate": 28.65,
+    "totalTrades": 349,
     "maxDrawdownPct": 6.03,
     "maxDrawdownEquityPct": 6.3,
     "maxConsecutiveLosses": 10,
-    "avgRiskReward": 4.0
+    "avgRiskReward": 4.1,
+    "sharpeRatio": 4.85
   },
   "equityCurve": [],
   "monthly": [
