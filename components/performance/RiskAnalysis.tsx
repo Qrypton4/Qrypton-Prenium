@@ -4,6 +4,8 @@ import Link from "next/link";
 export default function RiskAnalysis({ s }: { s: PerformanceSummary }) {
   const worstCaseLoss = s.initialCapital * 0.005 * s.maxConsecutiveLosses;
   const worstCasePct = (worstCaseLoss / s.initialCapital) * 100;
+  const riskAtStart = Math.round(s.initialCapital * 0.005);
+  const riskNow = Math.round(s.finalCapital * 0.005);
 
   return (
     <div className="flex flex-col gap-6">
@@ -31,7 +33,7 @@ export default function RiskAnalysis({ s }: { s: PerformanceSummary }) {
       {/* Ce que les chiffres bruts ne montrent pas */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-line border border-line rounded-2xl overflow-hidden">
         <div className="bg-bg-2 p-6">
-          <div className="text-[10.5px] text-muted uppercase tracking-wide mb-2">Ratio de Sharpe</div>
+          <h3 className="font-display text-base font-semibold mb-3">Ratio de Sharpe</h3>
           <div className="font-mono text-2xl font-semibold text-white">
             {s.sharpeRatio ? s.sharpeRatio.toFixed(2) : "—"}
           </div>
@@ -43,12 +45,18 @@ export default function RiskAnalysis({ s }: { s: PerformanceSummary }) {
           </p>
         </div>
         <div className="bg-bg-2 p-6">
-          <div className="text-[10.5px] text-muted uppercase tracking-wide mb-2">Effet boule de neige</div>
-          <div className="font-mono text-2xl font-semibold text-white">0,5 % du capital</div>
+          <h3 className="font-display text-base font-semibold mb-3">Qrypton utilise les intérêts composés</h3>
+          <div className="font-mono text-2xl font-semibold text-white">
+            {riskAtStart.toLocaleString("fr-FR")} € → {riskNow.toLocaleString("fr-FR")} €
+          </div>
           <p className="text-[11.5px] text-muted-2 leading-relaxed mt-3">
-            Le robot risque toujours 0,5 % du capital du moment, pas un montant fixe en euros.
-            Résultat : plus le compte grossit, plus les gains (et les pertes) en euros grossissent
-            avec lui — comme une boule de neige qui prend du volume en roulant.
+            Effet boule de neige : le robot risque toujours 0,5 % du capital du moment, pas un
+            montant fixe. Sur ce backtest, le risque par trade est ainsi passé de{" "}
+            {riskAtStart.toLocaleString("fr-FR")} € sur un compte de départ à{" "}
+            {s.initialCapital.toLocaleString("fr-FR")} € à {riskNow.toLocaleString("fr-FR")} €{" "}
+            une fois le compte monté à {Math.round(s.finalCapital).toLocaleString("fr-FR")} € —
+            les gains (et les pertes) grossissent avec le capital, comme une boule de neige qui
+            prend du volume en roulant.
           </p>
         </div>
       </div>
