@@ -9,15 +9,25 @@ type BasicCard = {
   highlight?: boolean;
   linkHref?: string;
   linkLabel?: string;
+  stats?: { label: string; value: string }[];
+  callout?: string;
 };
 
 const CAPITAL_CARD: BasicCard = {
   icon: Wallet,
   title: "Quel capital prévoir ?",
-  text: "Pour une utilisation avec vos fonds propres, nous recommandons un capital de référence de 10 000 € minimum afin de conserver une cohérence entre le capital utilisé et le coût de la licence Qrypton.\n\nAvec une Prop Firm, un compte de 10 000 € peut généralement être accessible pour environ 80 à 150 €, selon la société et les conditions du challenge.",
-  example: "Ces montants sont indicatifs. Les conditions varient selon chaque Prop Firm.",
+  text: "",
+  stats: [
+    { label: "Fonds propres", value: "10 000 €" },
+    { label: "Prop Firm", value: "10 000 € à 200 000 €" },
+  ],
+  callout: "💡 Avec environ 1 000 €, vous pouvez combiner 1 an de Qrypton + un challenge 10 000 €.",
+  example: "Tarifs indicatifs. Les conditions et tailles de comptes varient selon la Prop Firm. La réussite d'un challenge n'est pas garantie.",
   highlight: true,
   linkHref: "/guide-qrypton/prop-firm",
+  linkLabel: "Qu'est-ce qu'une Prop Firm ?",
+};
+
   linkLabel: "Qu'est-ce qu'une Prop Firm ?",
 };
 
@@ -89,9 +99,26 @@ export default function TradingBasicsCards() {
           >
             <b.icon className="w-5 h-5 text-blue-soft" strokeWidth={1.6} />
           </div>
-          <h3 className="text-[15px] font-semibold mb-2">{b.title}</h3>
-          <p className="text-[13px] text-muted leading-relaxed mb-2.5 whitespace-pre-line">{b.text}</p>
-          <p className="text-[12px] text-muted-2 leading-relaxed border-t border-line pt-2.5">{b.example}</p>
+         <h3 className="text-[15px] font-semibold mb-2">{b.title}</h3>
+              {b.text && (
+                <p className="text-[13px] text-muted leading-relaxed mb-2.5 whitespace-pre-line">{b.text}</p>
+              )}
+              {b.stats && (
+                <div className="flex flex-col gap-1.5 mb-3">
+                  {b.stats.map((s) => (
+                    <div key={s.label} className="flex items-baseline justify-between gap-3">
+                      <span className="text-[12.5px] text-muted">{s.label}</span>
+                      <span className="text-[14px] font-semibold font-mono text-white">{s.value}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {b.callout && (
+                <div className="text-[12.5px] font-medium text-blue-soft bg-blue/10 border border-blue/20 rounded-lg px-3 py-2.5 mb-2.5 leading-relaxed">
+                  {b.callout}
+                </div>
+              )}
+              <p className="text-[11.5px] text-muted-2 leading-relaxed border-t border-line pt-2.5">{b.example}</p>
           {b.linkHref && (
             <div className="flex justify-end mt-3">
               <Link
