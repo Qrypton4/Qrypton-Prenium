@@ -28,9 +28,6 @@ const CAPITAL_CARD: BasicCard = {
   linkLabel: "Qu'est-ce qu'une Prop Firm ?",
 };
 
-  linkLabel: "Qu'est-ce qu'une Prop Firm ?",
-};
-
 const BASICS: BasicCard[] = [
   {
     icon: ShieldAlert,
