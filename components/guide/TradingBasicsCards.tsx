@@ -9,7 +9,7 @@ type BasicCard = {
   highlight?: boolean;
   linkHref?: string;
   linkLabel?: string;
-  stats?: { label: string; value: string }[];
+  stats?: { label: string; value: string; note?: string }[];
   callout?: string;
 };
 
@@ -17,10 +17,10 @@ const CAPITAL_CARD: BasicCard = {
   icon: Wallet,
   title: "Quel capital prévoir ?",
   text: "",
-  stats: [
-    { label: "Fonds propres", value: "10 000 €" },
-    { label: "Prop Firm", value: "10 000 € à 200 000 €" },
-  ],
+ stats: [
+      { label: "Fonds propres", value: "10 000 €" },
+      { label: "Prop Firm", value: "10 000 € à 200 000 €", note: "sans risque personnel" },
+    ],
   callout: "💡 Avec environ 1 000 €, vous pouvez combiner 1 an de Qrypton + un challenge 10 000 €.",
   example: "Tarifs indicatifs. Les conditions et tailles de comptes varient selon la Prop Firm. La réussite d'un challenge n'est pas garantie.",
   highlight: true,
@@ -101,15 +101,20 @@ export default function TradingBasicsCards() {
                 <p className="text-[13px] text-muted leading-relaxed mb-2.5 whitespace-pre-line">{b.text}</p>
               )}
               {b.stats && (
-                <div className="flex flex-col gap-1.5 mb-3">
-                  {b.stats.map((s) => (
-                    <div key={s.label} className="flex items-baseline justify-between gap-3">
-                      <span className="text-[12.5px] text-muted">{s.label}</span>
-                      <span className="text-[14px] font-semibold font-mono text-white">{s.value}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
+  <div className="flex flex-col gap-2 mb-3">
+    {b.stats.map((s) => (
+      <div key={s.label}>
+        <div className="flex items-baseline justify-between gap-3">
+          <span className="text-[12.5px] text-muted">{s.label}</span>
+          <span className="text-[14px] font-semibold font-mono text-white">{s.value}</span>
+        </div>
+        {s.note && (
+          <div className="text-[10.5px] text-positive text-right mt-0.5">({s.note})</div>
+        )}
+      </div>
+    ))}
+  </div>
+)}
               {b.callout && (
                 <div className="text-[12.5px] font-medium text-blue-soft bg-blue/10 border border-blue/20 rounded-lg px-3 py-2.5 mb-2.5 leading-relaxed">
                   {b.callout}
