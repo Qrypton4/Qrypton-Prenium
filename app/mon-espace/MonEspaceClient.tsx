@@ -410,6 +410,7 @@ function PerformanceTabRich({
 
   const chrono = [...trades].reverse();
   const balances: number[] = chrono.map((t: any) => Number(t.balance_after ?? lastBalance));
+  const dates: string[] = chrono.map((t: any) => t.close_time);
   const firstDate = chrono[0]?.close_time;
 
   const wins = trades.filter((t: any) => Number(t.profit) > 0).length;
