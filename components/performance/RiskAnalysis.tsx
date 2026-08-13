@@ -46,9 +46,6 @@ export default function RiskAnalysis({ s }: { s: PerformanceSummary }) {
         </div>
         <div className="bg-bg-2 p-6">
           <h3 className="font-display text-base font-semibold mb-3">Qrypton utilise les intérêts composés</h3>
-          <div className="font-mono text-2xl font-semibold text-white">
-            {riskAtStart.toLocaleString("fr-FR")} € → {riskNow.toLocaleString("fr-FR")} €
-          </div>
           <p className="text-[11.5px] text-muted-2 leading-relaxed mt-3">
             Effet boule de neige : le robot risque toujours 0,5 % du capital du moment, pas un
             montant fixe. Sur ce backtest, le risque par trade est ainsi passé de{" "}
