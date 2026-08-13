@@ -48,7 +48,7 @@ export default function RiskAnalysis({ s }: { s: PerformanceSummary }) {
           <h3 className="font-display text-base font-semibold mb-3">Qrypton utilise les intérêts composés</h3>
           <p className="text-[11.5px] text-muted-2 leading-relaxed mt-3">
             Effet boule de neige : le robot risque toujours 0,5 % du capital du moment, pas un
-            montant fixe. Sur ce backtest, le risque par trade est ainsi passé de{" "}
+            montant fixe. Sur cette période de référence, le risque par trade est ainsi passé de{" "}
             {riskAtStart.toLocaleString("fr-FR")} € sur un compte de départ à{" "}
             {s.initialCapital.toLocaleString("fr-FR")} € à {riskNow.toLocaleString("fr-FR")} €{" "}
             une fois le compte monté à {Math.round(s.finalCapital).toLocaleString("fr-FR")} € —
@@ -64,7 +64,7 @@ export default function RiskAnalysis({ s }: { s: PerformanceSummary }) {
         <p className="text-sm text-muted leading-relaxed">
           Avec un Profit Factor de <strong className="text-white">{s.profitFactor.toFixed(2)}</strong>,
           la stratégie génère environ {s.profitFactor.toFixed(2)} € de gains pour chaque euro perdu sur
-          l&apos;ensemble des {s.totalTrades} trades du backtest. Le drawdown maximal observé (
+          l&apos;ensemble des {s.totalTrades} trades de la période de référence. Le drawdown maximal observé (
           {s.maxDrawdownPct} % en solde) reste contenu malgré un taux de réussite modéré (
           {s.winRate} %) — cohérent avec une stratégie à faible Win Rate mais à ratio
           rendement/risque élevé (RR moyen {s.avgRiskReward?.toFixed(2)}), où la régularité vient du
