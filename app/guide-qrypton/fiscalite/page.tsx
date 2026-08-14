@@ -80,9 +80,12 @@ export default function GuideFiscalite() {
           </div>
         </Reveal>
 
-        {/* Broker — Fonds propres */}
+       {/* Broker — Fonds propres */}
         <Reveal delay={0.08}>
-          <div className="border border-line rounded-2xl bg-bg-2 p-8 md:p-10 mb-6">
+          <div className="text-[10.5px] text-muted-2 uppercase tracking-widest font-mono mb-3 px-1">
+            Exemples chiffrés
+          </div>
+          <div className="border border-line rounded-2xl bg-bg-2 p-8 md:p-10 mb-6"> 
             <h2 className="font-display text-base font-semibold mb-1">💼 Broker — Fonds propres</h2>
             <p className="text-muted-2 text-[12.5px] mb-2">Vous utilisez votre propre capital</p>
 
