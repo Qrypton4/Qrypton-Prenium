@@ -4,19 +4,27 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, User } from "lucide-react";
+import { Menu, X, User, ChevronDown } from "lucide-react";
 import { ProfileMenu } from "./navbar/ProfileMenu";
 import type { LicenseStatus } from "@/lib/license";
 
 const BASE_LINKS = [
   { href: "/", label: "Accueil" },
   { href: "/performance", label: "Performance du robot" },
-  { href: "/guide-qrypton/prop-firm", label: "Prop Firm" },
   { href: "/tarifs", label: "Tarifs" },
-  { href: "/guide-qrypton", label: "Guide Qrypton" },
+  {
+    href: "/guide-qrypton",
+    label: "Guide Qrypton",
+    subLinks: [
+      { href: "/guide-qrypton/prop-firm", label: "Prop Firm" },
+      { href: "/guide-qrypton/broker", label: "Broker" },
+      { href: "/guide-qrypton/fiscalite", label: "Fiscalité et obligations" },
+    ],
+  },
   { href: "/contact", label: "Contact" },
   { href: "/faq", label: "FAQ" },
 ];
+
 const EDGE_ZONE = 40; // px depuis le bord pour déclencher l'ouverture au swipe
 const SWIPE_THRESHOLD = 60; // px minimum de déplacement horizontal pour valider le geste
 const SWIPE_BACK_KEY = "qrypton_swipe_nav_pending";
@@ -47,6 +55,7 @@ type SiteNavProps = {
 
 export default function SiteNav({ isLoggedIn, firstName, license }: SiteNavProps) {
   const [open, setOpen] = useState(false);
+  const [guideOpen, setGuideOpen] = useState(false);
   const router = useRouter();
   const touchStart = useRef<{ x: number; y: number } | null>(null);
 
@@ -162,16 +171,56 @@ export default function SiteNav({ isLoggedIn, firstName, license }: SiteNavProps
           </button>
         </div>
         <div className="flex flex-col p-3">
-          {LINKS.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              onClick={() => setOpen(false)}
-              className="px-4 py-3.5 rounded-lg text-[14.5px] text-muted hover:text-white hover:bg-white/5 transition"
-            >
-              {l.label}
-            </Link>
-          ))}
+          {LINKS.map((l) =>
+            "subLinks" in l && l.subLinks ? (
+              <div key={l.href}>
+                <button
+                  onClick={() => setGuideOpen((v) => !v)}
+                  className={`w-full flex items-center justify-between px-4 py-3.5 rounded-lg text-[14.5px] transition ${
+                    guideOpen ? "text-blue-soft" : "text-muted hover:text-white hover:bg-white/5"
+                  }`}
+                >
+                  <span>{l.label}</span>
+                  <ChevronDown
+                    className={`w-4 h-4 transition-transform duration-200 ${guideOpen ? "rotate-180" : ""}`}
+                    strokeWidth={1.8}
+                  />
+                </button>
+                <div
+                  className={`overflow-hidden transition-all duration-200 ${
+                    guideOpen ? "max-h-60 opacity-100 mt-1" : "max-h-0 opacity-0"
+                  }`}
+                >
+                  <div className="ml-3 rounded-xl border border-white/[0.06] bg-[#111318] shadow-lg shadow-black/30 overflow-hidden">
+                    {l.subLinks.map((sub, i) => (
+                      <Link
+                        key={sub.href}
+                        href={sub.href}
+                        onClick={() => {
+                          setOpen(false);
+                          setGuideOpen(false);
+                        }}
+                        className={`block px-4 py-3 text-[13.5px] text-white/85 hover:text-blue-soft transition ${
+                          i > 0 ? "border-t border-white/[0.06]" : ""
+                        }`}
+                      >
+                        {sub.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <Link
+                key={l.href}
+                href={l.href}
+                onClick={() => setOpen(false)}
+                className="px-4 py-3.5 rounded-lg text-[14.5px] text-muted hover:text-white hover:bg-white/5 transition"
+              >
+                {l.label}
+              </Link>
+            )
+          )}
         </div>
       </nav>
     </>
