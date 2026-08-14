@@ -74,10 +74,11 @@ export default async function GuidePropFirm() {
             </div>
 
             <ChallengeSteps />
-            <div>
-              <h2 className="font-display text-base font-semibold mb-4">
-                Étapes d&apos;installation sur un compte Prop Firm
-              </h2>
+            
+            <div className="mt-8 pt-6 border-t border-line">
+  <h2 className="font-display text-base font-semibold mb-4">
+    Étapes d&apos;installation sur un compte Prop Firm
+  </h2>
               <StepList
                 steps={[
                   "Choisir une Prop Firm compatible MT5 et s'inscrire à un challenge.",
