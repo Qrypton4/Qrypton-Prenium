@@ -18,9 +18,6 @@ export default function GuidePropFirm() {
 
       <main className="max-w-[760px] mx-auto px-6 md:px-12 py-16">
         <Reveal>
-          <Link href="/guide-qrypton" className="text-sm text-muted hover:text-white transition">
-            ← Retour au guide
-          </Link>
           <div className="mt-6 mb-10">
             <div className="w-12 h-12 rounded-xl border border-line-strong bg-blue/5 flex items-center justify-center mb-5 text-xl">
               🚀
