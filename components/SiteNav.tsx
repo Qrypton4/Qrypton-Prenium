@@ -16,6 +16,7 @@ const BASE_LINKS = [
     href: "/guide-qrypton",
     label: "Guide Qrypton",
     subLinks: [
+      { href: "/guide-qrypton", label: "Guide Qrypton" },
       { href: "/guide-qrypton/prop-firm", label: "Prop Firm" },
       { href: "/guide-qrypton/broker", label: "Broker" },
       { href: "/guide-qrypton/fiscalite", label: "Fiscalité et obligations" },
@@ -174,35 +175,21 @@ export default function SiteNav({ isLoggedIn, firstName, license }: SiteNavProps
           {LINKS.map((l) =>
             "subLinks" in l && l.subLinks ? (
               <div key={l.href}>
-                <div
-                  className={`flex items-center rounded-lg transition ${
+                <button
+                  onClick={() => setGuideOpen((v) => !v)}
+                  className={`w-full flex items-center justify-between px-4 py-3.5 rounded-lg text-[14.5px] transition ${
                     guideOpen ? "text-blue-soft" : "text-muted hover:text-white hover:bg-white/5"
                   }`}
                 >
-                  <Link
-                    href={l.href}
-                    onClick={() => {
-                      setOpen(false);
-                      setGuideOpen(false);
-                    }}
-                    className="flex-1 px-4 py-3.5 text-[14.5px]"
-                  >
-                    {l.label}
-                  </Link>
-                  <button
-                    onClick={() => setGuideOpen((v) => !v)}
-                    aria-label="Afficher les sous-pages du guide"
-                    className="px-4 py-3.5"
-                  >
-                    <ChevronDown
-                      className={`w-4 h-4 transition-transform duration-200 ${guideOpen ? "rotate-180" : ""}`}
-                      strokeWidth={1.8}
-                    />
-                  </button>
-                </div>
+                  <span>{l.label}</span>
+                  <ChevronDown
+                    className={`w-4 h-4 transition-transform duration-200 ${guideOpen ? "rotate-180" : ""}`}
+                    strokeWidth={1.8}
+                  />
+                </button>
                 <div
                   className={`overflow-hidden transition-all duration-200 ${
-                    guideOpen ? "max-h-60 opacity-100 mt-1" : "max-h-0 opacity-0"
+                    guideOpen ? "max-h-72 opacity-100 mt-1" : "max-h-0 opacity-0"
                   }`}
                 >
                   <div className="ml-3 rounded-xl border border-white/[0.06] bg-[#111318] shadow-lg shadow-black/30 overflow-hidden">
