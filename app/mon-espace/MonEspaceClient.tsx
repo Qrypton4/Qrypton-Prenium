@@ -4,7 +4,6 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { Card, Row, Kpi } from "./ui";
 import Image from "next/image";
-import PWAInstallSettingsCard from "@/components/PWAInstallSettingsCard";
 
 const TABS = [
   { id: "dashboard", label: "📊 Tableau de bord" },
@@ -43,6 +42,7 @@ export default function MonEspaceClient({
 }) {
   const [tab, setTab] = useState<TabId>("dashboard");
   const [moreOpen, setMoreOpen] = useState(false);
+
   const bottomTabs = TABS.filter((t) => BOTTOM_IDS.includes(t.id));
   const moreTabs = TABS.filter((t) => !BOTTOM_IDS.includes(t.id));
 
@@ -301,54 +301,6 @@ function DashboardTab({ license, subscription, trades, netProfit, winRate, lastB
 
 /* ---------- Nouvelle page Performances (design riche) ---------- */
 
-function StatCard({ icon, label, value, sub, valueClass, subClass }: {
-  icon: React.ReactNode; label: string; value: string; sub: string;
-  valueClass?: string; subClass?: string;
-}) {
-  return (
-    <div className="rounded-2xl p-5 border border-white/[0.06] bg-gradient-to-b from-white/[0.03] to-transparent bg-[#0B1120] transition-all duration-300 hover:border-blue-400/25 hover:shadow-[0_0_30px_-10px_rgba(59,130,255,0.35)]">
-      <div className="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-400/20 flex items-center justify-center text-blue-300 mb-3">
-        {icon}
-      </div>
-      <div className="text-[10px] text-muted uppercase tracking-wide">{label}</div>
-      <div className={`text-2xl font-bold mt-1 ${valueClass ?? "text-white"}`}>{value}</div>
-      <div className={`text-xs mt-1 ${subClass ?? "text-muted"}`}>{sub}</div>
-    </div>
-  );
-}
-
-function IconTrend() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="3 17 9 11 13 15 21 7" /><polyline points="14 7 21 7 21 14" />
-    </svg>
-  );
-}
-function IconDollar() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="9" /><path d="M12 7v10M15 9.5c0-1.4-1.3-2.5-3-2.5s-3 1.1-3 2.5 1.3 2 3 2.5 3 1.1 3 2.5-1.3 2.5-3 2.5-3-1.1-3-2.5" />
-    </svg>
-  );
-}
-function IconBars() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="6" y1="20" x2="6" y2="12" /><line x1="12" y1="20" x2="12" y2="8" /><line x1="18" y1="20" x2="18" y2="4" />
-    </svg>
-  );
-}
-function IconTarget() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="5" /><circle cx="12" cy="12" r="1" fill="currentColor" />
-    </svg>
-  );
-} 
-function isMarketOpen() {
-  const day = new Date().getDay();
-  return day !== 0 && day !== 6;
-}
 function PerformanceTabRich({
   license,
   subscription,
@@ -358,37 +310,6 @@ function PerformanceTabRich({
   winRate,
   lastBalance,
 }: any) {
-  const [liveSnapshot, setLiveSnapshot] = useState<{
-    balance: number;
-    equity: number;
-    floating_pl: number;
-    open_positions_count: number;
-  } | null>(null);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    async function fetchSnapshot() {
-      try {
-        const res = await fetch("/api/dashboard/live-snapshot");
-        if (!res.ok) return;
-        const data = await res.json();
-        if (!cancelled && data.ok) {
-          setLiveSnapshot(data.snapshot);
-        }
-      } catch {
-        // silencieux : on retentera au prochain cycle
-      }
-    }
-
-    fetchSnapshot();
-    const interval = setInterval(fetchSnapshot, 5000);
-
-    return () => {
-      cancelled = true;
-      clearInterval(interval);
-    };
-  }, []);
   if (!hasTrades) {
     return (
       <div className="flex flex-col gap-6">
@@ -419,100 +340,65 @@ function PerformanceTabRich({
   const recentTrades = trades.slice(0, 3);
 
   return (
-      <div className="flex flex-col gap-5 tab-fade">
-        <h2 className="text-xs text-muted uppercase tracking-wide">Performances</h2>
+    <div className="flex flex-col gap-5">
+      <h2 className="text-xs text-muted uppercase tracking-wide">Performances</h2>
 
-        {/* HERO CARD */}
-        <div className="relative overflow-hidden rounded-[28px] p-6 sm:p-8 border border-blue-400/15 bg-gradient-to-br from-[#0B1226] via-[#0A0F1F] to-[#060912] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.6)]">
-          <div className="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-blue-500/20 blur-[80px] pointer-events-none" />
-          <div className="absolute -bottom-20 -left-10 w-56 h-56 rounded-full bg-blue-500/10 blur-[90px] pointer-events-none" />
-
-          <div className="flex justify-between items-start relative z-10">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-400/30 flex items-center justify-center text-blue-300">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="3 17 9 11 13 15 21 7" />
-                  <polyline points="14 7 21 7 21 14" />
-                </svg>
-              </div>
-              <div>
-                <div className="font-semibold text-[16px] text-white">OPR Edge™</div>
-                <div className="inline-flex items-center gap-1.5 mt-1 text-[11px] text-blue-300 bg-blue-500/10 rounded-full px-2.5 py-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-                  {license.status === "active" && isMarketOpen() ? "Robot actif" : "Robot inactif"}
-                </div>
+      <div className="rounded-[22px] p-6 border border-blue-soft/25 bg-gradient-to-br from-[#101B33] to-[#0A0D14] relative overflow-hidden">
+        <div className="flex justify-between items-start relative z-10">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-xl bg-blue-soft/10 border border-blue-soft/30 flex items-center justify-center text-blue-soft text-xl">
+              📈
+            </div>
+            <div>
+              <div className="font-semibold text-[15px]">OPR Edge™</div>
+              <div className="inline-flex items-center gap-1.5 mt-1 text-[11px] text-blue-soft bg-blue-soft/10 rounded-full px-2.5 py-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-soft" />
+                {license.status === "active" ? "Robot actif" : "Robot inactif"}
               </div>
             </div>
-            <div className="text-right">
-              <div className="text-[10px] text-muted uppercase tracking-wide">Performance totale</div>
-              <div className={`text-[30px] font-bold mt-0.5 ${perfPositive ? "text-blue-300" : "text-red-400"}`}>
-                {perfPositive ? "+" : ""}{perfPct.toFixed(2)} %
-              </div>
-              <div className="text-[10px] text-muted mt-0.5">{firstDate
+          </div>
+          <div className="text-right">
+            <div className="text-[10px] text-muted uppercase tracking-wide">
+              Performance totale
+            </div>
+            <div className={`text-[26px] font-bold mt-0.5 ${perfPositive ? "text-positive" : "text-red-400"}`}>
+              {perfPositive ? "+" : ""}
+              {perfPct.toFixed(2)} %
+            </div>
+          </div>
+        </div>
+
+        <MiniSpark values={balances} dates={dates} positive={perfPositive} />
+
+        <div className="flex justify-between items-center mt-3 text-[11px] text-muted relative z-10">
+          <span>
+            {firstDate
               ? `Depuis le ${new Date(firstDate).toLocaleDateString("fr-FR")}`
-              : "Depuis l'activation"}</div>
-            </div>
-          </div>
-
-          <MiniSpark values={balances} dates={dates} positive={perfPositive} />
-
-
-         <div className="flex items-center justify-between mt-3 text-[11px] text-muted relative z-10">
-            {liveSnapshot && liveSnapshot.open_positions_count > 0 && (
-                <span className="flex items-center gap-1.5">
-                  <span className="text-[10px] text-muted uppercase tracking-wide">
-                    Position{liveSnapshot.open_positions_count > 1 ? "s" : ""} ouverte{liveSnapshot.open_positions_count > 1 ? "s" : ""}
-                    {liveSnapshot.open_positions_count > 1 ? ` (${liveSnapshot.open_positions_count})` : ""}
-                  </span>
-                  <span
-                    className={`font-semibold text-[13px] ${
-                      liveSnapshot.floating_pl >= 0 ? "text-green-400" : "text-red-400"
-                    }`}
-                  >
-                    {liveSnapshot.floating_pl >= 0 ? "+" : ""}
-                    {liveSnapshot.floating_pl.toFixed(2)} €
-                  </span>
-                </span>
-              )}
-          </div>
+              : "Historique de trading"}
+          </span>
+          <span className="text-blue-soft font-medium">Voir le détail →</span>
         </div>
+      </div>
 
-        {/* 4 CARTES STATS */}
-        <div className="grid grid-cols-2 gap-3 sm:gap-4">
-          <StatCard
-            icon={<IconTrend />}
-            label="Capital"
-            value={`${Math.round(lastBalance).toLocaleString("fr-FR")} €`}
-            sub="Compte connecté"
-          />
-          <StatCard
-            icon={<IconDollar />}
-            label="Profit total"
-            value={`${netProfit >= 0 ? "+" : ""}${Math.round(netProfit).toLocaleString("fr-FR")} €`}
-            valueClass={perfPositive ? "text-blue-300" : "text-red-400"}
-            sub={`${perfPositive ? "+" : ""}${perfPct.toFixed(2)} %`}
-            subClass={perfPositive ? "text-blue-300" : "text-red-400"}
-          />
-          <StatCard
-            icon={<IconBars />}
-            label="Trades"
-            value={String(trades.length)}
-            sub="Depuis l'activation"
-          />
-          <StatCard
-            icon={<IconTarget />}
-            label="Win rate"
-            value={`${winRate} %`}
-            sub={`${wins} gagnants / ${losses} perdants`}
-          />
-        </div>
+      <div className="grid grid-cols-2 gap-3">
+        <KpiRich label="Capital" value={`${Math.round(lastBalance).toLocaleString("fr-FR")} €`} sub="Compte connecté" />
+        <KpiRich
+          label="Profit total"
+          value={`${netProfit >= 0 ? "+" : ""}${Math.round(netProfit).toLocaleString("fr-FR")} €`}
+          valueClass={netProfit >= 0 ? "text-positive" : "text-red-400"}
+          sub={`${perfPositive ? "+" : ""}${perfPct.toFixed(2)} %`}
+          subClass={perfPositive ? "text-positive" : "text-red-400"}
+        />
+        <KpiRich label="Trades" value={trades.length} sub="Depuis l'activation" />
+        <KpiRich label="Win rate" value={`${winRate} %`} sub={`${wins} gagnants / ${losses} perdants`} />
+      </div>
 
       <Card title="État du robot">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <StatusItem
-            label={license.status === "active" && isMarketOpen() ? "Robot actif" : "Robot inactif"}
+            label={license.status === "active" ? "Robot actif" : "Robot inactif"}
             sub="Marché surveillé : NAS100"
-            positive={license.status === "active" && isMarketOpen()}
+            positive={license.status === "active"}
           />
           <StatusItem
             label={license.mt5_account_login ? "Connecté à MT5" : "Non connecté"}
@@ -570,10 +456,8 @@ function PerformanceTabRich({
           })}
         </div>
       </Card>
-    </div>
-  );
-}
-<button
+
+      <button
         onClick={() => downloadTradesCSV(trades)}
         className="border border-line rounded-2xl bg-bg-2 px-5 py-4 flex items-center justify-between text-left hover:border-blue-soft/40 hover:bg-white/[0.03] transition"
       >
@@ -585,6 +469,9 @@ function PerformanceTabRich({
         </div>
         <span className="text-blue-soft text-lg">⬇</span>
       </button>
+    </div>
+  );
+}
 
 function downloadTradesCSV(trades: any[]) {
   const header = [
@@ -690,7 +577,7 @@ function MiniSpark({
 
   if (!values || values.length < 2) return null;
   const W = 386;
-  const H = 110;
+  const H = 80;
   const min = Math.min(...values);
   const max = Math.max(...values);
   const range = max - min || 1;
@@ -701,7 +588,7 @@ function MiniSpark({
   }));
   const path = coords.map((c, i) => `${i === 0 ? "M" : "L"}${c.x},${c.y}`).join(" ");
   const area = `${path} L${W},${H} L0,${H} Z`;
-  const color = "#3B82FF";
+  const color = positive ? "#3DDC8A" : "#FF5C6C";
 
   function updateHoverFromClientX(clientX: number, rect: DOMRect) {
     const relX = ((clientX - rect.left) / rect.width) * W;
@@ -749,14 +636,7 @@ function MiniSpark({
           </linearGradient>
         </defs>
         <path d={area} fill="url(#sparkGrad)" />
-        <path
-          d={path}
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          style={{ filter: "drop-shadow(0 0 6px rgba(59,130,255,0.55))" }}
-        />
+        <path d={path} fill="none" stroke={color} strokeWidth="2.2" />
         <circle cx={coords[coords.length - 1].x} cy={coords[coords.length - 1].y} r="3.5" fill={color} />
 
         {hover && (
@@ -954,9 +834,6 @@ function SettingsTab({ email }: { email?: string | null }) {
           <button className="text-sm text-red-400 hover:underline">Déconnexion</button>
         </form>
       </Card>
-      <Card title="Application">
-              <PWAInstallSettingsCard />
-     </Card>
     </div>
   );
 }
