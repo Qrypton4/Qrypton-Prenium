@@ -5,6 +5,7 @@ import ExampleFirmsList from "@/components/guide/ExampleFirmsList";
 import PricingCTAButton from "@/components/guide/PricingCTAButton";
 import { Reveal } from "@/components/Animated";
 import { createClient } from "@/lib/supabase-server";
+import ChallengeSteps from "@/components/guide/ChallengeSteps";
 
 export const metadata = {
   title: "Prop Firm — Guide Qrypton",
