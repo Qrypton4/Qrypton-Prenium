@@ -73,6 +73,7 @@ export default async function GuidePropFirm() {
               </div>
             </div>
 
+            <ChallengeSteps />
             <div>
               <h2 className="font-display text-base font-semibold mb-4">
                 Étapes d&apos;installation sur un compte Prop Firm
