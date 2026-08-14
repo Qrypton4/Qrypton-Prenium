@@ -15,7 +15,7 @@ export default function StatCards({ s }: { s: PerformanceSummary }) {
     { label: "Capital initial", value: s.initialCapital, suffix: " €", decimals: 0 },
     { label: "Capital final", value: s.finalCapital, suffix: " €", decimals: 0, positive: true },
     { label: "Gain total", value: s.netProfitEUR, suffix: " €", decimals: 0, positive: true },
-    { label: "Gain total", value: s.netProfitPct, suffix: " %", decimals: 2, positive: true },
+    { label: "Gain total (%)", value: s.netProfitPct, suffix: " %", decimals: 2, positive: true },
     { label: "Profit Factor", value: s.profitFactor, decimals: 2 },
     { label: "Win Rate", value: s.winRate, suffix: " %", decimals: 2 },
     { label: "Trades", value: s.totalTrades, decimals: 0 },
