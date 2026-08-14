@@ -570,10 +570,8 @@ function PerformanceTabRich({
           })}
         </div>
       </Card>
-    </div>
-  );
-}
-<button
+
+      <button
         onClick={() => downloadTradesCSV(trades)}
         className="border border-line rounded-2xl bg-bg-2 px-5 py-4 flex items-center justify-between text-left hover:border-blue-soft/40 hover:bg-white/[0.03] transition"
       >
@@ -585,6 +583,9 @@ function PerformanceTabRich({
         </div>
         <span className="text-blue-soft text-lg">⬇</span>
       </button>
+    </div>
+  );
+}
 
 function downloadTradesCSV(trades: any[]) {
   const header = [
