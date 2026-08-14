@@ -573,6 +573,61 @@ function PerformanceTabRich({
     </div>
   );
 }
+<button
+        onClick={() => downloadTradesCSV(trades)}
+        className="border border-line rounded-2xl bg-bg-2 px-5 py-4 flex items-center justify-between text-left hover:border-blue-soft/40 hover:bg-white/[0.03] transition"
+      >
+        <div>
+          <div className="text-[13.5px] font-medium">Télécharger l&apos;historique complet</div>
+          <div className="text-[11.5px] text-muted-2 mt-0.5">
+            {trades.length} trade{trades.length > 1 ? "s" : ""} · fichier CSV
+          </div>
+        </div>
+        <span className="text-blue-soft text-lg">⬇</span>
+      </button>
+
+function downloadTradesCSV(trades: any[]) {
+  const header = [
+    "Marché",
+    "Date d'ouverture",
+    "Prix d'ouverture",
+    "Date de clôture",
+    "Prix de clôture",
+    "Direction",
+    "Volume (lots)",
+    "Profit (€)",
+    "Solde après trade (€)",
+  ];
+
+  const rows = [...trades]
+    .sort((a, b) => new Date(a.close_time).getTime() - new Date(b.close_time).getTime())
+    .map((t) => [
+      t.symbol ?? "",
+      t.open_time ? new Date(t.open_time).toLocaleString("fr-FR") : "",
+      t.open_price != null ? Number(t.open_price) : "",
+      t.close_time ? new Date(t.close_time).toLocaleString("fr-FR") : "",
+      t.close_price != null ? Number(t.close_price) : "",
+      t.direction === "buy" ? "Achat" : t.direction === "sell" ? "Vente" : t.direction ?? "",
+      t.lot_size ?? "",
+      Number(t.profit ?? 0).toFixed(2),
+      t.balance_after != null ? Number(t.balance_after).toFixed(2) : "",
+    ]);
+
+  const csv = [header, ...rows]
+    .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(";"))
+    .join("\n");
+
+  const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const today = new Date().toISOString().slice(0, 10);
+  a.href = url;
+  a.download = `qrypton-historique-trades-${today}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 
 function KpiRich({
   label,
