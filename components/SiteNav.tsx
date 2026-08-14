@@ -11,12 +11,12 @@ import type { LicenseStatus } from "@/lib/license";
 const BASE_LINKS = [
   { href: "/", label: "Accueil" },
   { href: "/performance", label: "Performance du robot" },
+  { href: "/guide-qrypton/prop-firm", label: "Prop Firm" },
   { href: "/tarifs", label: "Tarifs" },
   { href: "/guide-qrypton", label: "Guide Qrypton" },
   { href: "/contact", label: "Contact" },
   { href: "/faq", label: "FAQ" },
 ];
-
 const EDGE_ZONE = 40; // px depuis le bord pour déclencher l'ouverture au swipe
 const SWIPE_THRESHOLD = 60; // px minimum de déplacement horizontal pour valider le geste
 const SWIPE_BACK_KEY = "qrypton_swipe_nav_pending";
