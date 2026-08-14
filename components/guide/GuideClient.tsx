@@ -59,7 +59,7 @@ export default function GuideClient() {
             <Ol items={[
               "Téléchargez MetaTrader 5 depuis le site officiel de votre broker ou de MetaQuotes.",
               "Installez-le comme n'importe quel logiciel (suivant, suivant, terminer).",
-              "Ouvrez MT5 et connectez-vous avec les identifiants de votre compte (login, mot de passe, serveur) — vous les recevez par email à l'ouverture du compte.",
+            "Ouvrez MT5 et connectez-vous avec les identifiants de votre compte (login, mot de passe, serveur) — vous les recevez par email de votre broker (fonds propres) ou de votre Prop Firm à l'ouverture du compte.", 
             ]} />
           </StepBody>
         )}
