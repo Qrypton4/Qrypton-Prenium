@@ -46,20 +46,6 @@ export default async function GuidePropFirm() {
               de trader manuellement.
             </Field>
             
-
-            <Field title="Comment fonctionne un challenge ?">
-              Un objectif de gain doit être atteint sur un compte de démonstration, dans le respect
-              de règles de drawdown maximal et journalier définies par la société. Une fois ces
-              règles respectées, le compte est financé et le robot continue d&apos;exécuter sa
-              stratégie sur ce capital.
-            </Field>
-
-            <Field title="Les principales règles">
-              Perte maximale journalière, perte maximale globale (drawdown), et parfois un nombre
-              minimum de jours de trading actif. Le robot Qrypton applique un risque fixe compatible
-              avec ces règles.
-            </Field>
-        
             <Field title="Si je perds le compte financé, dois-je rembourser ?">
                Non. Le capital appartient à la Prop Firm, pas à vous. En cas de
                liquidation du compte (drawdown dépassé), vous perdez simplement
