@@ -3,19 +3,15 @@ import SiteNavContainer from "@/components/SiteNavContainer";
 import StepList from "@/components/guide/StepList";
 import ExampleFirmsList from "@/components/guide/ExampleFirmsList";
 import PricingCTAButton from "@/components/guide/PricingCTAButton";
-import { Reveal } from "@/components/Animated";
-import { createClient } from "@/lib/supabase-server";
 import ChallengeSteps from "@/components/guide/ChallengeSteps";
+import { Reveal } from "@/components/Animated";
 
 export const metadata = {
   title: "Prop Firm — Guide Qrypton",
   description: "Comprendre comment utiliser le robot Qrypton via une Prop Firm et un compte financé.",
 };
 
-export default async function GuidePropFirm() {
-  const supabase = createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
+export default function GuidePropFirm() {
   return (
     <>
       <SiteNavContainer />
