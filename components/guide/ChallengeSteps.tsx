@@ -97,7 +97,7 @@ export default function ChallengeSteps() {
         ))}
       </div>
 
-      <p className="text-muted-2 text-[11px] leading-relaxed mt-5">
+      <p className="text-muted-2 text-[11px] leading-relaxed mt-2">
         Les frais, objectifs, règles, remboursements et conditions de partage des bénéfices
         varient selon chaque Prop Firm. La réussite d&apos;un challenge et les performances
         futures ne sont pas garanties.
