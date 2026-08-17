@@ -58,10 +58,12 @@ export default function GuidePropFirm() {
               </div>
               <div>
                 <div className="text-[10.5px] text-muted-2 uppercase tracking-wide font-mono mb-2">Contraintes</div>
-                <p className="text-muted text-[13.5px] leading-relaxed">
+               <p className="text-muted text-[13.5px] leading-relaxed">
                   Les profits sont partagés avec la société (généralement 80 % pour vous, 20 % pour
                   la Prop Firm), et des règles de drawdown strictes doivent être respectées en
-                  permanence.
+                  permanence. Le challenge peut durer quelques semaines à plusieurs mois. Qrypton
+                  ne force pas les trades : l&apos;objectif est atteint progressivement, dans le
+                  respect des règles de la Prop Firm.
                 </p>
               </div>
             </div>
