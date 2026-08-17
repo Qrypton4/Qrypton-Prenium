@@ -2,14 +2,35 @@
 //| OPR_LiveReport.mqh |
 //| Envoie chaque trade clôturé vers l'API Qrypton (Performance live)|
 //| À appeler depuis OnTradeTransaction() quand un deal de sortie |
-//| est détecté (DEAL_ENTRY_OUT). |
+//| est détecté (DEAL_ENTRY_OUT). Inclut un rattrapage automatique |
+//| des trades manqués (PC/MT5 éteint au moment de la clôture), |
+//| à appeler dans OnInit() via CatchUpMissedTrades(). |
 //+------------------------------------------------------------------+
 #property strict
 
 string ReportUrl = "https://api.qrypton.io/v1/trades/report";
 
+// Mémorise le dernier trade correctement envoyé, pour ne pas le renvoyer
+// deux fois et pour savoir jusqu'où remonter au redémarrage.
+ulong g_lastReportedTicket = 0;
+
+string GlobalVarName()
+  {
+   return "Qrypton_LastTicket_" + IntegerToString((int)AccountInfoInteger(ACCOUNT_LOGIN)) + "_" + _Symbol;
+  }
+
+void SaveLastReportedTicket(ulong ticket)
+  {
+   if(ticket > g_lastReportedTicket)
+     {
+      g_lastReportedTicket = ticket;
+      GlobalVariableSet(GlobalVarName(), (double)ticket);
+     }
+  }
+
 //+------------------------------------------------------------------+
-//| dealTicket = ticket du deal de clôture (fourni par OnTradeTransaction) |
+//| dealTicket = ticket du deal de clôture (fourni par OnTradeTransaction |
+//| ou par le rattrapage CatchUpMissedTrades) |
 //+------------------------------------------------------------------+
 void ReportClosedTrade(ulong dealTicket)
   {
@@ -47,8 +68,8 @@ void ReportClosedTrade(ulong dealTicket)
         }
      }
 
-   // R multiple approximatif basé sur le risque fixe défini dans l'EA (RiskPercent)
-   double riskAmount = balanceAfter * (RiskPercent / 100.0);
+   // R multiple approximatif basé sur le risque fixe défini dans l'EA (InpRiskPercent)
+   double riskAmount = balanceAfter * (InpRiskPercent / 100.0);
    double rMultiple = (riskAmount != 0) ? profit / riskAmount : 0;
 
    string json = StringFormat(
@@ -65,9 +86,83 @@ void ReportClosedTrade(ulong dealTicket)
    int res = WebRequest("POST", ReportUrl, headers, 5000, post, result, resultHeaders);
 
    if(res == -1)
-      PrintFormat("Qrypton: échec de l'envoi du trade au serveur (code %d). Il sera retenté au prochain trade.", GetLastError());
+      PrintFormat("Qrypton: échec de l'envoi du trade #%d au serveur (code %d). Il sera retenté au prochain démarrage.", dealTicket, GetLastError());
    else
-      Print("Qrypton: trade reporté avec succès.");
+     {
+      Print("Qrypton: trade #", dealTicket, " reporté avec succès.");
+      SaveLastReportedTicket(dealTicket);
+     }
+  }
+
+//+------------------------------------------------------------------+
+//| Rattrapage des trades clôturés pendant que le robot était éteint |
+//| (PC arrêté, MT5 fermé, coupure...). À appeler dans OnInit(), |
+//| après la vérification de licence. |
+//+------------------------------------------------------------------+
+void CatchUpMissedTrades()
+  {
+   string varName = GlobalVarName();
+   bool firstRun = !GlobalVariableCheck(varName);
+
+   if(firstRun)
+     {
+      // Premier lancement avec ce système : on ne renvoie pas tout l'historique
+      // existant du compte, on se contente de retenir le dernier trade déjà
+      // présent comme point de départ pour les futurs rattrapages.
+      ulong maxTicket = 0;
+      if(HistorySelect(0, TimeCurrent()))
+        {
+         int total = HistoryDealsTotal();
+         for(int i = 0; i < total; i++)
+           {
+            ulong ticket = HistoryDealGetTicket(i);
+            if(HistoryDealGetString(ticket, DEAL_SYMBOL) != _Symbol) continue;
+            if(HistoryDealGetInteger(ticket, DEAL_MAGIC) != InpMagicNumber) continue;
+            if(HistoryDealGetInteger(ticket, DEAL_ENTRY) != DEAL_ENTRY_OUT) continue;
+            if(ticket > maxTicket) maxTicket = ticket;
+           }
+        }
+      g_lastReportedTicket = maxTicket;
+      GlobalVariableSet(varName, (double)maxTicket);
+      Print("Qrypton: initialisation du suivi des trades (aucun rattrapage au premier lancement).");
+      return;
+     }
+
+   g_lastReportedTicket = (ulong)GlobalVariableGet(varName);
+
+   if(!HistorySelect(0, TimeCurrent()))
+      return;
+
+   int total = HistoryDealsTotal();
+   ulong toProcess[];
+   int count = 0;
+   ArrayResize(toProcess, total);
+
+   for(int i = 0; i < total; i++)
+     {
+      ulong ticket = HistoryDealGetTicket(i);
+      if(ticket <= g_lastReportedTicket) continue;
+      if(HistoryDealGetString(ticket, DEAL_SYMBOL) != _Symbol) continue;
+      if(HistoryDealGetInteger(ticket, DEAL_MAGIC) != InpMagicNumber) continue;
+      if(HistoryDealGetInteger(ticket, DEAL_ENTRY) != DEAL_ENTRY_OUT) continue;
+
+      toProcess[count] = ticket;
+      count++;
+     }
+
+   if(count == 0)
+     {
+      Print("Qrypton: aucun trade manqué à rattraper.");
+      return;
+     }
+
+   ArrayResize(toProcess, count);
+   ArraySort(toProcess);
+
+   PrintFormat("Qrypton: %d trade(s) manqué(s) détecté(s), rattrapage en cours...", count);
+
+   for(int i = 0; i < count; i++)
+      ReportClosedTrade(toProcess[i]);
   }
 
 //+------------------------------------------------------------------+
