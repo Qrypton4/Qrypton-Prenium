@@ -273,7 +273,7 @@ function RecapStep({
         disabled
         className="block w-full max-w-[320px] mx-auto text-center py-3.5 rounded-[10px] font-semibold text-[15px] bg-white text-bg opacity-90 cursor-not-allowed transition"
       >
-        Continuer — {price}€{billing === "monthly" ? "/mois" : ""}
+        Commencer maintenant — {price}€{billing === "monthly" ? "/mois" : ""}
       </button>
       <div className="text-center text-[11px] text-muted-2 font-mono mt-3">
         Ouverture des paiements Prop Firm très prochainement
