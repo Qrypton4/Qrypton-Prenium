@@ -16,6 +16,11 @@ const FIRM_DESCRIPTIONS: Record<string, string> = {
   fundednext: "Utilisez Qrypton sur un compte FundedNext compatible.",
 };
 
+const FIRM_URLS: Record<string, string> = {
+  ftmo: "https://ftmo.com",
+  fundednext: "https://fundednext.com",
+};
+
 const FIRM_ORDER = ["ftmo", "fundednext"];
 
 export default async function TarifsPropFirm() {
@@ -61,12 +66,15 @@ export default async function TarifsPropFirm() {
                 key={firm.slug}
                 firm={firm}
                 description={FIRM_DESCRIPTIONS[firm.slug] ?? ""}
+                officialUrl={FIRM_URLS[firm.slug]}
               />
             ))}
           </div>
+          <p className="text-muted-2 text-[11px] text-center max-w-[620px] mx-auto -mt-8 mb-14">
+            Qrypton n&apos;est affilié à aucune de ces Prop Firms ; les liens ci-dessus renvoient
+            vers leurs sites officiels respectifs.
+          </p>
         </Reveal>
-
-        {/* Explication de la capacité */}
         <Reveal delay={0.08}>
           <div className="max-w-[720px] mx-auto border border-line rounded-2xl bg-bg-2 p-8 md:p-10 mb-14">
             <h2 className="font-display text-lg font-semibold mb-4">
@@ -77,7 +85,8 @@ export default async function TarifsPropFirm() {
               stratégie automatisée est utilisée par plusieurs traders.
             </p>
             <p className="text-muted text-[13.5px] leading-relaxed mb-3">
-              Qrypton suit ces conditions afin de respecter les règles de chaque Prop Firm.
+              Qrypton suit ces conditions afin de respecter les règles propres à chaque Prop
+              Firm.
             </p>
             <p className="text-muted text-[13.5px] leading-relaxed mb-3">
               La capacité affichée correspond au montant de capital que Qrypton peut actuellement
@@ -162,9 +171,11 @@ function tierForCapital(capital: number) {
 function FirmCardView({
   firm,
   description,
+  officialUrl,
 }: {
   firm: PropFirmAllocationStatus;
   description: string;
+  officialUrl?: string;
 }) {
   const capacityKnown = firm.allocationMax !== null;
   const percentUsed =
@@ -211,9 +222,20 @@ function FirmCardView({
         )}
       </div>
 
-      <span className="inline-block text-blue-soft text-sm font-medium hover:underline cursor-default">
-        En savoir plus →
-      </span>
+      {officialUrl ? (
+        <a
+          href={officialUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block text-blue-soft text-sm font-medium hover:underline"
+        >
+          En savoir plus (site officiel) ↗
+        </a>
+      ) : (
+        <span className="inline-block text-blue-soft text-sm font-medium hover:underline cursor-default">
+          En savoir plus →
+        </span>
+      )}
     </div>
   );
 }
