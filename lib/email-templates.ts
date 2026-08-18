@@ -170,6 +170,42 @@ export function checkIn7DaysEmail(firstName: string) {
     ),
   };
 }
+export function propFirmSupplementChangedEmail(
+  firstName: string,
+  added: boolean,
+  capital: string,
+  newAmount: string,
+  renewalDate: string
+) {
+  return added
+    ? {
+        subject: "Mise à jour de votre abonnement Qrypton — Grande Allocation",
+        html: wrapper(
+          `Bonjour ${firstName},`,
+          `<p>Après vérification de votre compte Prop Firm, votre allocation Funded est de
+           <strong>${capital}</strong>.</p>
+           <p>Le Supplément Grande Allocation s'applique donc à votre licence Qrypton.
+           Votre tarif actuel reste inchangé jusqu'à la fin de votre période déjà payée.</p>
+           <p>À partir de votre prochain renouvellement, le <strong>${renewalDate}</strong>,
+           votre abonnement passera à <strong>${newAmount}</strong>.</p>`,
+          "Voir mon espace client",
+          `${SITE_URL}/mon-espace`
+        ),
+      }
+    : {
+        subject: "Mise à jour de votre abonnement Qrypton",
+        html: wrapper(
+          `Bonjour ${firstName},`,
+          `<p>Votre allocation Prop Firm est désormais de <strong>${capital}</strong>.</p>
+           <p>Le Supplément Grande Allocation ne s'applique plus à votre licence Qrypton.</p>
+           <p>À partir de votre prochain renouvellement, le <strong>${renewalDate}</strong>,
+           votre abonnement repassera à <strong>${newAmount}</strong>.</p>`,
+          "Voir mon espace client",
+          `${SITE_URL}/mon-espace`
+        ),
+      };
+}
+
 export function seasonalNoticeEmail(firstName: string) {
   return {
     subject: "Qrypton pendant l'été : ce qui change (et ce qui ne change pas)",
