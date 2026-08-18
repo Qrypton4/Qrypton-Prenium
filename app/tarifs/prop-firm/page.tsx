@@ -2,7 +2,7 @@ import Link from "next/link";
 import SiteNavContainer from "@/components/SiteNavContainer";
 import { Reveal } from "@/components/Animated";
 import { getAllPropFirmAllocationStatuses, PropFirmAllocationStatus } from "@/lib/propFirm";
-import { PROP_FIRM_PLANS } from "@/lib/propFirmPlans";
+import { PROP_FIRM_PLANS, PropFirmPlanKey } from "@/lib/propFirmPlans";
 
 export const metadata = {
   title: "Prop Firm — Tarifs Qrypton",
@@ -42,7 +42,7 @@ export default async function TarifsPropFirm() {
           </div>
         </Reveal>
 
-        {/* Prop Firms compatibles — capacité disponible */}
+        {/* Capacités d'allocation FTMO / FundedNext */}
         <Reveal delay={0.05}>
           <h2 className="font-display text-base font-semibold text-center mb-6 text-muted-2">
             Capacité disponible par Prop Firm
@@ -58,9 +58,31 @@ export default async function TarifsPropFirm() {
           </div>
         </Reveal>
 
-        {/* Explication de la capacité */}
+        {/* Tarifs — même mise en page que /tarifs/fonds-propres */}
         <Reveal delay={0.08}>
-          <div className="max-w-[720px] mx-auto border border-line rounded-2xl bg-bg-2 p-8 md:p-10 mb-14">
+          <div className="max-w-[720px] mx-auto flex flex-col gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <PropFirmPlanCard plan={PROP_FIRM_PLANS.monthly} />
+              <PropFirmPlanCard plan={PROP_FIRM_PLANS.six_months} />
+            </div>
+            <PropFirmPlanCard plan={PROP_FIRM_PLANS.twelve_months} />
+          </div>
+
+          <div className="max-w-[720px] mx-auto mt-14 border-t border-line pt-10 text-center">
+            <h2 className="font-display text-base font-semibold mb-4">Incluses dans les 3 formules</h2>
+            <ul className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-[13.5px] text-muted">
+              {["Robot OPR Edge™", "Licence personnelle", "1 compte Prop Firm inclus", "Support utilisateur"].map((f) => (
+                <li key={f} className="flex items-center gap-2">
+                  <span className="text-blue-soft">✓</span> {f}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
+
+        {/* Explication de la capacité */}
+        <Reveal delay={0.12}>
+          <div className="max-w-[720px] mx-auto border border-line rounded-2xl bg-bg-2 p-8 md:p-10 mt-14 mb-14">
             <h2 className="font-display text-lg font-semibold mb-4">
               Pourquoi une capacité disponible ?
             </h2>
@@ -82,60 +104,8 @@ export default async function TarifsPropFirm() {
           </div>
         </Reveal>
 
-        {/* Offre Prop Firm — présentation provisoire */}
-        <Reveal delay={0.1}>
-          <div className="max-w-[860px] mx-auto mb-8">
-            <div className="text-center mb-8">
-              <span className="inline-block px-3 py-1 rounded-full text-[10.5px] font-mono uppercase tracking-wide bg-blue/15 text-blue-soft border border-blue-soft/30 mb-4">
-                Offre à venir
-              </span>
-              <h2 className="font-display text-xl font-semibold">Formules Prop Firm</h2>
-              <p className="text-muted-2 text-[12.5px] mt-2 max-w-[480px] mx-auto">
-                Tarifs de travail, susceptibles d&apos;évoluer avant l&apos;ouverture officielle de
-                cette offre.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              {Object.values(PROP_FIRM_PLANS).map((plan) => (
-                <div
-                  key={plan.key}
-                  className="relative flex flex-col border border-line-strong rounded-[20px] p-8 bg-bg-2 bg-gradient-to-b from-blue/5 to-transparent opacity-90"
-                >
-                  <div className="text-xs text-blue-soft font-mono uppercase tracking-wide mb-3">
-                    {plan.billingMonths === 1 ? "Mensuel" : `${plan.billingMonths} mois`}
-                  </div>
-                  <div className="flex items-baseline gap-1.5 mb-4">
-                    <span className="font-mono text-[32px] font-medium">{plan.priceEUR}€</span>
-                    <span className="text-muted text-sm">
-                      {plan.billingMonths === 1 ? "/ mois" : ""}
-                    </span>
-                  </div>
-                  <div className="text-[12.5px] text-muted mb-1">
-                    {plan.includedAccounts} compte Prop Firm inclus
-                  </div>
-                  <div className="text-[11.5px] text-muted-2">
-                    Compte supplémentaire : +{plan.extraAccountPriceEUR}€/mois
-                  </div>
-                  <div className="flex-1" />
-                  <button
-                    disabled
-                    className="block w-full text-center py-3.5 rounded-[10px] font-semibold mt-6 bg-white/10 text-muted cursor-not-allowed"
-                  >
-                    Bientôt disponible
-                  </button>
-                </div>
-              ))}
-            </div>
-
-            <p className="text-muted-2 text-[11.5px] text-center mt-6">
-              Les conditions d&apos;utilisation peuvent varier selon la Prop Firm sélectionnée.
-            </p>
-          </div>
-        </Reveal>
-
         {/* Guide Prop Firm */}
-        <Reveal delay={0.12}>
+        <Reveal delay={0.14}>
           <div className="max-w-[620px] mx-auto text-center border-t border-line pt-10 mb-6">
             <p className="text-muted text-[14px] mb-3">
               Vous ne connaissez pas encore les Prop Firms ?
@@ -212,6 +182,58 @@ function FirmCardView({
             </button>
           </div>
         )}
+      </div>
+    </div>
+  );
+}
+
+function PropFirmPlanCard({ plan }: { plan: (typeof PROP_FIRM_PLANS)[PropFirmPlanKey] }) {
+  return (
+    <div
+      className={`relative flex flex-col border rounded-[20px] p-8 bg-bg-2 ${
+        plan.highlight
+          ? "border-blue-soft bg-gradient-to-b from-blue/10 to-transparent"
+          : "border-line-strong bg-gradient-to-b from-blue/5 to-transparent"
+      }`}
+    >
+      {plan.highlight && (
+        <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-[10.5px] font-mono uppercase tracking-wide bg-blue text-white">
+          Meilleur choix
+        </span>
+      )}
+
+      <div className="text-xs text-blue-soft font-mono uppercase tracking-wide mb-3">
+        {plan.label}
+      </div>
+
+      <div className="flex items-baseline gap-1.5 mb-1">
+        <span className="font-mono text-[38px] font-medium">{plan.priceEUR}€</span>
+        <span className="text-muted text-sm">
+          {plan.billingMonths === 1 ? "/ mois" : `/ ${plan.billingMonths} mois`}
+        </span>
+      </div>
+
+      {plan.compareToMonthly && plan.savingsEUR && (
+        <div className="text-[12.5px] text-muted mb-1">
+          <span className="line-through text-muted-2">{plan.compareToMonthly}€</span>{" "}
+          en paiement mensuel
+        </div>
+      )}
+
+      <div className="text-[12.5px] font-medium mb-5" style={{ color: plan.savingsEUR ? "#6FE3A5" : undefined }}>
+        {plan.savingsEUR ? `Économie de ${plan.savingsEUR}€` : "Sans engagement"}
+      </div>
+
+      <div className="flex-1" />
+
+      <button
+        disabled
+        className="block w-full max-w-[280px] mx-auto text-center py-3.5 rounded-[10px] font-semibold transition mt-6 bg-white text-bg opacity-90 cursor-not-allowed"
+      >
+        Bientôt disponible
+      </button>
+      <div className="text-center text-[11px] text-muted-2 font-mono mt-3">
+        Ouverture des paiements Prop Firm très prochainement
       </div>
     </div>
   );
