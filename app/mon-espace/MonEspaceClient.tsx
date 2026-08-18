@@ -30,6 +30,7 @@ export default function MonEspaceClient({
   winRate,
   lastBalance,
   userEmail,
+  propFirmAccounts,
 }: {
   license: any;
   subscription: any;
@@ -40,6 +41,7 @@ export default function MonEspaceClient({
   winRate: string;
   lastBalance: number;
   userEmail?: string | null;
+  propFirmAccounts?: any[];
 }) {
   const [tab, setTab] = useState<TabId>("dashboard");
   const [moreOpen, setMoreOpen] = useState(false);
@@ -148,7 +150,7 @@ export default function MonEspaceClient({
               lastBalance={lastBalance}
             />
           )}
-          {tab === "license" && <LicenseTab license={license} />}
+          {tab === "license" && <LicenseTab license={license} propFirmAccounts={propFirmAccounts ?? []} />}
           {tab === "robot" && <RobotTab license={license} />}
           {tab === "subscription" && (
             <SubscriptionTab subscription={subscription} invoices={invoices} />
@@ -790,7 +792,7 @@ function MiniSpark({
 
 /* ---------- Onglets inchangés ---------- */
 
-function LicenseTab({ license }: any) {
+function LicenseTab({ license, propFirmAccounts = [] }: any) {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
 
@@ -826,19 +828,86 @@ function LicenseTab({ license }: any) {
   }
 
   return (
-    <Card title="Ma licence">
-      <Row k="Clé de licence" v={license.license_key} />
-      <Row k="Compte MT5 lié" v={license.mt5_account_login ?? "Pas encore activée"} />
-      {license.mt5_account_login && (
-        <button
-          onClick={handleReset}
-          disabled={loading}
-          className="mt-4 text-sm text-blue-soft hover:underline disabled:opacity-50"
-        >
-          {loading ? "Réinitialisation..." : "Réinitialiser mon compte MT5"}
-        </button>
+    <>
+      <Card title="Ma licence">
+        <Row k="Clé de licence" v={license.license_key} />
+        <Row k="Compte MT5 lié" v={license.mt5_account_login ?? "Pas encore activée"} />
+        {license.mt5_account_login && (
+          <button
+            onClick={handleReset}
+            disabled={loading}
+            className="mt-4 text-sm text-blue-soft hover:underline disabled:opacity-50"
+          >
+            {loading ? "Réinitialisation..." : "Réinitialiser mon compte MT5"}
+          </button>
+        )}
+        {message && <p className="text-muted text-xs mt-3">{message}</p>}
+      </Card>
+
+      <div className="mt-6">
+        <PropFirmLicensesCard accounts={propFirmAccounts} />
+      </div>
+    </>
+  );
+}
+
+const PROP_FIRM_STATUS_LABEL: Record<string, string> = {
+  pending_verification: "En attente de vérification",
+  active: "Active",
+  suspended: "Suspendue",
+  closed: "Clôturée",
+};
+
+const PROP_FIRM_STATUS_DOT: Record<string, string> = {
+  pending_verification: "bg-yellow-400",
+  active: "bg-positive",
+  suspended: "bg-orange-400",
+  closed: "bg-muted-2",
+};
+
+function PropFirmLicensesCard({ accounts }: { accounts: any[] }) {
+  return (
+    <Card title="Mes licences Prop Firm">
+      {accounts.length === 0 ? (
+        <div className="text-center py-4">
+          <p className="text-muted text-sm mb-3">
+            Vous n&apos;avez pas encore de compte Prop Firm associé à Qrypton.
+          </p>
+          <a href="/tarifs/prop-firm" className="text-blue-soft text-sm hover:underline">
+            Découvrir l&apos;offre Prop Firm →
+          </a>
+        </div>
+      ) : (
+        <div className="flex flex-col gap-4">
+          {accounts.map((acc) => (
+            <div
+              key={acc.id}
+              className="border border-line rounded-xl p-4 flex flex-col gap-1.5"
+            >
+              <div className="flex items-center justify-between mb-1">
+                <span className="font-medium text-[14px]">
+                  {acc.prop_firms?.name ?? "Prop Firm"}
+                </span>
+                <span className="flex items-center gap-1.5 text-[11.5px] text-muted-2">
+                  <span
+                    className={`w-1.5 h-1.5 rounded-full ${
+                      PROP_FIRM_STATUS_DOT[acc.status] ?? "bg-muted-2"
+                    }`}
+                  />
+                  {PROP_FIRM_STATUS_LABEL[acc.status] ?? acc.status}
+                </span>
+              </div>
+              <Row k="Compte MT5" v={acc.mt5_account} />
+              <Row k="Capital" v={`${Number(acc.capital).toLocaleString("fr-FR")} $`} />
+              {!acc.verified && (
+                <p className="text-muted-2 text-[11px] mt-1">
+                  Vérification du compte en cours.
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
       )}
-      {message && <p className="text-muted text-xs mt-3">{message}</p>}
     </Card>
   );
 }
@@ -961,3 +1030,4 @@ function SettingsTab({ email }: { email?: string | null }) {
     </div>
   );
 }
+  
