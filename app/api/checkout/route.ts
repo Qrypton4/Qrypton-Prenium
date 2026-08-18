@@ -2,30 +2,26 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { createClient } from "@/lib/supabase-server";
 import { supabaseAdmin } from "@/lib/supabase";
-import { getPlan } from "@/lib/plans";
+import { getPlan, PlanKey } from "@/lib/plans";
+import { shouldApplySupplement, PROP_FIRM_SUPPLEMENT_STRIPE_ENV_VAR } from "@/lib/propFirmSupplement";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
-const CGV_VERSION = "2026-08-18";
-
-export async function POST(req: NextRequest) {
+export async function GET(req: NextRequest) {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  if (!user) {
-    return NextResponse.json({ ok: false, message: "not_authenticated" }, { status: 401 });
-  }
-
-  const body = await req.json();
-  const { plan: planKey, cgvAccepted, rightsWaiverAccepted, cgvText, rightsWaiverText } = body;
-
-  if (!cgvAccepted || !rightsWaiverAccepted) {
-    return NextResponse.json({ ok: false, message: "consent_required" }, { status: 400 });
-  }
-
-  const plan = getPlan(planKey || "monthly");
+  const planKey = req.nextUrl.searchParams.get("plan") || "monthly";
+  const plan = getPlan(planKey);
   if (!plan) {
     return NextResponse.json({ ok: false, message: "invalid_plan" }, { status: 400 });
+  }
+
+  if (!user) {
+    const url = req.nextUrl.clone();
+    url.pathname = "/connexion";
+    url.searchParams.set("next", `/api/checkout?plan=${planKey}`);
+    return NextResponse.redirect(url);
   }
 
   const priceId = process.env[plan.stripePriceEnvVar];
@@ -36,50 +32,54 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const ip =
-    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-    req.headers.get("x-real-ip") ||
-    null;
-  const userAgent = req.headers.get("user-agent") || null;
+  // Cas 2 du brief Grande Allocation : si le client a déclaré un compte Prop
+  // Firm déjà Funded (≥80k) avant paiement, le supplément est ajouté dès le
+  // checkout, sur la même facture — pas d'étape séparée après coup. La
+  // déclaration reste "verified: false" jusqu'à vérification manuelle.
+  const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [
+    { price: priceId, quantity: 1 },
+  ];
+
+  const { data: declaredAccount } = await supabaseAdmin
+    .from("prop_firm_accounts")
+    .select("status, capital")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  let supplementApplied = false;
+
+  if (declaredAccount && shouldApplySupplement(declaredAccount.status, Number(declaredAccount.capital))) {
+    const supplementEnvVar = PROP_FIRM_SUPPLEMENT_STRIPE_ENV_VAR[planKey as PlanKey];
+    const supplementPriceId = process.env[supplementEnvVar];
+    if (supplementPriceId) {
+      lineItems.push({ price: supplementPriceId, quantity: 1 });
+      supplementApplied = true;
+    }
+    // Si la variable d'env du supplément n'est pas encore configurée, on
+    // laisse passer le checkout SANS supplément plutôt que de bloquer la
+    // vente — la correction se fera après coup via /admin, comme pour
+    // toute vérification manuelle.
+  }
 
   const session = await stripe.checkout.sessions.create({
     mode: "subscription",
-    line_items: [{ price: priceId, quantity: 1 }],
+    line_items: lineItems,
     client_reference_id: user.id,
     customer_email: user.email,
-    metadata: { plan: plan.key },
-    subscription_data: { metadata: { plan: plan.key } },
+    metadata: { plan: planKey, propFirmSupplementApplied: String(supplementApplied) },
+    subscription_data: { metadata: { plan: planKey, propFirmSupplementApplied: String(supplementApplied) } },
     success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/mon-espace?checkout=success`,
     cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/tarifs?checkout=cancelled`,
   });
 
-  await supabaseAdmin.from("legal_consents").insert({
-    user_id: user.id,
-    plan: plan.key,
-    cgv_accepted: true,
-    rights_waiver_accepted: true,
-    cgv_text: cgvText,
-    rights_waiver_text: rightsWaiverText,
-    cgv_version: CGV_VERSION,
-    ip_address: ip,
-    user_agent: userAgent,
-    stripe_session_id: session.id,
-  });
-
+  // Enregistre la tentative pour permettre les relances automatiques si le
+  // paiement n'est jamais finalisé (voir /api/cron/abandoned-checkout).
   await supabaseAdmin.from("checkout_attempts").insert({
     user_id: user.id,
     stripe_session_id: session.id,
   });
 
-  return NextResponse.json({ ok: true, url: session.url });
-}
-
-export async function GET(req: NextRequest) {
-  // L'ancien accès direct est désormais bloqué : le paiement doit passer par
-  // /paiement pour garantir le recueil du consentement CGV / droit de rétractation.
-  const planKey = req.nextUrl.searchParams.get("plan") || "monthly";
-  const url = req.nextUrl.clone();
-  url.pathname = "/paiement";
-  url.search = `?plan=${planKey}`;
-  return NextResponse.redirect(url);
+  return NextResponse.redirect(session.url!);
 }
