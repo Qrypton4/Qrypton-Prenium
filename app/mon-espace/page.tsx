@@ -39,6 +39,15 @@ export default async function MonEspace() {
     .eq("user_id", user.id)
     .order("issued_at", { ascending: false });
 
+  // Comptes Prop Firm du client — lecture seule, ne conditionne rien d'autre
+  // sur cette page. Vide pour l'instant tant qu'aucun compte n'a été créé
+  // (le parcours de paiement Prop Firm n'est pas encore branché).
+  const { data: propFirmAccounts } = await supabaseAdmin
+    .from("prop_firm_accounts")
+    .select("id, mt5_account, capital, status, verified, created_at, prop_firms(name, slug)")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false });
+
   if (!license) {
   return (
     <>
@@ -78,6 +87,7 @@ export default async function MonEspace() {
       winRate={winRate}
       lastBalance={lastBalance}
       userEmail={user.email}
+      propFirmAccounts={propFirmAccounts ?? []}
     />
   </>
 );
