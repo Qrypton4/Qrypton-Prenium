@@ -1,7 +1,7 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-const PROTECTED_PATHS = ["/mon-espace", "/guide-demarrage"];
+const PROTECTED_PATHS = ["/mon-espace", "/guide-demarrage", "/admin"];
 
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({ request: { headers: request.headers } });
@@ -38,5 +38,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/mon-espace/:path*", "/guide-demarrage/:path*"],
+  matcher: ["/mon-espace/:path*", "/guide-demarrage/:path*", "/admin/:path*"],
 };
