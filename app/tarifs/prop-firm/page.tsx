@@ -1,13 +1,15 @@
 import Link from "next/link";
+import { createClient } from "@/lib/supabase-server";
+import { supabaseAdmin } from "@/lib/supabase";
 import SiteNavContainer from "@/components/SiteNavContainer";
 import { Reveal } from "@/components/Animated";
+import { PLANS, PlanKey } from "@/lib/plans";
 import { getAllPropFirmAllocationStatuses, PropFirmAllocationStatus } from "@/lib/propFirm";
-import { PROP_FIRM_PLANS, PropFirmPlanKey } from "@/lib/propFirmPlans";
 
 export const metadata = {
   title: "Prop Firm — Tarifs Qrypton",
   description:
-    "Utilisez Qrypton sur un compte auprès d'une Prop Firm compatible (FTMO, FundedNext).",
+    "Utilisez Qrypton sur un compte auprès d'une Prop Firm compatible (FTMO, FundedNext). Mêmes tarifs que Fonds propres.",
 };
 
 const FIRM_DESCRIPTIONS: Record<string, string> = {
@@ -17,7 +19,35 @@ const FIRM_DESCRIPTIONS: Record<string, string> = {
 
 const FIRM_ORDER = ["ftmo", "fundednext"];
 
+async function getTarifsData(): Promise<{ isLoggedIn: boolean; hasActiveSub: boolean }> {
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    return { isLoggedIn: false, hasActiveSub: false };
+  }
+
+  const { data: subscription } = await supabaseAdmin
+    .from("subscriptions")
+    .select("status")
+    .eq("user_id", user.id)
+    .eq("status", "active")
+    .maybeSingle();
+
+  return { isLoggedIn: true, hasActiveSub: !!subscription };
+}
+
+// Même logique de CTA que /tarifs/fonds-propres : même produit, même abonnement,
+// juste utilisable sur un compte Prop Firm. Le "next" pointe vers cette page
+// pour que le client revienne bien ici après inscription.
+function ctaHrefFor(planKey: PlanKey, isLoggedIn: boolean, hasActiveSub: boolean): string {
+  if (!isLoggedIn) return `/inscription?next=/tarifs/prop-firm&plan=${planKey}`;
+  if (hasActiveSub) return "/mon-espace";
+  return `/paiement?plan=${planKey}`;
+}
+
 export default async function TarifsPropFirm() {
+  const { isLoggedIn, hasActiveSub } = await getTarifsData();
   const statuses = await getAllPropFirmAllocationStatuses();
   const firms = FIRM_ORDER.map((slug) =>
     statuses.find((s) => s.slug === slug)
@@ -58,20 +88,20 @@ export default async function TarifsPropFirm() {
           </div>
         </Reveal>
 
-        {/* Tarifs — même mise en page que /tarifs/fonds-propres */}
+        {/* Tarifs — identiques à /tarifs/fonds-propres, mêmes boutons, même paiement */}
         <Reveal delay={0.08}>
           <div className="max-w-[720px] mx-auto flex flex-col gap-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <PropFirmPlanCard plan={PROP_FIRM_PLANS.monthly} />
-              <PropFirmPlanCard plan={PROP_FIRM_PLANS.six_months} />
+              <PlanCard plan={PLANS.monthly} href={ctaHrefFor("monthly", isLoggedIn, hasActiveSub)} />
+              <PlanCard plan={PLANS.six_months} href={ctaHrefFor("six_months", isLoggedIn, hasActiveSub)} />
             </div>
-            <PropFirmPlanCard plan={PROP_FIRM_PLANS.twelve_months} />
+            <PlanCard plan={PLANS.twelve_months} href={ctaHrefFor("twelve_months", isLoggedIn, hasActiveSub)} />
           </div>
 
           <div className="max-w-[720px] mx-auto mt-14 border-t border-line pt-10 text-center">
             <h2 className="font-display text-base font-semibold mb-4">Incluses dans les 3 formules</h2>
             <ul className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-[13.5px] text-muted">
-              {["Robot OPR Edge™", "Licence personnelle", "1 compte Prop Firm inclus", "Support utilisateur"].map((f) => (
+              {["Robot OPR Edge™", "Licence personnelle", "Mises à jour du logiciel", "Support utilisateur"].map((f) => (
                 <li key={f} className="flex items-center gap-2">
                   <span className="text-blue-soft">✓</span> {f}
                 </li>
@@ -187,7 +217,13 @@ function FirmCardView({
   );
 }
 
-function PropFirmPlanCard({ plan }: { plan: (typeof PROP_FIRM_PLANS)[PropFirmPlanKey] }) {
+function PlanCard({
+  plan,
+  href,
+}: {
+  plan: (typeof PLANS)[PlanKey];
+  href: string;
+}) {
   return (
     <div
       className={`relative flex flex-col border rounded-[20px] p-8 bg-bg-2 ${
@@ -226,14 +262,14 @@ function PropFirmPlanCard({ plan }: { plan: (typeof PROP_FIRM_PLANS)[PropFirmPla
 
       <div className="flex-1" />
 
-      <button
-        disabled
-        className="block w-full max-w-[280px] mx-auto text-center py-3.5 rounded-[10px] font-semibold transition mt-6 bg-white text-bg opacity-90 cursor-not-allowed"
+      <Link
+        href={href}
+        className="block w-full max-w-[280px] mx-auto text-center py-3.5 rounded-[10px] font-semibold transition mt-6 bg-white text-bg hover:bg-blue-soft"
       >
-        Bientôt disponible
-      </button>
+        Commencer maintenant
+      </Link>
       <div className="text-center text-[11px] text-muted-2 font-mono mt-3">
-        Ouverture des paiements Prop Firm très prochainement
+        Accès immédiat après validation du paiement
       </div>
     </div>
   );
