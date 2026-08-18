@@ -53,7 +53,7 @@ export default async function TarifsPropFirm() {
         {/* Prop Firms compatibles — capacité disponible */}
         <Reveal delay={0.05}>
           <h2 className="font-display text-base font-semibold text-center mb-6 text-muted-2">
-            Capacité disponible chez nos partenaires
+            Capacité disponible par Prop Firm
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-[860px] mx-auto mb-14">
             {firms.map((firm) => (
@@ -77,8 +77,7 @@ export default async function TarifsPropFirm() {
               stratégie automatisée est utilisée par plusieurs traders.
             </p>
             <p className="text-muted text-[13.5px] leading-relaxed mb-3">
-              Qrypton suit ces conditions afin de respecter les règles de chaque Prop Firm
-              partenaire.
+              Qrypton suit ces conditions afin de respecter les règles de chaque Prop Firm.
             </p>
             <p className="text-muted text-[13.5px] leading-relaxed mb-3">
               La capacité affichée correspond au montant de capital que Qrypton peut actuellement
