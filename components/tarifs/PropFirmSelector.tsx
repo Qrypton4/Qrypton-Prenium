@@ -43,6 +43,7 @@ export default function PropFirmSelector() {
   const [selection, setSelection] = useState<Selection>(DEFAULT_SELECTION);
   const [hydrated, setHydrated] = useState(false);
 
+  // Mémorise le choix du client : au retour sur la page, il ne repart pas de zéro.
   useEffect(() => {
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
@@ -53,6 +54,7 @@ export default function PropFirmSelector() {
         }
       }
     } catch {
+      // localStorage indisponible (navigation privée, etc.) — on continue sans mémorisation.
     }
     setHydrated(true);
   }, []);
@@ -62,17 +64,12 @@ export default function PropFirmSelector() {
     try {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(selection));
     } catch {
+      // silencieux
     }
   }, [selection, hydrated]);
 
-  function reset() {
-    setSelection(DEFAULT_SELECTION);
-    try {
-      window.localStorage.removeItem(STORAGE_KEY);
-    } catch {}
-  }
-
   if (!hydrated) {
+    // Évite un flash "étape 1" avant que la mémorisation locale soit lue.
     return <div className="min-h-[240px]" />;
   }
 
@@ -139,7 +136,6 @@ export default function PropFirmSelector() {
           billing={selection.billing}
           onChangeBilling={(billing) => setSelection((s) => ({ ...s, billing }))}
           onChangeCapital={() => setSelection((s) => ({ ...s, capital: null }))}
-          onReset={reset}
         />
       )}
     </div>
@@ -183,14 +179,12 @@ function RecapStep({
   billing,
   onChangeBilling,
   onChangeCapital,
-  onReset,
 }: {
   firm: FirmSlug;
   capital: number;
   billing: PropFirmBillingPeriod;
   onChangeBilling: (b: PropFirmBillingPeriod) => void;
   onChangeCapital: () => void;
-  onReset: () => void;
 }) {
   const firmName = FIRMS.find((f) => f.slug === firm)?.name ?? firm;
   const tier = getPropFirmTier(capital);
@@ -227,30 +221,52 @@ function RecapStep({
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-3 mb-6">
-        {(["monthly", "six_months", "twelve_months"] as PropFirmBillingPeriod[]).map((b) => (
-          <button
-            key={b}
-            onClick={() => onChangeBilling(b)}
-            className={`border rounded-xl py-4 text-center transition ${
-              billing === b
-                ? "border-blue-soft bg-blue-soft/10"
-                : "border-line-strong bg-bg-2 hover:border-blue-soft/40"
-            }`}
-          >
-            <div className="text-[11.5px] text-muted-2 mb-1.5 uppercase tracking-wide">
-              {BILLING_LABELS[b]}
-            </div>
-            <div className="font-mono text-[18px] font-medium">{tier.prices[b]}€</div>
-          </button>
-        ))}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
+        {(["monthly", "six_months", "twelve_months"] as PropFirmBillingPeriod[]).map((b) => {
+          const months = b === "six_months" ? 6 : b === "twelve_months" ? 12 : 1;
+          const equivalentMonthlyTotal = tier.prices.monthly * months;
+          const savings = equivalentMonthlyTotal - tier.prices[b];
+          const selected = billing === b;
+
+          return (
+            <button
+              key={b}
+              onClick={() => onChangeBilling(b)}
+              className={`relative flex flex-col items-center border rounded-xl py-5 px-3 text-center transition ${
+                selected
+                  ? "border-blue-soft bg-blue-soft/10"
+                  : "border-line-strong bg-bg-2 hover:border-blue-soft/40"
+              }`}
+            >
+              {b === "twelve_months" && (
+                <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full text-[9.5px] font-mono uppercase tracking-wide bg-blue text-white">
+                  Meilleur choix
+                </span>
+              )}
+              <div className="text-[11.5px] text-muted-2 mb-2 uppercase tracking-wide">
+                {BILLING_LABELS[b]}
+              </div>
+              <div className="font-mono text-[22px] font-medium mb-1">{tier.prices[b]}€</div>
+              {months > 1 ? (
+                <>
+                  <div className="text-[11px] text-muted-2 mb-0.5">
+                    <span className="line-through">{equivalentMonthlyTotal}€</span> en mensuel
+                  </div>
+                  <div className="text-[11.5px] font-medium" style={{ color: "#6FE3A5" }}>
+                    Économie de {savings}€
+                  </div>
+                </>
+              ) : (
+                <div className="text-[11px] text-muted-2">Sans engagement</div>
+              )}
+            </button>
+          );
+        })}
       </div>
 
-      <p className="text-muted-2 text-[11.5px] text-center mb-1 leading-relaxed">
-        Votre tarif dépend uniquement du capital nominal de votre compte Prop Firm.
-      </p>
       <p className="text-muted-2 text-[11.5px] text-center mb-6 leading-relaxed">
-        Le même barème s&apos;applique quelle que soit la Prop Firm.
+        Votre tarif dépend uniquement du capital nominal de votre compte Prop Firm — le même
+        barème s&apos;applique quelle que soit la Prop Firm.
       </p>
 
       <button
@@ -259,15 +275,6 @@ function RecapStep({
       >
         Activer Qrypton — {price}€{billing === "monthly" ? "/mois" : ""}
       </button>
-      <p className="text-muted-2 text-[11px] text-center mt-3">
-        Paiement bientôt disponible — cette offre n&apos;est pas encore activable.
-      </p>
-
-      <div className="text-center mt-6">
-        <button onClick={onReset} className="text-muted-2 text-[11.5px] hover:text-white transition">
-          Recommencer le parcours
-        </button>
-      </div>
     </div>
   );
 }
