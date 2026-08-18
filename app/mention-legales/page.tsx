@@ -13,15 +13,17 @@ export default function MentionsLegales() {
 
         <h2 className="text-white font-semibold mt-6 mb-2">Éditeur du site</h2>
         <p>
-          Le site qryptonedge.com est édité par [À COMPLÉTER : Nom / Prénom],
-          [À COMPLÉTER : statut juridique, ex. Entreprise Individuelle / Micro-entreprise],
-          immatriculé sous le numéro SIRET [À COMPLÉTER],
-          dont le siège est situé [À COMPLÉTER : adresse complète], France.
+          Le site qryptonedge.com est édité par Rémi Thony Bernard Laly, exerçant sous le nom
+          commercial Qrypton Edge, entreprise individuelle (micro-entrepreneur),
+          immatriculée au Registre du Commerce et des Sociétés de Valenciennes sous le
+          numéro SIREN 108 731 670,
+          dont l&apos;établissement est situé 12 Résidence Simone Veil, 59138 Bachant, France.
         </p>
-        <p>Contact : [À COMPLÉTER : email de contact]</p>
+        <p>Contact : contact@qryptonedge.com</p>
+        <p>TVA non applicable, article 293 B du Code général des impôts (franchise en base de TVA).</p>
 
         <h2 className="text-white font-semibold mt-6 mb-2">Directeur de la publication</h2>
-        <p>[À COMPLÉTER : Nom / Prénom]</p>
+        <p>Rémi Thony Bernard Laly</p>
 
         <h2 className="text-white font-semibold mt-6 mb-2">Hébergement</h2>
         <p>
