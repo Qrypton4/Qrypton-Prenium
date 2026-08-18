@@ -14,12 +14,18 @@ import { getPropFirmTier, PropFirmBillingPeriod } from "@/lib/propFirmPlans";
 
 type FirmSlug = "ftmo" | "fundednext";
 
-const FIRMS: { slug: FirmSlug; name: string; description: string }[] = [
-  { slug: "ftmo", name: "FTMO", description: "L'une des Prop Firms les plus connues au monde." },
+const FIRMS: { slug: FirmSlug; name: string; description: string; url: string }[] = [
+  {
+    slug: "ftmo",
+    name: "FTMO",
+    description: "L'une des Prop Firms les plus connues au monde.",
+    url: "https://ftmo.com",
+  },
   {
     slug: "fundednext",
     name: "FundedNext",
     description: "Une Prop Firm en forte croissance, conditions flexibles.",
+    url: "https://fundednext.com",
   },
 ];
 
@@ -264,10 +270,23 @@ function RecapStep({
         })}
       </div>
 
-      <p className="text-muted-2 text-[11.5px] text-center mb-6 leading-relaxed">
+      <p className="text-muted-2 text-[11.5px] text-center mb-4 leading-relaxed">
         Votre tarif dépend uniquement du capital nominal de votre compte Prop Firm — le même
         barème s&apos;applique quelle que soit la Prop Firm.
       </p>
+
+      {!FIRMS.find((f) => f.slug === firm)?.url ? null : (
+        <div className="text-center mb-6">
+          <a
+            href={FIRMS.find((f) => f.slug === firm)!.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-soft text-[12.5px] font-medium hover:underline"
+          >
+            Pas encore de compte {firmName} ? Le créer sur le site officiel ↗
+          </a>
+        </div>
+      )}
 
      <button
         disabled
