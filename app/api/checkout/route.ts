@@ -6,21 +6,26 @@ import { getPlan } from "@/lib/plans";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
-export async function GET(req: NextRequest) {
+const CGV_VERSION = "2026-08-18";
+
+export async function POST(req: NextRequest) {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  const planKey = req.nextUrl.searchParams.get("plan") || "monthly";
-  const plan = getPlan(planKey);
-  if (!plan) {
-    return NextResponse.json({ ok: false, message: "invalid_plan" }, { status: 400 });
+  if (!user) {
+    return NextResponse.json({ ok: false, message: "not_authenticated" }, { status: 401 });
   }
 
-  if (!user) {
-    const url = req.nextUrl.clone();
-    url.pathname = "/connexion";
-    url.searchParams.set("next", `/api/checkout?plan=${planKey}`);
-    return NextResponse.redirect(url);
+  const body = await req.json();
+  const { plan: planKey, cgvAccepted, rightsWaiverAccepted, cgvText, rightsWaiverText } = body;
+
+  if (!cgvAccepted || !rightsWaiverAccepted) {
+    return NextResponse.json({ ok: false, message: "consent_required" }, { status: 400 });
+  }
+
+  const plan = getPlan(planKey || "monthly");
+  if (!plan) {
+    return NextResponse.json({ ok: false, message: "invalid_plan" }, { status: 400 });
   }
 
   const priceId = process.env[plan.stripePriceEnvVar];
@@ -31,23 +36,50 @@ export async function GET(req: NextRequest) {
     );
   }
 
+  const ip =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("x-real-ip") ||
+    null;
+  const userAgent = req.headers.get("user-agent") || null;
+
   const session = await stripe.checkout.sessions.create({
     mode: "subscription",
     line_items: [{ price: priceId, quantity: 1 }],
     client_reference_id: user.id,
     customer_email: user.email,
-    metadata: { plan: planKey },
-    subscription_data: { metadata: { plan: planKey } },
+    metadata: { plan: plan.key },
+    subscription_data: { metadata: { plan: plan.key } },
     success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/mon-espace?checkout=success`,
     cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/tarifs?checkout=cancelled`,
   });
 
-  // Enregistre la tentative pour permettre les relances automatiques si le
-  // paiement n'est jamais finalisé (voir /api/cron/abandoned-checkout).
+  await supabaseAdmin.from("legal_consents").insert({
+    user_id: user.id,
+    plan: plan.key,
+    cgv_accepted: true,
+    rights_waiver_accepted: true,
+    cgv_text: cgvText,
+    rights_waiver_text: rightsWaiverText,
+    cgv_version: CGV_VERSION,
+    ip_address: ip,
+    user_agent: userAgent,
+    stripe_session_id: session.id,
+  });
+
   await supabaseAdmin.from("checkout_attempts").insert({
     user_id: user.id,
     stripe_session_id: session.id,
   });
 
-  return NextResponse.redirect(session.url!);
+  return NextResponse.json({ ok: true, url: session.url });
+}
+
+export async function GET(req: NextRequest) {
+  // L'ancien accès direct est désormais bloqué : le paiement doit passer par
+  // /paiement pour garantir le recueil du consentement CGV / droit de rétractation.
+  const planKey = req.nextUrl.searchParams.get("plan") || "monthly";
+  const url = req.nextUrl.clone();
+  url.pathname = "/paiement";
+  url.search = `?plan=${planKey}`;
+  return NextResponse.redirect(url);
 }
