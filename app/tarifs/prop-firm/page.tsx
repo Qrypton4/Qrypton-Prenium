@@ -92,32 +92,7 @@ export default async function TarifsPropFirm() {
           </div>
         </Reveal>
 
-        {/* Exemples ludiques */}
-        <Reveal delay={0.12}>
-          <div className="max-w-[860px] mx-auto mb-14">
-            <h2 className="font-display text-lg font-semibold text-center mb-6">
-              Vous ne savez pas quelle formule choisir ?
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {EXAMPLES.map((ex) => {
-                const tier = tierForCapital(ex.capital);
-                return (
-                  <div
-                    key={ex.capital}
-                    className="border border-line rounded-xl bg-bg-2 p-5 text-center"
-                  >
-                    <div className="text-[13px] text-muted mb-1">Compte de</div>
-                    <div className="font-mono text-[18px] font-medium mb-3">
-                      {ex.capital.toLocaleString("fr-FR")} €
-                    </div>
-                    <div className="text-blue-soft text-[12px] mb-1">→ {tier.label}</div>
-                    <div className="font-mono text-[15px]">{tier.prices.monthly}€/mois</div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </Reveal>
+        
 
         {/* Guide Prop Firm */}
         <Reveal delay={0.14}>
