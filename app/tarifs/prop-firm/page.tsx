@@ -16,11 +16,6 @@ const FIRM_DESCRIPTIONS: Record<string, string> = {
   fundednext: "Utilisez Qrypton sur un compte FundedNext compatible.",
 };
 
-const FIRM_URLS: Record<string, string> = {
-  ftmo: "https://ftmo.com",
-  fundednext: "https://fundednext.com",
-};
-
 const FIRM_ORDER = ["ftmo", "fundednext"];
 
 export default async function TarifsPropFirm() {
@@ -66,7 +61,6 @@ export default async function TarifsPropFirm() {
                 key={firm.slug}
                 firm={firm}
                 description={FIRM_DESCRIPTIONS[firm.slug] ?? ""}
-                officialUrl={FIRM_URLS[firm.slug]}
               />
             ))}
           </div>
@@ -170,12 +164,11 @@ function tierForCapital(capital: number) {
 
 function FirmCardView({
   firm,
-  description,
-  officialUrl,
+  description
 }: {
   firm: PropFirmAllocationStatus;
   description: string;
-  officialUrl?: string;
+  
 }) {
   const capacityKnown = firm.allocationMax !== null;
   const percentUsed =
@@ -222,20 +215,6 @@ function FirmCardView({
         )}
       </div>
 
-      {officialUrl ? (
-        <a
-          href={officialUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block text-blue-soft text-sm font-medium hover:underline"
-        >
-          En savoir plus (site officiel) ↗
-        </a>
-      ) : (
-        <span className="inline-block text-blue-soft text-sm font-medium hover:underline cursor-default">
-          En savoir plus →
-        </span>
-      )}
-    </div>
+       </div>
   );
 }
