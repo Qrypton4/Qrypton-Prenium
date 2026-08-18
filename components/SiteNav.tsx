@@ -11,7 +11,14 @@ import type { LicenseStatus } from "@/lib/license";
 const BASE_LINKS = [
   { href: "/", label: "Accueil" },
   { href: "/performance", label: "Performance du robot" },
-  { href: "/tarifs", label: "Tarifs" },
+  {
+    href: "/tarifs",
+    label: "Tarifs",
+    subLinks: [
+      { href: "/tarifs/fonds-propres", label: "Fonds propres" },
+      { href: "/tarifs/prop-firm", label: "Prop Firm" },
+    ],
+  },
   {
     href: "/guide-qrypton",
     label: "Guide Qrypton",
@@ -57,6 +64,13 @@ type SiteNavProps = {
 export default function SiteNav({ isLoggedIn, firstName, license }: SiteNavProps) {
   const [open, setOpen] = useState(false);
   const [guideOpen, setGuideOpen] = useState(false);
+  const [tarifsOpen, setTarifsOpen] = useState(false);
+
+  // Un seul état par lien à sous-menu — clé = href du parent.
+  const submenuState: Record<string, [boolean, (v: boolean) => void]> = {
+    "/tarifs": [tarifsOpen, setTarifsOpen],
+    "/guide-qrypton": [guideOpen, setGuideOpen],
+  };
   const router = useRouter();
   const touchStart = useRef<{ x: number; y: number } | null>(null);
 
@@ -77,7 +91,6 @@ export default function SiteNav({ isLoggedIn, firstName, license }: SiteNavProps
       const deltaY = t.clientY - touchStart.current.y;
       const startX = touchStart.current.x;
 
-      // Ignore les gestes principalement verticaux (scroll normal de la page)
       if (Math.abs(deltaX) < Math.abs(deltaY)) {
         touchStart.current = null;
         return;
@@ -87,10 +100,7 @@ export default function SiteNav({ isLoggedIn, firstName, license }: SiteNavProps
       const isMenuGestureShape = startX < EDGE_ZONE && deltaX > SWIPE_THRESHOLD;
       const isMonEspaceGestureShape = startX > screenWidth - EDGE_ZONE && deltaX < -SWIPE_THRESHOLD;
 
-      // Menu (bord gauche → swipe vers la droite)
       if (!open && isMenuGestureShape) {
-        // Si on vient d'arriver ici via le swipe "Mon espace", ce geste en sens
-        // inverse doit ramener à la page précédente — pas ouvrir le menu.
         if (consumePendingSwipeBack()) {
           router.back();
         } else {
@@ -99,7 +109,6 @@ export default function SiteNav({ isLoggedIn, firstName, license }: SiteNavProps
       } else if (open && deltaX < -SWIPE_THRESHOLD) {
         setOpen(false);
       } else if (!open && isMonEspaceGestureShape) {
-        // Mon espace (même système, en miroir : bord droit → swipe vers la gauche)
         markSwipeNavigation();
         router.push(isLoggedIn ? "/mon-espace" : "/connexion");
       }
@@ -172,46 +181,50 @@ export default function SiteNav({ isLoggedIn, firstName, license }: SiteNavProps
           </button>
         </div>
         <div className="flex flex-col p-3">
-          {LINKS.map((l) =>
-            "subLinks" in l && l.subLinks ? (
-              <div key={l.href}>
-                <button
-                  onClick={() => setGuideOpen((v) => !v)}
-                  className={`w-full flex items-center justify-between px-4 py-3.5 rounded-lg text-[14.5px] transition ${
-                    guideOpen ? "text-blue-soft" : "text-muted hover:text-white hover:bg-white/5"
-                  }`}
-                >
-                  <span>{l.label}</span>
-                  <ChevronDown
-                    className={`w-4 h-4 transition-transform duration-200 ${guideOpen ? "rotate-180" : ""}`}
-                    strokeWidth={1.8}
-                  />
-                </button>
-                <div
-                  className={`overflow-hidden transition-all duration-200 ${
-                    guideOpen ? "max-h-72 opacity-100 mt-1" : "max-h-0 opacity-0"
-                  }`}
-                >
-                  <div className="ml-3 rounded-xl border border-white/[0.06] bg-[#111318] shadow-lg shadow-black/30 overflow-hidden">
-                    {l.subLinks.map((sub, i) => (
-                      <Link
-                        key={sub.href}
-                        href={sub.href}
-                        onClick={() => {
-                          setOpen(false);
-                          setGuideOpen(false);
-                        }}
-                        className={`block px-4 py-3 text-[13.5px] text-white/85 hover:text-blue-soft transition ${
-                          i > 0 ? "border-t border-white/[0.06]" : ""
-                        }`}
-                      >
-                        {sub.label}
-                      </Link>
-                    ))}
+          {LINKS.map((l) => {
+            if ("subLinks" in l && l.subLinks) {
+              const [isOpen, setIsOpen] = submenuState[l.href] ?? [false, () => {}];
+              return (
+                <div key={l.href}>
+                  <button
+                    onClick={() => setIsOpen(!isOpen)}
+                    className={`w-full flex items-center justify-between px-4 py-3.5 rounded-lg text-[14.5px] transition ${
+                      isOpen ? "text-blue-soft" : "text-muted hover:text-white hover:bg-white/5"
+                    }`}
+                  >
+                    <span>{l.label}</span>
+                    <ChevronDown
+                      className={`w-4 h-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+                      strokeWidth={1.8}
+                    />
+                  </button>
+                  <div
+                    className={`overflow-hidden transition-all duration-200 ${
+                      isOpen ? "max-h-72 opacity-100 mt-1" : "max-h-0 opacity-0"
+                    }`}
+                  >
+                    <div className="ml-3 rounded-xl border border-white/[0.06] bg-[#111318] shadow-lg shadow-black/30 overflow-hidden">
+                      {l.subLinks.map((sub, i) => (
+                        <Link
+                          key={sub.href}
+                          href={sub.href}
+                          onClick={() => {
+                            setOpen(false);
+                            setIsOpen(false);
+                          }}
+                          className={`block px-4 py-3 text-[13.5px] text-white/85 hover:text-blue-soft transition ${
+                            i > 0 ? "border-t border-white/[0.06]" : ""
+                          }`}
+                        >
+                          {sub.label}
+                        </Link>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ) : (
+              );
+            }
+            return (
               <Link
                 key={l.href}
                 href={l.href}
@@ -220,8 +233,8 @@ export default function SiteNav({ isLoggedIn, firstName, license }: SiteNavProps
               >
                 {l.label}
               </Link>
-            )
-          )}
+            );
+          })}
         </div>
       </nav>
     </>
