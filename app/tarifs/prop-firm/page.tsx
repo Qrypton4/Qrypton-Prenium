@@ -5,6 +5,7 @@ import SiteNavContainer from "@/components/SiteNavContainer";
 import { Reveal } from "@/components/Animated";
 import { PLANS, PlanKey } from "@/lib/plans";
 import { getAllPropFirmAllocationStatuses, PropFirmAllocationStatus } from "@/lib/propFirm";
+import PropFirmDeclarationForm from "@/components/tarifs/PropFirmDeclarationForm";
 
 export const metadata = {
   title: "Prop Firm — Tarifs Qrypton",
@@ -89,7 +90,8 @@ export default async function TarifsPropFirm() {
         </Reveal>
 
         {/* Tarifs — identiques à /tarifs/fonds-propres, mêmes boutons, même paiement */}
-        <Reveal delay={0.08}>
+       <Reveal delay={0.08}>
+          <PropFirmDeclarationForm />
           <div className="max-w-[720px] mx-auto flex flex-col gap-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <PlanCard plan={PLANS.monthly} href={ctaHrefFor("monthly", isLoggedIn, hasActiveSub)} />
