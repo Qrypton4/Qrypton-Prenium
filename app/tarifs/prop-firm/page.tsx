@@ -5,6 +5,11 @@ import SiteNavContainer from "@/components/SiteNavContainer";
 import { Reveal } from "@/components/Animated";
 import { PLANS, PlanKey } from "@/lib/plans";
 import { getAllPropFirmAllocationStatuses, PropFirmAllocationStatus } from "@/lib/propFirm";
+import {
+  shouldApplySupplement,
+  getSupplementAmount,
+  PROP_FIRM_SUPPLEMENT_THRESHOLD_EUR,
+} from "@/lib/propFirmSupplement";
 import PropFirmDeclarationForm from "@/components/tarifs/PropFirmDeclarationForm";
 
 export const metadata = {
@@ -20,12 +25,17 @@ const FIRM_DESCRIPTIONS: Record<string, string> = {
 
 const FIRM_ORDER = ["ftmo", "fundednext"];
 
-async function getTarifsData(): Promise<{ isLoggedIn: boolean; hasActiveSub: boolean }> {
+async function getTarifsData(): Promise<{
+  isLoggedIn: boolean;
+  hasActiveSub: boolean;
+  supplementActive: boolean;
+  declaredCapital: number | null;
+}> {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
-    return { isLoggedIn: false, hasActiveSub: false };
+    return { isLoggedIn: false, hasActiveSub: false, supplementActive: false, declaredCapital: null };
   }
 
   const { data: subscription } = await supabaseAdmin
@@ -35,7 +45,27 @@ async function getTarifsData(): Promise<{ isLoggedIn: boolean; hasActiveSub: boo
     .eq("status", "active")
     .maybeSingle();
 
-  return { isLoggedIn: true, hasActiveSub: !!subscription };
+  // Même requête que le checkout : dernière déclaration Prop Firm du client,
+  // pour savoir si le Supplément Grande Allocation doit s'afficher ICI, sur
+  // la page tarifs — pas seulement au moment du paiement Stripe.
+  const { data: declaredAccount } = await supabaseAdmin
+    .from("prop_firm_accounts")
+    .select("status, capital")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  const supplementActive = declaredAccount
+    ? shouldApplySupplement(declaredAccount.status, Number(declaredAccount.capital))
+    : false;
+
+  return {
+    isLoggedIn: true,
+    hasActiveSub: !!subscription,
+    supplementActive,
+    declaredCapital: declaredAccount ? Number(declaredAccount.capital) : null,
+  };
 }
 
 // Même logique de CTA que /tarifs/fonds-propres : même produit, même abonnement,
@@ -48,7 +78,7 @@ function ctaHrefFor(planKey: PlanKey, isLoggedIn: boolean, hasActiveSub: boolean
 }
 
 export default async function TarifsPropFirm() {
-  const { isLoggedIn, hasActiveSub } = await getTarifsData();
+  const { isLoggedIn, hasActiveSub, supplementActive, declaredCapital } = await getTarifsData();
   const statuses = await getAllPropFirmAllocationStatuses();
   const firms = FIRM_ORDER.map((slug) =>
     statuses.find((s) => s.slug === slug)
@@ -90,14 +120,41 @@ export default async function TarifsPropFirm() {
         </Reveal>
 
         {/* Tarifs — identiques à /tarifs/fonds-propres, mêmes boutons, même paiement */}
-       <Reveal delay={0.08}>
+        <Reveal delay={0.08}>
           <PropFirmDeclarationForm />
+
+          {supplementActive && (
+            <div className="max-w-[720px] mx-auto mb-8 border border-blue-soft/30 rounded-2xl bg-blue/5 p-5">
+              <p className="text-white/90 text-[13.5px] font-medium mb-1.5">
+                🔵 Supplément Grande Allocation appliqué
+              </p>
+              <p className="text-muted-2 text-[12px] leading-relaxed">
+                Votre compte déclaré ({declaredCapital?.toLocaleString("fr-FR")}€) atteint le seuil
+                de {PROP_FIRM_SUPPLEMENT_THRESHOLD_EUR.toLocaleString("fr-FR")}€. Qrypton mobilise
+                une capacité d&apos;allocation renforcée pour respecter les conditions fixées par
+                votre Prop Firm — les prix ci-dessous incluent déjà ce supplément.
+              </p>
+            </div>
+          )}
+
           <div className="max-w-[720px] mx-auto flex flex-col gap-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <PlanCard plan={PLANS.monthly} href={ctaHrefFor("monthly", isLoggedIn, hasActiveSub)} />
-              <PlanCard plan={PLANS.six_months} href={ctaHrefFor("six_months", isLoggedIn, hasActiveSub)} />
+              <PlanCard
+                plan={PLANS.monthly}
+                href={ctaHrefFor("monthly", isLoggedIn, hasActiveSub)}
+                supplementActive={supplementActive}
+              />
+              <PlanCard
+                plan={PLANS.six_months}
+                href={ctaHrefFor("six_months", isLoggedIn, hasActiveSub)}
+                supplementActive={supplementActive}
+              />
             </div>
-            <PlanCard plan={PLANS.twelve_months} href={ctaHrefFor("twelve_months", isLoggedIn, hasActiveSub)} />
+            <PlanCard
+              plan={PLANS.twelve_months}
+              href={ctaHrefFor("twelve_months", isLoggedIn, hasActiveSub)}
+              supplementActive={supplementActive}
+            />
           </div>
 
           <div className="max-w-[720px] mx-auto mt-14 border-t border-line pt-10 text-center">
@@ -116,7 +173,7 @@ export default async function TarifsPropFirm() {
         <Reveal delay={0.12}>
           <div className="max-w-[720px] mx-auto border border-line rounded-2xl bg-bg-2 p-8 md:p-10 mt-14 mb-14">
             <h2 className="font-display text-lg font-semibold mb-4">
-              Pourquoi une capacité disponible ?
+             Pourquoi une capacité disponible ?
             </h2>
             <p className="text-muted text-[13.5px] leading-relaxed mb-3">
               Certaines Prop Firms appliquent des limites de capital lorsqu&apos;une même
@@ -222,10 +279,15 @@ function FirmCardView({
 function PlanCard({
   plan,
   href,
+  supplementActive,
 }: {
   plan: (typeof PLANS)[PlanKey];
   href: string;
+  supplementActive: boolean;
 }) {
+  const supplement = getSupplementAmount(plan.key);
+  const displayedPrice = supplementActive ? plan.priceEUR + supplement : plan.priceEUR;
+
   return (
     <div
       className={`relative flex flex-col border rounded-[20px] p-8 bg-bg-2 ${
@@ -245,22 +307,32 @@ function PlanCard({
       </div>
 
       <div className="flex items-baseline gap-1.5 mb-1">
-        <span className="font-mono text-[38px] font-medium">{plan.priceEUR}€</span>
+        {supplementActive && (
+          <span className="font-mono text-[18px] text-muted-2 line-through">{plan.priceEUR}€</span>
+        )}
+        <span className="font-mono text-[38px] font-medium">{displayedPrice}€</span>
         <span className="text-muted text-sm">
           {plan.billingMonths === 1 ? "/ mois" : `/ ${plan.billingMonths} mois`}
         </span>
       </div>
 
-      {plan.compareToMonthly && plan.savingsEUR && (
-        <div className="text-[12.5px] text-muted mb-1">
-          <span className="line-through text-muted-2">{plan.compareToMonthly}€</span>{" "}
-          en paiement mensuel
+      {supplementActive ? (
+        <div className="text-[12px] font-medium mb-5 text-blue-soft">
+          dont +{supplement}€ Supplément Grande Allocation
         </div>
+      ) : (
+        <>
+          {plan.compareToMonthly && plan.savingsEUR && (
+            <div className="text-[12.5px] text-muted mb-1">
+              <span className="line-through text-muted-2">{plan.compareToMonthly}€</span>{" "}
+              en paiement mensuel
+            </div>
+          )}
+          <div className="text-[12.5px] font-medium mb-5" style={{ color: plan.savingsEUR ? "#6FE3A5" : undefined }}>
+            {plan.savingsEUR ? `Économie de ${plan.savingsEUR}€` : "Sans engagement"}
+          </div>
+        </>
       )}
-
-      <div className="text-[12.5px] font-medium mb-5" style={{ color: plan.savingsEUR ? "#6FE3A5" : undefined }}>
-        {plan.savingsEUR ? `Économie de ${plan.savingsEUR}€` : "Sans engagement"}
-      </div>
 
       <div className="flex-1" />
 
@@ -276,3 +348,4 @@ function PlanCard({
     </div>
   );
 }
+ 
