@@ -49,6 +49,10 @@ export default function PropFirmDeclarationForm() {
       }
 
       setStep("submitted");
+      // Recharge les données serveur de la page (prix affichés) pour que le
+      // supplément apparaisse immédiatement, sans que le client ait besoin
+      // de recharger la page lui-même.
+      router.refresh();
     } catch {
       setError("Une erreur est survenue. Réessayez ou contactez le support.");
     } finally {
