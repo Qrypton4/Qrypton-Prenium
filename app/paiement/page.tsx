@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase-server";
 import { redirect } from "next/navigation";
 import { ConsentForm } from "./ConsentForm";
 import { getPlan } from "@/lib/plans";
+import { isSalesOpen } from "@/lib/launch";
 
 export const metadata = { title: "Paiement — Qrypton" };
 
@@ -10,6 +11,10 @@ export default async function Paiement({
 }: {
   searchParams: { plan?: string };
 }) {
+  if (!isSalesOpen()) {
+    redirect("/tarifs/fonds-propres");
+  }
+
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
