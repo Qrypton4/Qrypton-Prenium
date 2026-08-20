@@ -111,7 +111,7 @@ export default function GuidePropFirm() {
             </div>
 
             <div className="mt-8 pt-6 border-t border-line text-center">
-              <PricingCTAButton />
+              <PricingCTAButton href="/tarifs/prop-firm" />
             </div>
           </div>
         </Reveal>
