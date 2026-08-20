@@ -11,6 +11,7 @@ import {
   PROP_FIRM_SUPPLEMENT_THRESHOLD_EUR,
 } from "@/lib/propFirmSupplement";
 import PropFirmDeclarationForm from "@/components/tarifs/PropFirmDeclarationForm";
+import { isSalesOpen, SALES_CLOSED_MESSAGE } from "@/lib/launch";
 
 export const metadata = {
   title: "Prop Firm — Tarifs Qrypton",
@@ -336,16 +337,24 @@ function PlanCard({
 
       <div className="flex-1" />
 
-      <Link
-        href={href}
-        className="block w-full max-w-[280px] mx-auto text-center py-3.5 rounded-[10px] font-semibold transition mt-6 bg-white text-bg hover:bg-blue-soft"
-      >
-        Commencer maintenant
-      </Link>
+      {isSalesOpen() ? (
+        <Link
+          href={href}
+          className="block w-full max-w-[280px] mx-auto text-center py-3.5 rounded-[10px] font-semibold transition mt-6 bg-white text-bg hover:bg-blue-soft"
+        >
+          Commencer maintenant
+        </Link>
+      ) : (
+        <span
+          aria-disabled="true"
+          className="block w-full max-w-[280px] mx-auto text-center py-3.5 rounded-[10px] font-semibold mt-6 bg-white/25 text-white/50 cursor-not-allowed select-none"
+        >
+          Commencer maintenant
+        </span>
+      )}
       <div className="text-center text-[11px] text-muted-2 font-mono mt-3">
-        Accès immédiat après validation du paiement
+        {isSalesOpen() ? "Accès immédiat après validation du paiement" : SALES_CLOSED_MESSAGE}
       </div>
     </div>
   );
 }
- 
