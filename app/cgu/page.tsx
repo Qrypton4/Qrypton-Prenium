@@ -8,8 +8,8 @@ export default function CGU() {
       <Link href="/" className="text-sm text-muted hover:text-white transition">← Retour à l&apos;accueil</Link>
       <h1 className="font-display text-2xl font-semibold mt-6 mb-2">Conditions Générales de Vente et d&apos;Utilisation</h1>
       <p className="text-xs text-muted-2 mb-8 border border-line rounded-lg p-4 bg-bg-2">
-        Dernière mise à jour : [À COMPLÉTER : date]. Édité par Rémi Thony Bernard Laly — Qrypton Edge,
-        micro-entrepreneur, SIREN 108 731 670, 12 Résidence Simone Veil, 59138 Bachant.
+        Dernière mise à jour : 01/09/2026. Édité par Rémi Laly — Qrypton Edge,
+        micro-entrepreneur, SIREN 108 731 670 (SIRET 108 731 670 00015), 12 Résidence Simone Veil, 59138 Bachant.
       </p>
       <div className="flex flex-col gap-6 text-sm text-muted leading-relaxed">
         <Section title="1. Objet">
