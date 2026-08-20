@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase-server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { getPlan, PlanKey } from "@/lib/plans";
 import { shouldApplySupplement, PROP_FIRM_SUPPLEMENT_STRIPE_ENV_VAR } from "@/lib/propFirmSupplement";
+import { isSalesOpen, SALES_CLOSED_MESSAGE } from "@/lib/launch";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 const CGV_VERSION = "1.0";
@@ -49,6 +50,9 @@ async function buildLineItems(
 // exact accepté) AVANT de créer la session Stripe, puis retourne l'URL de
 // paiement au client.
 export async function POST(req: NextRequest) {
+  if (!isSalesOpen()) {
+    return NextResponse.json({ ok: false, message: SALES_CLOSED_MESSAGE }, { status: 403 });
+  }
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
@@ -124,6 +128,9 @@ export async function POST(req: NextRequest) {
 // sans enregistrement de consentement puisqu'aucun formulaire n'est passé
 // par ce chemin.
 export async function GET(req: NextRequest) {
+  if (!isSalesOpen()) {
+    return NextResponse.json({ ok: false, message: SALES_CLOSED_MESSAGE }, { status: 403 });
+  }
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
