@@ -161,7 +161,7 @@ export default async function TarifsPropFirm() {
           <div className="max-w-[720px] mx-auto mt-14 border-t border-line pt-10 text-center">
             <h2 className="font-display text-base font-semibold mb-4">Incluses dans les 3 formules</h2>
             <ul className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-[13.5px] text-muted">
-              {["Robot OPR Edge™", "Licence personnelle", "Mises à jour du logiciel", "Support utilisateur"].map((f) => (
+              {["Robot OPR Edge™", "Licence personnelle", "Guide d'installation", "Mises à jour du logiciel", "Support utilisateur"].map((f) => (
                 <li key={f} className="flex items-center gap-2">
                   <span className="text-blue-soft">✓</span> {f}
                 </li>
