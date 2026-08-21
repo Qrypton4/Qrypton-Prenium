@@ -37,7 +37,7 @@ export default function RiskAnalysis({ s }: { s: PerformanceSummary }) {
           <div className="font-mono text-2xl font-semibold text-white">
             {s.sharpeRatio ? s.sharpeRatio.toFixed(2) : "—"}
           </div>
-          <p className="text-[11.5px] text-muted-2 leading-relaxed mt-3">
+          <p className="text-[11.5px] text-muted leading-relaxed mt-3">
             Mesure la régularité des performances par rapport au risque pris, en faisant une
             moyenne entre les périodes positives et négatives. Plus il est élevé, plus la
             performance est régulière : en dessous de 1 c&apos;est faible, autour de 2 c&apos;est
@@ -46,7 +46,7 @@ export default function RiskAnalysis({ s }: { s: PerformanceSummary }) {
         </div>
         <div className="bg-bg-2 p-6">
           <h3 className="font-display text-base font-semibold mb-3">Qrypton utilise les intérêts composés</h3>
-          <p className="text-[11.5px] text-muted-2 leading-relaxed mt-3">
+          <p className="text-[11.5px] text-muted leading-relaxed mt-3">
             Effet boule de neige : le robot risque toujours 0,5 % du capital du moment, pas un
             montant fixe. Sur cette période de référence, le risque par trade est ainsi passé de{" "}
             {riskAtStart.toLocaleString("fr-FR")} € sur un compte de départ à{" "}
