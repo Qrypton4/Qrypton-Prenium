@@ -7,6 +7,7 @@ import InstallPromptAndroid from "@/components/InstallPromptAndroid";
 import InstallPromptIOS from "@/components/InstallPromptIOS";
 import { PWAInstallProvider } from "@/components/PWAInstallContext";
 import Footer from "@/components/Footer";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "Qrypton — Trading algorithmique, conçu avec précision.",
@@ -82,6 +83,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </PWAInstallProvider>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
