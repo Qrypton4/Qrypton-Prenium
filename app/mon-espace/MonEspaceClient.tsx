@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Card, Row, Kpi } from "./ui";
 import Image from "next/image";
 import PWAInstallSettingsCard from "@/components/PWAInstallSettingsCard";
+import PropFirmDeclarationForm from "@/components/tarifs/PropFirmDeclarationForm";
 
 const TABS = [
   { id: "dashboard", label: "📊 Tableau de bord" },
@@ -868,16 +869,15 @@ const PROP_FIRM_STATUS_DOT: Record<string, string> = {
 function PropFirmLicensesCard({ accounts }: { accounts: any[] }) {
   return (
     <Card title="Mes licences Prop Firm">
-      {accounts.length === 0 ? (
-        <div className="text-center py-4">
-          <p className="text-muted text-sm mb-3">
-            Vous n&apos;avez pas encore de compte Prop Firm associé à Qrypton.
-          </p>
-          <a href="/tarifs/prop-firm" className="text-blue-soft text-sm hover:underline">
-            Découvrir l&apos;offre Prop Firm →
-          </a>
-        </div>
-      ) : (
+     {accounts.length === 0 ? (
+          <div className="py-2">
+            <p className="text-muted text-sm mb-4 text-center">
+              Vous tradez avec un compte Prop Firm ? Déclarez-le pour que votre capacité
+              d&apos;allocation soit prise en compte automatiquement.
+            </p>
+            <PropFirmDeclarationForm redirectPath="/mon-espace" startOpen />
+          </div>
+        ) : ( 
         <div className="flex flex-col gap-4">
           {accounts.map((acc) => (
             <div
