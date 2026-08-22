@@ -1,58 +1,69 @@
-// app/api/prop-firm-declaration/route.ts
-// Permet à un client connecté de déclarer un compte Prop Firm AVANT paiement
-// (Cas 2 du brief : nouveau client déjà Funded). Cette déclaration détermine
-// le prix affiché au checkout, mais reste "verified: false" jusqu'à
-// vérification manuelle par l'admin — voir /admin et sync-prop-firm-subscription.
-
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase-server";
 import { supabaseAdmin } from "@/lib/supabase";
+import { randomUUID } from "crypto";
 
 export async function POST(req: NextRequest) {
   const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
     return NextResponse.json({ ok: false, message: "not_authenticated" }, { status: 401 });
   }
 
-  const { propFirmSlug, mt5Account, capital, alreadyFunded } = await req.json();
+  const formData = await req.formData();
+  const propFirmSlug = formData.get("propFirmSlug") as string;
+  const mt5Account = (formData.get("mt5Account") as string)?.trim();
+  const capital = Number(formData.get("capital"));
+  const alreadyFunded = formData.get("alreadyFunded") === "true";
+  const certified = formData.get("certified") === "true";
+  const proof = formData.get("proof") as File | null;
 
   if (!propFirmSlug || !mt5Account || !Number.isFinite(capital) || capital <= 0) {
     return NextResponse.json({ ok: false, message: "invalid_input" }, { status: 400 });
   }
-
-  const { data: firm, error: firmError } = await supabaseAdmin
-    .from("prop_firms")
-    .select("id")
-    .eq("slug", propFirmSlug)
-    .maybeSingle();
-
-  if (firmError || !firm) {
-    return NextResponse.json({ ok: false, message: "unknown_prop_firm" }, { status: 400 });
+  if (!certified) {
+    return NextResponse.json({ ok: false, message: "certification_required" }, { status: 400 });
+  }
+  if (!proof || proof.size === 0) {
+    return NextResponse.json({ ok: false, message: "proof_required" }, { status: 400 });
   }
 
-  const status = alreadyFunded ? "active" : "pending_verification";
+  const ext = proof.name.split(".").pop() || "jpg";
+  const proofPath = `${user.id}/${randomUUID()}.${ext}`;
 
-  const { data: account, error: insertError } = await supabaseAdmin
-    .from("prop_firm_accounts")
-    .insert({
-      user_id: user.id,
-      prop_firm_id: firm.id,
-      mt5_account: mt5Account,
-      capital,
-      status,
-      verified: false, // toujours à vérifier manuellement, même si déclaré Funded
-      funded_at: alreadyFunded ? new Date().toISOString() : null,
-    })
-    .select("id")
-    .single();
+  const { error: uploadError } = await supabaseAdmin.storage
+    .from("prop-firm-proofs")
+    .upload(proofPath, proof, { contentType: proof.type });
 
-  if (insertError || !account) {
-    return NextResponse.json({ ok: false, message: "insert_failed" }, { status: 500 });
+  if (uploadError) {
+    return NextResponse.json({ ok: false, message: "upload_failed" }, { status: 500 });
   }
 
-  return NextResponse.json({ ok: true, accountId: account.id });
+  const { data, error } = await supabaseAdmin.rpc("declare_prop_firm_account", {
+    p_user_id: user.id,
+    p_prop_firm_slug: propFirmSlug,
+    p_mt5_account: mt5Account,
+    p_capital: capital,
+    p_already_funded: alreadyFunded,
+    p_proof_path: proofPath,
+  });
+
+  if (error || !data?.ok) {
+    await supabaseAdmin.storage.from("prop-firm-proofs").remove([proofPath]);
+
+    const message = data?.message || "insert_failed";
+    if (message === "allocation_exceeded") {
+      return NextResponse.json(
+        { ok: false, message: "allocation_exceeded", available: data.available },
+        { status: 409 }
+      );
+    }
+    if (message === "duplicate_account") {
+      return NextResponse.json({ ok: false, message: "duplicate_account" }, { status: 409 });
+    }
+    return NextResponse.json({ ok: false, message }, { status: 500 });
+  }
+
+  return NextResponse.json({ ok: true, accountId: data.accountId });
 }
