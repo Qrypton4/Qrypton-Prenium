@@ -31,12 +31,13 @@ async function getTarifsData(): Promise<{
   hasActiveSub: boolean;
   supplementActive: boolean;
   declaredCapital: number | null;
+  userEmail: string | null; 
 }> {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
-    return { isLoggedIn: false, hasActiveSub: false, supplementActive: false, declaredCapital: null };
+    return { isLoggedIn: false, hasActiveSub: false, supplementActive: false, declaredCapital: null, userEmail: null };
   }
 
   const { data: subscription } = await supabaseAdmin
@@ -66,6 +67,7 @@ async function getTarifsData(): Promise<{
     hasActiveSub: !!subscription,
     supplementActive,
     declaredCapital: declaredAccount ? Number(declaredAccount.capital) : null,
+        userEmail: user.email ?? null,
   };
 }
 
