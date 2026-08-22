@@ -50,12 +50,12 @@ async function buildLineItems(
 // exact accepté) AVANT de créer la session Stripe, puis retourne l'URL de
 // paiement au client.
 export async function POST(req: NextRequest) {
-  if (!isSalesOpen()) {
-    return NextResponse.json({ ok: false, message: SALES_CLOSED_MESSAGE }, { status: 403 });
-  }
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
+  if (!isSalesOpen(user?.email)) {
+    return NextResponse.json({ ok: false, message: SALES_CLOSED_MESSAGE }, { status: 403 });
+  }
   if (!user) {
     return NextResponse.json({ ok: false, message: "not_authenticated" }, { status: 401 });
   }
@@ -128,11 +128,12 @@ export async function POST(req: NextRequest) {
 // sans enregistrement de consentement puisqu'aucun formulaire n'est passé
 // par ce chemin.
 export async function GET(req: NextRequest) {
-  if (!isSalesOpen()) {
-    return NextResponse.json({ ok: false, message: SALES_CLOSED_MESSAGE }, { status: 403 });
-  }
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
+
+  if (!isSalesOpen(user?.email)) {
+    return NextResponse.json({ ok: false, message: SALES_CLOSED_MESSAGE }, { status: 403 });
+  }
 
   const planKey = req.nextUrl.searchParams.get("plan") || "monthly";
   const plan = getPlan(planKey);
