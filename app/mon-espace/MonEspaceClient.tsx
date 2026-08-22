@@ -854,15 +854,19 @@ function LicenseTab({ license, propFirmAccounts = [] }: any) {
 
 const PROP_FIRM_STATUS_LABEL: Record<string, string> = {
   pending_verification: "En attente de vérification",
-  active: "Active",
+  active: "En attente de vérification",
+  verified: "Vérifié",
   suspended: "Suspendue",
+  rejected: "Refusée",
   closed: "Clôturée",
 };
 
 const PROP_FIRM_STATUS_DOT: Record<string, string> = {
   pending_verification: "bg-yellow-400",
-  active: "bg-positive",
+  active: "bg-yellow-400",
+  verified: "bg-positive",
   suspended: "bg-orange-400",
+  rejected: "bg-red-400",
   closed: "bg-muted-2",
 };
 
