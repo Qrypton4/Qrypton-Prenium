@@ -150,7 +150,7 @@ function PlanCard({
 
       <div className="flex-1" />
 
-      {isSalesOpen ? (
+      {salesOpen ? (
         <Link
           href={href}
           className="block w-full max-w-[280px] mx-auto text-center py-3.5 rounded-[10px] font-semibold transition mt-6 bg-white text-bg hover:bg-blue-soft"
@@ -166,7 +166,7 @@ function PlanCard({
         </span>
       )}
       <div className="text-center text-[11px] text-muted-2 font-mono mt-3">
-        {isSalesOpen ? "Accès immédiat après validation du paiement" : SALES_CLOSED_MESSAGE}
+        {salesOpen ? "Accès immédiat après validation du paiement" : SALES_CLOSED_MESSAGE}
       </div>
     </div>
   );
