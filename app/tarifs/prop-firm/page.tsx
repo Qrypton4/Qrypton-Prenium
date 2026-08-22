@@ -218,7 +218,7 @@ export default async function TarifsPropFirm() {
   );
 }
 
-function formatUSD(n: number): string {
+function formatEUR(n: number): string {
   return new Intl.NumberFormat("fr-FR").format(Math.round(n));
 }
 
@@ -244,7 +244,7 @@ function FirmCardView({
         <div className="flex items-center justify-between text-[11.5px] font-mono uppercase tracking-wide text-muted-2 mb-2">
           <span>Capacité disponible</span>
           <span>
-            {capacityKnown ? `${formatUSD(firm.allocationAvailable ?? 0)} $` : "—"}
+            {capacityKnown ? `${formatEUR(firm.allocationAvailable ?? 0)} €` : "—"}
           </span>
         </div>
         <div className="h-1.5 w-full rounded-full bg-white/[0.06] overflow-hidden">
