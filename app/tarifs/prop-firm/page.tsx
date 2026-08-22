@@ -10,7 +10,7 @@ import {
   getSupplementAmount,
   PROP_FIRM_SUPPLEMENT_THRESHOLD_EUR,
 } from "@/lib/propFirmSupplement";
-import PropFirmDeclarationForm from "@/components/tarifs/PropFirmDeclarationForm";
+
 import { isSalesOpen, SALES_CLOSED_MESSAGE } from "@/lib/launch";
 
 export const metadata = {
@@ -77,7 +77,7 @@ async function getTarifsData(): Promise<{
 function ctaHrefFor(planKey: PlanKey, isLoggedIn: boolean, hasActiveSub: boolean): string {
   if (!isLoggedIn) return `/inscription?next=/tarifs/prop-firm&plan=${planKey}`;
   if (hasActiveSub) return "/mon-espace";
-  return `/paiement?plan=${planKey}`;
+  return `/paiement?plan=${planKey}&context=propfirm`;
 }
 
 export default async function TarifsPropFirm() {
@@ -125,7 +125,7 @@ export default async function TarifsPropFirm() {
 
         {/* Tarifs — identiques à /tarifs/fonds-propres, mêmes boutons, même paiement */}
         <Reveal delay={0.08}>
-          <PropFirmDeclarationForm />
+          
 
           {supplementActive && (
             <div className="max-w-[720px] mx-auto mb-8 border border-blue-soft/30 rounded-2xl bg-blue/5 p-5">
