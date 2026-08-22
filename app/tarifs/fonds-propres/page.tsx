@@ -10,12 +10,12 @@ export const metadata = {
   description: "OPR Edge™ à partir de 79€/mois pour trader avec vos propres fonds. Formules mensuelle, 6 mois et 12 mois.",
 };
 
-async function getTarifsData(): Promise<{ isLoggedIn: boolean; hasActiveSub: boolean }> {
+async function getTarifsData(): Promise<{ isLoggedIn: boolean; hasActiveSub: boolean; userEmail: string | null }> {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
-    return { isLoggedIn: false, hasActiveSub: false };
+    return { isLoggedIn: false, hasActiveSub: false, userEmail: null };
   }
 
   const { data: subscription } = await supabaseAdmin
@@ -25,7 +25,8 @@ async function getTarifsData(): Promise<{ isLoggedIn: boolean; hasActiveSub: boo
     .eq("status", "active")
     .maybeSingle();
 
-  return { isLoggedIn: true, hasActiveSub: !!subscription };
+  return { isLoggedIn: true, hasActiveSub: !!subscription, userEmail: user.email ?? null };
+
 }
 
 function ctaHrefFor(planKey: PlanKey, isLoggedIn: boolean, hasActiveSub: boolean): string {
@@ -35,7 +36,8 @@ function ctaHrefFor(planKey: PlanKey, isLoggedIn: boolean, hasActiveSub: boolean
 }
 
 export default async function TarifsFondsPropres() {
-  const { isLoggedIn, hasActiveSub } = await getTarifsData();
+  const { isLoggedIn, hasActiveSub, userEmail } = await getTarifsData();
+    const salesOpen = isSalesOpen(userEmail);
 
   return (
     <>
@@ -70,10 +72,11 @@ export default async function TarifsFondsPropres() {
 
         <div className="max-w-[720px] mx-auto flex flex-col gap-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <PlanCard plan={PLANS.monthly} href={ctaHrefFor("monthly", isLoggedIn, hasActiveSub)} />
-            <PlanCard plan={PLANS.six_months} href={ctaHrefFor("six_months", isLoggedIn, hasActiveSub)} />
-          </div>
-          <PlanCard plan={PLANS.twelve_months} href={ctaHrefFor("twelve_months", isLoggedIn, hasActiveSub)} />
+            <PlanCard plan={PLANS.monthly} href={ctaHrefFor("monthly", isLoggedIn, hasActiveSub)} salesOpen={salesOpen} />
+              <PlanCard plan={PLANS.six_months} href={ctaHrefFor("six_months", isLoggedIn, hasActiveSub)} salesOpen={salesOpen} />
+            </div>
+          <PlanCard plan={PLANS.twelve_months} href={ctaHrefFor("twelve_months", isLoggedIn, hasActiveSub)} salesOpen={salesOpen} />
+
         </div>
        
         <div className="max-w-[720px] mx-auto mt-14 border-t border-line pt-10 text-center">
@@ -103,9 +106,11 @@ export default async function TarifsFondsPropres() {
 function PlanCard({
   plan,
   href,
+  salesOpen,
 }: {
   plan: (typeof PLANS)[PlanKey];
   href: string;
+  salesOpen: boolean;
 }) {
   return (
     <div
@@ -145,7 +150,7 @@ function PlanCard({
 
       <div className="flex-1" />
 
-      {isSalesOpen() ? (
+      {isSalesOpen ? (
         <Link
           href={href}
           className="block w-full max-w-[280px] mx-auto text-center py-3.5 rounded-[10px] font-semibold transition mt-6 bg-white text-bg hover:bg-blue-soft"
@@ -161,7 +166,7 @@ function PlanCard({
         </span>
       )}
       <div className="text-center text-[11px] text-muted-2 font-mono mt-3">
-        {isSalesOpen() ? "Accès immédiat après validation du paiement" : SALES_CLOSED_MESSAGE}
+        {isSalesOpen ? "Accès immédiat après validation du paiement" : SALES_CLOSED_MESSAGE}
       </div>
     </div>
   );
