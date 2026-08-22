@@ -8,7 +8,7 @@
 //+------------------------------------------------------------------+
 #property strict
 
-string ReportUrl = "https://api.qrypton.io/v1/trades/report";
+string ReportUrl = "https://qryptonedge.com/api/v1/trades/report";
 
 // Mémorise le dernier trade correctement envoyé, pour ne pas le renvoyer
 // deux fois et pour savoir jusqu'où remonter au redémarrage.
