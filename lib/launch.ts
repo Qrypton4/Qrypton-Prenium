@@ -1,9 +1,12 @@
-// Date d'ouverture officielle des abonnements Qrypton.
-// Le "+02:00" fixe explicitement l'heure de Paris (CEST, applicable en septembre),
-// donc la comparaison est correcte quel que soit le fuseau horaire du serveur.
 const SALES_OPEN_AT = new Date("2026-09-22T00:00:00+02:00");
 
-export function isSalesOpen(): boolean {
+function isTestBypass(email: string | null | undefined): boolean {
+  const bypassEmail = process.env.SALES_TEST_BYPASS_EMAIL;
+  return !!bypassEmail && !!email && email.toLowerCase() === bypassEmail.toLowerCase();
+}
+
+export function isSalesOpen(userEmail?: string | null): boolean {
+  if (isTestBypass(userEmail)) return true;
   return Date.now() >= SALES_OPEN_AT.getTime();
 }
 
