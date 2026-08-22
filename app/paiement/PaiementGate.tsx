@@ -14,6 +14,7 @@ export function PaiementGate({
   const [step, setStep] = useState<"declare" | "payment">(
     hasDeclaredAccount ? "payment" : "declare"
   );
+  const [skipped, setSkipped] = useState(false);
 
   if (step === "declare") {
     return (
@@ -24,7 +25,10 @@ export function PaiementGate({
           onDone={() => setStep("payment")}
         />
         <button
-          onClick={() => setStep("payment")}
+          onClick={() => {
+            setSkipped(true);
+            setStep("payment");
+          }}
           className="text-muted-2 text-[12.5px] hover:text-white transition text-center"
         >
           Je n&apos;ai pas de compte Prop Firm →
@@ -33,5 +37,21 @@ export function PaiementGate({
     );
   }
 
-  return <ConsentForm plan={plan} />;
+  return (
+    <div className="flex flex-col gap-4">
+      {skipped && (
+        <div className="border border-blue-soft/30 rounded-2xl bg-blue/5 p-4 text-center">
+          <p className="text-white text-[13px] font-medium mb-1">
+            N&apos;oubliez pas de déclarer votre compte plus tard
+          </p>
+          <p className="text-muted-2 text-[12px] leading-relaxed">
+            Dès que vous aurez un compte Prop Firm, déclarez-le depuis votre espace
+            client, onglet Licence — pour que votre capacité d&apos;allocation soit
+            prise en compte.
+          </p>
+        </div>
+      )}
+      <ConsentForm plan={plan} />
+    </div>
+  );
 }
