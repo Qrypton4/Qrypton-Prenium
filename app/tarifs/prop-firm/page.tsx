@@ -79,7 +79,8 @@ function ctaHrefFor(planKey: PlanKey, isLoggedIn: boolean, hasActiveSub: boolean
 }
 
 export default async function TarifsPropFirm() {
-  const { isLoggedIn, hasActiveSub, supplementActive, declaredCapital } = await getTarifsData();
+  const { isLoggedIn, hasActiveSub, supplementActive, declaredCapital, userEmail } = await getTarifsData();
+  const salesOpen = isSalesOpen(userEmail);
   const statuses = await getAllPropFirmAllocationStatuses();
   const firms = FIRM_ORDER.map((slug) =>
     statuses.find((s) => s.slug === slug)
@@ -144,17 +145,20 @@ export default async function TarifsPropFirm() {
                 plan={PLANS.monthly}
                 href={ctaHrefFor("monthly", isLoggedIn, hasActiveSub)}
                 supplementActive={supplementActive}
+                salesOpen={salesOpen}
               />
               <PlanCard
                 plan={PLANS.six_months}
                 href={ctaHrefFor("six_months", isLoggedIn, hasActiveSub)}
                 supplementActive={supplementActive}
+                salesOpen={salesOpen}
               />
             </div>
             <PlanCard
               plan={PLANS.twelve_months}
               href={ctaHrefFor("twelve_months", isLoggedIn, hasActiveSub)}
               supplementActive={supplementActive}
+              salesOpen={salesOpen}
             />
           </div>
 
@@ -281,10 +285,12 @@ function PlanCard({
   plan,
   href,
   supplementActive,
+  salesOpen,
 }: {
   plan: (typeof PLANS)[PlanKey];
   href: string;
   supplementActive: boolean;
+  salesOpen: boolean;
 }) {
   const supplement = getSupplementAmount(plan.key);
   const displayedPrice = supplementActive ? plan.priceEUR + supplement : plan.priceEUR;
@@ -337,7 +343,7 @@ function PlanCard({
 
       <div className="flex-1" />
 
-      {isSalesOpen() ? (
+      {isSalesOpen ? (
         <Link
           href={href}
           className="block w-full max-w-[280px] mx-auto text-center py-3.5 rounded-[10px] font-semibold transition mt-6 bg-white text-bg hover:bg-blue-soft"
@@ -353,7 +359,7 @@ function PlanCard({
         </span>
       )}
       <div className="text-center text-[11px] text-muted-2 font-mono mt-3">
-        {isSalesOpen() ? "Accès immédiat après validation du paiement" : SALES_CLOSED_MESSAGE}
+        {isSalesOpen ? "Accès immédiat après validation du paiement" : SALES_CLOSED_MESSAGE}
       </div>
     </div>
   );
