@@ -110,9 +110,35 @@ export default function GuidePropFirm() {
               />
             </div>
 
+            <div className="mt-8 pt-6 border-t border-line">
+              <h2 className="font-display text-base font-semibold mb-2">
+                C&apos;est quoi cette histoire de « capacité disponible » ?
+              </h2>
+              <p className="text-muted text-[13.5px] leading-relaxed mb-3">
+                Imaginez une salle de sport avec un nombre limité de casiers. Chaque
+                client qui utilise Qrypton sur une Prop Firm prend un casier — peu importe
+                que ce soit vous ou un autre client, les casiers sont partagés entre tout le
+                monde. La Prop Firm impose ce nombre limité de casiers pour une bonne raison :
+                elle veut éviter que trop de comptes utilisent exactement la même stratégie de
+                trading en même temps.
+              </p>
+              <p className="text-muted text-[13.5px] leading-relaxed mb-3">
+                Sur la page tarifs, vous voyez en temps réel combien de « casiers » sont
+                encore libres pour chaque Prop Firm. Si votre compte est trop gros pour la
+                place restante, vous le saurez tout de suite — avant même de payer quoi que
+                ce soit.
+              </p>
+              <p className="text-muted text-[13.5px] leading-relaxed">
+                Bonne nouvelle : ça ne change rien à votre propre compte. Votre argent, vos
+                gains, votre challenge — tout ça vous appartient normalement. C&apos;est
+                seulement une histoire de place partagée entre les clients de Qrypton.
+              </p>
+            </div>
+
             <div className="mt-8 pt-6 border-t border-line text-center">
               <PricingCTAButton href="/tarifs/prop-firm" />
             </div>
+
           </div>
         </Reveal>
       </main>
