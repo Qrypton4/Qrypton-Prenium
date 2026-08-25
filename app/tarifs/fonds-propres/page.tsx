@@ -71,23 +71,6 @@ export default async function TarifsFondsPropres() {
   </p>
 </div>
 
-        <div className="max-w-[620px] mx-auto rounded-2xl border border-line-strong bg-bg-2 px-5 py-4 text-center mb-8">
-  <p className="text-sm text-white/85 font-medium mb-1">
-    Vous tradez sur un compte Prop Firm (FTMO, FundedNext…) ?
-  </p>
-  <p className="text-muted-2 text-[12.5px] leading-relaxed mb-3">
-    Cette page concerne uniquement un trading avec vos propres fonds. Les Prop Firms suivent des
-    règles d&apos;allocation différentes — le tarif applicable n&apos;est pas le même.
-  </p>
-  <Link
-    href="/tarifs/prop-firm"
-    className="inline-block text-blue-soft text-[13px] font-semibold hover:underline"
-  >
-    Voir l&apos;offre Prop Firm →
-  </Link>
-</div>
-
-
         <FondsPropresPricingSection
           plans={[
             { plan: PLANS.monthly, href: ctaHrefFor("monthly", isLoggedIn, hasActiveSub) },
