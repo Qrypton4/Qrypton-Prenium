@@ -49,7 +49,11 @@ export default function FondsPropresPricingSection({
         />
         <span className="text-[13px] text-white/85">
           Je confirme que j&apos;utilise Qrypton pour trader avec{" "}
-          <strong>mes propres fonds</strong>, et non via un compte Prop Firm.
+          <strong>mes propres fonds</strong>, et non via un compte Prop Firm. Vous êtes en Prop
+          Firm ?{" "}
+          <a href="/tarifs/prop-firm" className="text-blue-soft hover:underline">
+            Voir l&apos;offre Prop Firm →
+          </a>
         </span>
       </label>
 
