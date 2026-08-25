@@ -4,6 +4,7 @@ import { supabaseAdmin } from "@/lib/supabase";
 import SiteNavContainer from "@/components/SiteNavContainer";
 import { PLANS, PlanKey } from "@/lib/plans";
 import { isSalesOpen, SALES_CLOSED_MESSAGE } from "@/lib/launch";
+import FondsPropresPricingSection from "@/components/tarifs/FondsPropresPricingSection";
 
 export const metadata = {
   title: "Fonds propres — Tarifs Qrypton",
@@ -70,14 +71,32 @@ export default async function TarifsFondsPropres() {
   </p>
 </div>
 
-        <div className="max-w-[720px] mx-auto flex flex-col gap-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <PlanCard plan={PLANS.monthly} href={ctaHrefFor("monthly", isLoggedIn, hasActiveSub)} salesOpen={salesOpen} />
-              <PlanCard plan={PLANS.six_months} href={ctaHrefFor("six_months", isLoggedIn, hasActiveSub)} salesOpen={salesOpen} />
-            </div>
-          <PlanCard plan={PLANS.twelve_months} href={ctaHrefFor("twelve_months", isLoggedIn, hasActiveSub)} salesOpen={salesOpen} />
+        <div className="max-w-[620px] mx-auto rounded-2xl border border-line-strong bg-bg-2 px-5 py-4 text-center mb-8">
+  <p className="text-sm text-white/85 font-medium mb-1">
+    Vous tradez sur un compte Prop Firm (FTMO, FundedNext…) ?
+  </p>
+  <p className="text-muted-2 text-[12.5px] leading-relaxed mb-3">
+    Cette page concerne uniquement un trading avec vos propres fonds. Les Prop Firms suivent des
+    règles d&apos;allocation différentes — le tarif applicable n&apos;est pas le même.
+  </p>
+  <Link
+    href="/tarifs/prop-firm"
+    className="inline-block text-blue-soft text-[13px] font-semibold hover:underline"
+  >
+    Voir l&apos;offre Prop Firm →
+  </Link>
+</div>
 
-        </div>
+
+        <FondsPropresPricingSection
+          plans={[
+            { plan: PLANS.monthly, href: ctaHrefFor("monthly", isLoggedIn, hasActiveSub) },
+            { plan: PLANS.six_months, href: ctaHrefFor("six_months", isLoggedIn, hasActiveSub) },
+            { plan: PLANS.twelve_months, href: ctaHrefFor("twelve_months", isLoggedIn, hasActiveSub) },
+          ]}
+          salesOpen={salesOpen}
+          salesClosedMessage={SALES_CLOSED_MESSAGE}
+        />
        
         <div className="max-w-[720px] mx-auto mt-14 border-t border-line pt-10 text-center">
           <h2 className="font-display text-base font-semibold mb-4">Incluses dans les 3 formules</h2>
@@ -100,74 +119,5 @@ export default async function TarifsFondsPropres() {
         </div>
       </main>
     </>
-  );
-}
-
-function PlanCard({
-  plan,
-  href,
-  salesOpen,
-}: {
-  plan: (typeof PLANS)[PlanKey];
-  href: string;
-  salesOpen: boolean;
-}) {
-  return (
-    <div
-      className={`relative flex flex-col border rounded-[20px] p-8 bg-bg-2 ${
-        plan.highlight
-          ? "border-blue-soft bg-gradient-to-b from-blue/10 to-transparent"
-          : "border-line-strong bg-gradient-to-b from-blue/5 to-transparent"
-      }`}
-    >
-      {plan.highlight && (
-        <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-[10.5px] font-mono uppercase tracking-wide bg-blue text-white">
-          Meilleur choix
-        </span>
-      )}
-
-      <div className="text-xs text-blue-soft font-mono uppercase tracking-wide mb-3">
-        {plan.label}
-      </div>
-
-      <div className="flex items-baseline gap-1.5 mb-1">
-        <span className="font-mono text-[38px] font-medium">{plan.priceEUR}€</span>
-        <span className="text-muted text-sm">
-          {plan.billingMonths === 1 ? "/ mois" : `/ ${plan.billingMonths} mois`}
-        </span>
-      </div>
-
-      {plan.compareToMonthly && plan.savingsEUR && (
-        <div className="text-[12.5px] text-muted mb-1">
-          <span className="line-through text-muted-2">{plan.compareToMonthly}€</span>{" "}
-          en paiement mensuel
-        </div>
-      )}
-
-      <div className="text-[12.5px] font-medium mb-5" style={{ color: plan.savingsEUR ? "#6FE3A5" : undefined }}>
-        {plan.savingsEUR ? `Économie de ${plan.savingsEUR}€` : "Sans engagement"}
-      </div>
-
-      <div className="flex-1" />
-
-      {salesOpen ? (
-        <Link
-          href={href}
-          className="block w-full max-w-[280px] mx-auto text-center py-3.5 rounded-[10px] font-semibold transition mt-6 bg-white text-bg hover:bg-blue-soft"
-        >
-          Commencer maintenant
-        </Link>
-      ) : (
-        <span
-          aria-disabled="true"
-          className="block w-full max-w-[280px] mx-auto text-center py-3.5 rounded-[10px] font-semibold mt-6 bg-white/25 text-white/50 cursor-not-allowed select-none"
-        >
-          Commencer maintenant
-        </span>
-      )}
-      <div className="text-center text-[11px] text-muted-2 font-mono mt-3">
-        {salesOpen ? "Accès immédiat après validation du paiement" : SALES_CLOSED_MESSAGE}
-      </div>
-    </div>
   );
 }
