@@ -16,9 +16,10 @@ export default function PropFirmDeclarationForm({
 }) {
   const router = useRouter();
   const [step, setStep] = useState<Step>(startOpen ? "form" : "closed");
-  const [propFirmSlug, setPropFirmSlug] = useState("ftmo");
+  const propFirmSlug = "ftmo";
   const [mt5Account, setMt5Account] = useState("");
   const [capital, setCapital] = useState("");
+  const CAPITAL_OPTIONS = [10000, 20000, 40000];
   const [alreadyFunded, setAlreadyFunded] = useState(true);
   const [proofFile, setProofFile] = useState<File | null>(null);
   const [certified, setCertified] = useState(false);
@@ -31,7 +32,7 @@ export default function PropFirmDeclarationForm({
 
     const capitalNumber = Number(capital);
     if (!mt5Account.trim() || !Number.isFinite(capitalNumber) || capitalNumber <= 0) {
-      setError("Merci de renseigner un numéro de compte et un capital valides.");
+      setError("Merci de renseigner un numéro de compte et de choisir un capital.");
       return;
     }
     if (!proofFile) {
@@ -155,14 +156,9 @@ export default function PropFirmDeclarationForm({
 
         <div>
           <label className="block text-[11.5px] text-muted-2 mb-1.5">Prop Firm</label>
-          <select
-            value={propFirmSlug}
-            onChange={(e) => setPropFirmSlug(e.target.value)}
-            className="w-full bg-bg border border-line-strong rounded-lg px-3 py-2.5 text-[13.5px]"
-          >
-            <option value="ftmo">FTMO</option>
-            <option value="fundednext">FundedNext</option>
-          </select>
+          <div className="w-full bg-bg border border-line-strong rounded-lg px-3 py-2.5 text-[13.5px] text-muted-2">
+            FTMO
+          </div>
         </div>
 
         <div>
@@ -178,15 +174,24 @@ export default function PropFirmDeclarationForm({
 
         <div>
           <label className="block text-[11.5px] text-muted-2 mb-1.5">
-            {alreadyFunded ? "Capital Funded (€)" : "Capital de départ du challenge (€)"}
+            {alreadyFunded ? "Capital Funded" : "Capital de départ du challenge"}
           </label>
-          <input
-            type="number"
-            value={capital}
-            onChange={(e) => setCapital(e.target.value)}
-            placeholder="Ex. 100000"
-            className="w-full bg-bg border border-line-strong rounded-lg px-3 py-2.5 text-[13.5px]"
-          />
+          <div className="flex gap-2">
+            {CAPITAL_OPTIONS.map((amount) => (
+              <button
+                key={amount}
+                type="button"
+                onClick={() => setCapital(String(amount))}
+                className={`flex-1 rounded-lg px-3 py-2.5 text-[12.5px] font-medium border transition ${
+                  capital === String(amount)
+                    ? "border-blue-soft bg-blue/10 text-white"
+                    : "border-line-strong text-muted-2 hover:text-white"
+                }`}
+              >
+                {amount.toLocaleString("fr-FR")} €
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="border border-line-strong rounded-lg p-4 bg-bg">
