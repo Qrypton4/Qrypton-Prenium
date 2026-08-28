@@ -1,9 +1,9 @@
 import Link from "next/link";
 import SiteNavContainer from "@/components/SiteNavContainer";
-import StepList from "@/components/guide/StepList";
 import ExampleFirmsList from "@/components/guide/ExampleFirmsList";
 import PricingCTAButton from "@/components/guide/PricingCTAButton";
 import ChallengeSteps from "@/components/guide/ChallengeSteps";
+import PropFirmAccountSteps from "@/components/guide/PropFirmAccountSteps";
 import { Reveal } from "@/components/Animated";
 
 export const metadata = {
@@ -72,7 +72,10 @@ export default function GuidePropFirm() {
             </div>
 
             <ChallengeSteps />
-  <div className="mt-8 pt-6 border-t border-line">
+
+            <PropFirmAccountSteps />
+
+            <div className="mt-8 pt-6 border-t border-line">
               <h2 className="font-display text-base font-semibold mb-2">
                 C&apos;est quoi cette histoire de « capacité disponible » ?
               </h2>
@@ -95,22 +98,6 @@ export default function GuidePropFirm() {
                 gains, votre challenge — tout ça vous appartient normalement. C&apos;est
                 seulement une histoire de place partagée entre les clients de Qrypton.
               </p>
-            </div>
-
-            <div className="mt-8 pt-6 border-t border-line">
-              <h2 className="font-display text-base font-semibold mb-4">
-                Étapes d&apos;installation sur un compte Prop Firm
-              </h2>
-              <StepList
-                steps={[
-                  "Choisir une Prop Firm compatible MT5 et s'inscrire à un challenge.",
-                  "Recevoir les identifiants du compte de démonstration fourni par la Prop Firm.",
-                  "Se connecter à MT5 avec ces identifiants.",
-                  "Installer le robot Qrypton sur le graphique correspondant.",
-                  "Ajuster si besoin le réglage du risque selon les règles de drawdown de la société.",
-                  "Une fois le challenge réussi, continuer avec le compte financé.",
-                ]}
-              />
             </div>
 
             <div className="mt-8 pt-6 border-t border-line">
