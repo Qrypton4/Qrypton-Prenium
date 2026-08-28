@@ -1,9 +1,9 @@
 import Link from "next/link";
 import SiteNavContainer from "@/components/SiteNavContainer";
+import StepList from "@/components/guide/StepList";
 import ExampleFirmsList from "@/components/guide/ExampleFirmsList";
 import PricingCTAButton from "@/components/guide/PricingCTAButton";
 import ChallengeSteps from "@/components/guide/ChallengeSteps";
-import PropFirmAccountSteps from "@/components/guide/PropFirmAccountSteps";
 import { Reveal } from "@/components/Animated";
 
 export const metadata = {
@@ -73,7 +73,30 @@ export default function GuidePropFirm() {
 
             <ChallengeSteps />
 
-            <PropFirmAccountSteps />
+            <div className="mt-8 pt-6 border-t border-line">
+              <h2 className="font-display text-base font-semibold mb-2">
+                Créer votre compte Prop Firm
+              </h2>
+              <p className="text-muted-2 text-[12.5px] mb-4">
+                Étape par étape, jusqu&apos;à la réception de vos identifiants.
+              </p>
+              <StepList
+                steps={[
+                  "Choisissez une Prop Firm parmi celles proposées (par exemple FTMO ou FundedNext).",
+                  "Créez votre compte sur le site de la Prop Firm choisie.",
+                  "Choisissez la taille de capital souhaitée, en euros (EUR).",
+                  "Vérifiez bien les conditions du challenge proposé avant de valider.",
+                  "Sélectionnez impérativement MetaTrader 5 comme plateforme — Qrypton ne fonctionne qu'avec MT5.",
+                  "Finalisez l'achat de votre capital.",
+                  "Récupérez vos identifiants de connexion une fois l'achat confirmé.",
+                ]}
+              />
+              <p className="text-muted-2 text-[12px] leading-relaxed mt-4">
+                Ces identifiants vous serviront dans la vidéo tuto disponible dans votre espace
+                Qrypton une fois votre abonnement actif, pour connecter le robot et votre compte
+                Prop Firm au marché.
+              </p>
+            </div>
 
             <div className="mt-8 pt-6 border-t border-line">
               <h2 className="font-display text-base font-semibold mb-2">
