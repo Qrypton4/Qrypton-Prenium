@@ -74,28 +74,118 @@ export default function GuidePropFirm() {
             <ChallengeSteps />
 
             <div className="mt-8 pt-6 border-t border-line">
-              <h2 className="font-display text-base font-semibold mb-2">
-                C&apos;est quoi cette histoire de « capacité disponible » ?
+              <h2 className="font-display text-base font-semibold mb-3">
+                Comment fonctionne la capacité disponible ?
               </h2>
+
               <p className="text-muted text-[13.5px] leading-relaxed mb-3">
-                Imaginez une salle de sport avec un nombre limité de casiers. Chaque
-                client qui utilise Qrypton sur une Prop Firm prend un casier — peu importe
-                que ce soit vous ou un autre client, les casiers sont partagés entre tout le
-                monde. La Prop Firm impose ce nombre limité de casiers pour une bonne raison :
-                elle veut éviter que trop de comptes utilisent exactement la même stratégie de
-                trading en même temps.
+                Qrypton est actuellement compatible avec <strong className="text-white">FTMO</strong>.
+              </p>
+              <p className="text-muted-2 text-[12.5px] leading-relaxed mb-3">
+                Qrypton n&apos;est ni partenaire, ni affilié, ni sponsorisé par FTMO. FTMO est une
+                société indépendante et Qrypton est un service totalement indépendant.
+              </p>
+              <p className="text-muted text-[13.5px] leading-relaxed mb-6">
+                Certaines règles de FTMO limitent l&apos;allocation de capital pouvant être
+                utilisée avec une même stratégie. Comme plusieurs clients peuvent utiliser
+                Qrypton, la capacité disponible est donc partagée entre les utilisateurs de
+                Qrypton.
+              </p>
+
+              <h3 className="font-display text-sm font-semibold text-blue-soft mb-2">
+                Votre allocation Qrypton
+              </h3>
+              <p className="text-muted text-[13.5px] leading-relaxed mb-3">
+                Lors de votre souscription, vous choisissez l&apos;allocation correspondant à
+                votre compte FTMO :
+              </p>
+              <div className="flex flex-wrap gap-2 mb-3">
+                {["10 000 €", "20 000 €", "40 000 €"].map((amount) => (
+                  <span
+                    key={amount}
+                    className="font-mono text-xs px-3 py-1.5 rounded-lg border border-line bg-blue/5 text-blue-soft"
+                  >
+                    {amount}
+                  </span>
+                ))}
+              </div>
+              <p className="text-muted-2 text-[12.5px] leading-relaxed mb-6">
+                👉 40 000 € est l&apos;allocation maximale prise en charge par abonnement Qrypton.
+              </p>
+
+              <h3 className="font-display text-sm font-semibold text-blue-soft mb-2">
+                Une capacité globale de 320 000 €
+              </h3>
+              <p className="text-muted text-[13.5px] leading-relaxed mb-3">
+                Pour respecter la limite d&apos;allocation applicable à une même stratégie chez
+                FTMO, Qrypton limite actuellement son utilisation à 320 000 € d&apos;allocation
+                cumulée. Cette capacité est partagée entre les utilisateurs de Qrypton.
+              </p>
+              <p className="text-muted-2 text-[12.5px] mb-2">Par exemple :</p>
+              <ul className="space-y-1.5 mb-3">
+                <li className="text-muted text-[13px] font-mono">
+                  Client A → 10 000 € → <span className="text-blue-soft">310 000 €</span> disponibles
+                </li>
+                <li className="text-muted text-[13px] font-mono">
+                  Client B → 20 000 € → <span className="text-blue-soft">290 000 €</span> disponibles
+                </li>
+                <li className="text-muted text-[13px] font-mono">
+                  Client C → 40 000 € → <span className="text-blue-soft">250 000 €</span> disponibles
+                </li>
+              </ul>
+              <p className="text-muted text-[13.5px] leading-relaxed mb-6">
+                La capacité disponible diminue donc au fur et à mesure des activations.
+              </p>
+
+              <h3 className="font-display text-sm font-semibold text-blue-soft mb-2">
+                Vérification de votre compte
+              </h3>
+              <p className="text-muted text-[13.5px] leading-relaxed mb-3">
+                Après votre paiement, Qrypton procède à une vérification de votre compte FTMO
+                afin de confirmer son montant et sa compatibilité avec l&apos;allocation choisie.
               </p>
               <p className="text-muted text-[13.5px] leading-relaxed mb-3">
-                Sur la page tarifs, vous voyez en temps réel combien de « casiers » sont
-                encore libres pour chaque Prop Firm. Si votre compte est trop gros pour la
-                place restante, vous le saurez tout de suite — avant même de payer quoi que
-                ce soit.
+                Si votre compte dépasse 40 000 €, Qrypton ne pourra pas trader ce compte.
               </p>
-              <p className="text-muted text-[13.5px] leading-relaxed">
-                Bonne nouvelle : ça ne change rien à votre propre compte. Votre argent, vos
-                gains, votre challenge — tout ça vous appartient normalement. C&apos;est
-                seulement une histoire de place partagée entre les clients de Qrypton.
+              <p className="text-muted text-[13.5px] leading-relaxed mb-6">
+                La vérification permet également de s&apos;assurer que la capacité restante est
+                suffisante pour votre allocation.
               </p>
+
+              <h3 className="font-display text-sm font-semibold text-blue-soft mb-2">
+                Votre compte reste totalement indépendant
+              </h3>
+              <p className="text-muted text-[13.5px] leading-relaxed mb-3">
+                L&apos;utilisation de Qrypton ne modifie pas la relation entre vous et FTMO.
+              </p>
+              <ul className="space-y-1.5 mb-3 text-muted text-[13.5px] leading-relaxed list-disc list-inside">
+                <li>Votre compte FTMO reste à votre nom.</li>
+                <li>Votre capital reste sous votre propre compte.</li>
+                <li>Vos gains et vos pertes restent les vôtres.</li>
+                <li>Vous restez responsable du respect des règles de FTMO.</li>
+              </ul>
+              <p className="text-muted-2 text-[12.5px] leading-relaxed mb-6">
+                Qrypton fournit uniquement son logiciel de trading automatisé. Qrypton n&apos;est
+                pas une Prop Firm et ne gère pas votre capital.
+              </p>
+
+              <h3 className="font-display text-sm font-semibold mb-3">En résumé</h3>
+              <ul className="space-y-2">
+                {[
+                  "FTMO uniquement pour le moment.",
+                  "10k, 20k ou 40k € d'allocation au choix.",
+                  "40k € maximum par abonnement Qrypton.",
+                  "320k € de capacité cumulée pour Qrypton.",
+                  "Vérification du compte après paiement avant activation.",
+                  "Compte supérieur à 40k € → Qrypton ne tradera pas ce compte.",
+                  "Qrypton est un service indépendant et n'est pas affilié à FTMO.",
+                ].map((item) => (
+                  <li key={item} className="flex gap-2 text-muted text-[13px] leading-relaxed">
+                    <span className="text-positive shrink-0">✓</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
 
             <div className="mt-8 pt-6 border-t border-line">
