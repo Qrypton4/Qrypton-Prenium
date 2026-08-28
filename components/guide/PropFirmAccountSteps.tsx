@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 
 const CTA_HREF = "/guide-demarrage";
 
-type StepIcon = "user" | "list" | "wallet" | "shield" | "card" | "key";
+type StepIcon = "menu" | "list" | "user" | "flag" | "shield" | "wallet" | "card" | "key";
 
 type GuideStep = {
   title: string;
@@ -16,42 +16,56 @@ type GuideStep = {
 
 const STEPS: GuideStep[] = [
   {
-    title: "Créez votre compte",
-    text: "Créez gratuitement votre compte auprès de la Prop Firm de votre choix.",
-    icon: "user",
-    image: { src: "/assets/guide/prop-firm/01-inscription.png", alt: "Page d'inscription de la Prop Firm" },
+    title: "Ouvrez le Guide Qrypton",
+    text: "Dans votre espace Qrypton, ouvrez le menu « Guide Qrypton » puis cliquez sur « Prop Firm ».",
+    icon: "menu",
+    image: { src: "/assets/guide/prop-firm/00-ouvrir-guide.jpg", alt: "Menu Guide Qrypton déroulé avec le lien Prop Firm" },
   },
   {
-    title: "Choisissez votre programme",
-    text: "Choisissez le programme qui correspond à vos objectifs. Les challenges et leurs conditions peuvent varier selon la Prop Firm.",
+    title: "Choisissez votre Prop Firm",
+    text: "Depuis le Guide Qrypton, repérez la liste des Prop Firms compatibles MT5 (FTMO, FundedNext…) et choisissez celle qui vous convient.",
+    note: "Les captures qui suivent illustrent le parcours sur FTMO, à titre d'exemple. Le déroulé est quasiment identique sur les autres Prop Firms : inscription, choix du programme, du capital, de la devise et de la plateforme MT5.",
     icon: "list",
-    image: { src: "/assets/guide/prop-firm/02-programme.png", alt: "Sélection du programme / challenge" },
+    image: { src: "/assets/guide/prop-firm/01-choix-prop-firm.jpg", alt: "Liste des Prop Firms compatibles MT5 sur le Guide Qrypton" },
   },
   {
-    title: "Choisissez votre capital",
-    text: "Sélectionnez la taille de compte souhaitée. Les montants disponibles dépendent de la Prop Firm et du programme choisi.",
-    icon: "wallet",
-    image: { src: "/assets/guide/prop-firm/03-capital.png", alt: "Sélection de la taille de compte" },
+    title: "Créez votre compte",
+    text: "Rendez-vous sur le site de la Prop Firm choisie et créez gratuitement votre compte.",
+    icon: "user",
+    image: { src: "/assets/guide/prop-firm/02-creation-compte.jpg", alt: "Page d'accueil / inscription de la Prop Firm" },
   },
   {
-    title: "Vérifiez les règles",
-    text: "Avant de valider votre choix, prenez le temps de vérifier les règles : objectif de profit, perte maximale, perte quotidienne et éventuelles restrictions.",
-    note: "Les règles peuvent varier selon le programme. Consultez toujours les conditions officielles avant votre achat.",
+    title: "Accédez aux challenges",
+    text: "Une fois connecté à votre espace, lancez un nouveau challenge et comparez les offres disponibles.",
+    icon: "flag",
+    image: { src: "/assets/guide/prop-firm/03-acceder-challenge.jpg", alt: "Aperçu des comptes et lancement d'un nouveau challenge" },
+  },
+  {
+    title: "Choisissez votre programme et vérifiez les règles",
+    text: "Sélectionnez le type de challenge (1-Step, 2-Step…) et affichez les objectifs et restrictions avant de continuer.",
+    note: "L'« objectif de profit » (souvent 8 à 10 %) est le gain à atteindre sur le compte de démonstration pour réussir le challenge. Les « restrictions » — perte maximale totale, perte quotidienne maximale, jours de trading minimum — sont les règles à respecter en permanence. Elles varient selon le programme et la Prop Firm.",
     icon: "shield",
-    image: { src: "/assets/guide/prop-firm/04-regles.png", alt: "Page des règles du challenge" },
+    image: { src: "/assets/guide/prop-firm/04-programme-regles.jpg", alt: "Choix du programme et tableau des objectifs / restrictions" },
+  },
+  {
+    title: "Choisissez le capital, l'euro et MetaTrader 5",
+    text: "Sélectionnez la taille de compte souhaitée selon votre budget.",
+    note: "Réglez la devise sur euro (EUR) — pas dollar (USD) — et sélectionnez impérativement MetaTrader 5 comme plateforme : Qrypton ne fonctionne qu'avec MT5.",
+    icon: "wallet",
+    image: { src: "/assets/guide/prop-firm/05-capital-devise-plateforme.jpg", alt: "Sélection du capital, de la devise EUR et de la plateforme MetaTrader 5" },
   },
   {
     title: "Finalisez votre achat",
-    text: "Une fois votre programme et votre capital sélectionnés, vous pouvez finaliser votre achat directement auprès de la Prop Firm.",
+    text: "Renseignez vos informations de facturation puis validez le paiement.",
     icon: "card",
-    image: { src: "/assets/guide/prop-firm/05-paiement.png", alt: "Page de paiement / confirmation" },
+    image: { src: "/assets/guide/prop-firm/06-paiement.jpg", alt: "Formulaire de facturation et validation du paiement" },
   },
   {
-    title: "Recevez vos identifiants",
-    text: "Après votre achat, vos informations de connexion sont généralement disponibles dans votre espace client et/ou communiquées par e-mail.",
-    note: "Conservez précieusement vos identifiants : ils vous permettront ensuite de connecter votre compte à MT5.",
+    title: "Récupérez vos identifiants",
+    text: "Une fois l'achat confirmé, retrouvez vos identifiants de connexion dans votre espace Prop Firm.",
+    note: "Conservez précieusement ces identifiants : ils vous permettront ensuite de connecter votre compte à MT5.",
     icon: "key",
-    image: { src: "/assets/guide/prop-firm/06-identifiants.png", alt: "Espace client ou e-mail avec les identifiants" },
+    image: { src: "/assets/guide/prop-firm/07-identifiants.jpg", alt: "Compte actif avec accès aux identifiants" },
   },
 ];
 
@@ -68,11 +82,10 @@ function StepGlyph({ icon }: { icon: StepIcon }) {
     strokeLinejoin: "round" as const,
   };
   switch (icon) {
-    case "user":
+    case "menu":
       return (
         <svg viewBox="0 0 24 24" {...common}>
-          <circle cx="12" cy="8" r="3.4" />
-          <path d="M5 20c1.2-4 4-6 7-6s5.8 2 7 6" />
+          <path d="M4 7h16M4 12h16M4 17h10" />
         </svg>
       );
     case "list":
@@ -84,12 +97,18 @@ function StepGlyph({ icon }: { icon: StepIcon }) {
           <circle cx="4" cy="18" r="1.2" fill="currentColor" stroke="none" />
         </svg>
       );
-    case "wallet":
+    case "user":
       return (
         <svg viewBox="0 0 24 24" {...common}>
-          <rect x="3.5" y="6.5" width="17" height="12" rx="2" />
-          <path d="M3.5 10.5h17" />
-          <circle cx="16.5" cy="14" r="1" fill="currentColor" stroke="none" />
+          <circle cx="12" cy="8" r="3.4" />
+          <path d="M5 20c1.2-4 4-6 7-6s5.8 2 7 6" />
+        </svg>
+      );
+    case "flag":
+      return (
+        <svg viewBox="0 0 24 24" {...common}>
+          <path d="M6 3v18" />
+          <path d="M6 4h11l-3 4 3 4H6" />
         </svg>
       );
     case "shield":
@@ -97,6 +116,14 @@ function StepGlyph({ icon }: { icon: StepIcon }) {
         <svg viewBox="0 0 24 24" {...common}>
           <path d="M12 3.5 19 6v6c0 4.6-3 7.6-7 8.5-4-.9-7-3.9-7-8.5V6l7-2.5Z" />
           <path d="M9 12l2 2 4-4" />
+        </svg>
+      );
+    case "wallet":
+      return (
+        <svg viewBox="0 0 24 24" {...common}>
+          <rect x="3.5" y="6.5" width="17" height="12" rx="2" />
+          <path d="M3.5 10.5h17" />
+          <circle cx="16.5" cy="14" r="1" fill="currentColor" stroke="none" />
         </svg>
       );
     case "card":
@@ -241,7 +268,8 @@ export default function PropFirmAccountSteps() {
               Vous avez maintenant créé votre compte Prop Firm et récupéré vos identifiants.
             </p>
             <p className="text-muted-2 text-[12.5px] leading-relaxed max-w-[380px] mx-auto mb-6">
-              La prochaine étape consiste à connecter votre compte à MT5 et à installer Qrypton.
+              La prochaine étape consiste à connecter votre compte à MT5 et à installer Qrypton — une
+              vidéo tuto dédiée vous attend dans votre espace Qrypton une fois votre abonnement actif.
             </p>
             <a
               href={CTA_HREF}
