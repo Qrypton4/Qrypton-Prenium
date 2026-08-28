@@ -10,9 +10,10 @@ const STEPS: Step[] = [
     title: "Choisissez votre compte",
     body: (
       <p className="text-sm text-muted leading-relaxed">
-        Choisissez la taille de compte que vous souhaitez auprès d&apos;une Prop Firm :{" "}
-        10 000 €, 50 000 €, 100 000 €, 200 000 €… Vous payez uniquement l&apos;inscription au
-        challenge, généralement entre <span className="text-white font-medium">80 € et 500 €</span>.
+        Choisissez la taille de compte que vous souhaitez auprès d&apos;une Prop Firm parmi{" "}
+        <span className="text-white font-medium">10 000 €, 20 000 € ou 40 000 €</span> — les
+        montants pris en charge par Qrypton. Vous payez uniquement l&apos;inscription au
+        challenge, généralement entre <span className="text-white font-medium">89 € et 345 €</span>.
       </p>
     ),
   },
