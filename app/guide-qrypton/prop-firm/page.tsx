@@ -197,10 +197,9 @@ export default function GuidePropFirm() {
               </p>
               <StepList
                 steps={[
-                  "Choisissez une Prop Firm parmi celles proposées (par exemple FTMO ou FundedNext).",
-                  "Créez votre compte sur le site de la Prop Firm choisie.",
+                  "Créez votre compte auprès de FTMO, la Prop Firm actuellement prise en charge par Qrypton.",
                   "Choisissez la taille de capital souhaitée, en euros (EUR).",
-                  "Choisissez votre challenge, selon les propositions de la Prop Firm.",
+                  "Choisissez votre challenge, selon les propositions de FTMO.",
                   "Sélectionnez impérativement MetaTrader 5 comme plateforme — Qrypton ne fonctionne qu'avec MT5.",
                   "Finalisez l'achat de votre capital.",
                   "Récupérez vos identifiants de connexion une fois l'achat confirmé.",
@@ -215,7 +214,7 @@ export default function GuidePropFirm() {
 
             <div className="mt-8 pt-6 border-t border-line">
               <h2 className="font-display text-base font-semibold mb-2">
-                Exemples de Prop Firms compatibles MT5
+                Prop Firm compatible MT5
               </h2>
               <ExampleFirmsList
                 items={[
@@ -224,13 +223,8 @@ export default function GuidePropFirm() {
                     url: "https://ftmo.com",
                     description: "Comptes jusqu'à 200 000 €, compatibilité native MT5.",
                   },
-                  {
-                    name: "FundedNext",
-                    url: "https://fundednext.com",
-                    description: "Conditions de challenge flexibles, compatible MT5.",
-                  },
                 ]}
-                note="Ces Prop Firms sont proposées à titre d'exemple uniquement. Qrypton n'est affilié à aucune d'elles et vous restez libre de choisir toute Prop Firm compatible avec MetaTrader 5."
+                note="FTMO est proposée à titre d'exemple. Qrypton n'est ni partenaire, ni affilié, ni sponsorisé par FTMO."
               />
             </div>
 
