@@ -20,7 +20,7 @@ export default function PropFirmDeclarationForm({
   const [mt5Account, setMt5Account] = useState("");
   const [capital, setCapital] = useState("");
   const CAPITAL_OPTIONS = [10000, 20000, 40000];
-  const [alreadyFunded, setAlreadyFunded] = useState(true);
+  const [alreadyFunded, setAlreadyFunded] = useState(false);
   const [proofFile, setProofFile] = useState<File | null>(null);
   const [certified, setCertified] = useState(false);
   const [loading, setLoading] = useState(false);
