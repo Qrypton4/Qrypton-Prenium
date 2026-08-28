@@ -52,8 +52,8 @@ export default function GuidePropFirm() {
                 <div className="text-[10.5px] text-positive uppercase tracking-wide font-mono mb-2">Avantages</div>
                 <p className="text-muted text-[13.5px] leading-relaxed">
                   Accès à un capital élevé avec un coût d&apos;entrée minime — souvent 50 € à 500 €
-                  pour des comptes de 10 000 € à 200 000 € ou plus, sans immobiliser une somme élevée
-                  au départ.
+                  pour des comptes de 10 000 € à 200 000 € ou plus (40 000 € maximum pris en charge
+                  par Qrypton), sans immobiliser une somme élevée au départ.
                 </p>
               </div>
               <div>
