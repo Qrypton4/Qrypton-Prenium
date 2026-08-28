@@ -7,7 +7,7 @@ export function Reveal({ children, delay = 0 }: { children: React.ReactNode; del
   const [shown, setShown] = useState(false);
 
   useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => e.isIntersecting && setShown(true), { threshold: 0.15 });
+    const obs = new IntersectionObserver(([e]) => e.isIntersecting && setShown(true), { threshold: 0, rootMargin: "0px 0px -10% 0px" });
     if (ref.current) obs.observe(ref.current);
     return () => obs.disconnect();
   }, []);
