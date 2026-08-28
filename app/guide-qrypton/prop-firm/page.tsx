@@ -85,7 +85,7 @@ export default function GuidePropFirm() {
                   "Choisissez une Prop Firm parmi celles proposées (par exemple FTMO ou FundedNext).",
                   "Créez votre compte sur le site de la Prop Firm choisie.",
                   "Choisissez la taille de capital souhaitée, en euros (EUR).",
-                  "Vérifiez bien les conditions du challenge proposé avant de valider.",
+                  "Choisissez votre challenge, selon les propositions de la Prop Firm.",
                   "Sélectionnez impérativement MetaTrader 5 comme plateforme — Qrypton ne fonctionne qu'avec MT5.",
                   "Finalisez l'achat de votre capital.",
                   "Récupérez vos identifiants de connexion une fois l'achat confirmé.",
