@@ -41,7 +41,7 @@ export default function Tarifs() {
           >
             <h2 className="font-display text-lg font-semibold mb-2">Prop Firm</h2>
             <p className="text-muted text-[13.5px] leading-relaxed">
-              Vous tradez avec un compte Prop Firm (FTMO, FundedNext...).
+              Vous tradez avec un compte Prop Firm (FTMO).
             </p>
           </Link>
         </div>
