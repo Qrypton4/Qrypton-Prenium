@@ -11,6 +11,7 @@ import {
   renewalConfirmedEmail,
   paymentFailedEmail,
   cancellationEmail,
+  subscriptionEndingEmail,
 } from "@/lib/email-templates";
 import { getPlan, computeLicenseEndDate, PlanKey } from "@/lib/plans";
 
@@ -68,6 +69,16 @@ export async function POST(req: NextRequest) {
       const periodEndISO =
         typeof rawPeriodEnd === "number" ? new Date(rawPeriodEnd * 1000).toISOString() : null;
 
+      // On récupère l'état précédent AVANT d'écraser, pour ne détecter que la
+      // transition "renouvellement désactivé" (et ne pas renvoyer le mail à
+      // chaque mise à jour ultérieure de l'abonnement).
+      const { data: existing } = await supabase
+        .from("subscriptions")
+        .select("cancel_at_period_end")
+        .eq("stripe_subscription_id", sub.id)
+        .maybeSingle();
+      const wasAlreadyEnding = existing?.cancel_at_period_end === true;
+
       const updatePayload: Record<string, unknown> = {
         status: sub.status,
         cancel_at_period_end: sub.cancel_at_period_end,
@@ -75,6 +86,10 @@ export async function POST(req: NextRequest) {
       if (periodEndISO) updatePayload.current_period_end = periodEndISO;
 
       await supabase.from("subscriptions").update(updatePayload).eq("stripe_subscription_id", sub.id);
+
+      if (sub.cancel_at_period_end && !wasAlreadyEnding && periodEndISO) {
+        await sendSubscriptionEndingEmail(sub.id, periodEndISO);
+      }
       break;
     }
 
@@ -178,6 +193,32 @@ async function sendCancellationEmail(stripeSubId: string) {
   const { subject, html } = cancellationEmail(contact.firstName);
   const sent = await sendEmail({ to: contact.email, subject, html });
   if (sent) await supabase.from("email_log").insert({ user_id: sub.user_id, email_type: "cancellation" });
+}
+
+async function sendSubscriptionEndingEmail(stripeSubId: string, periodEndISO: string) {
+  const { data: sub } = await supabase
+    .from("subscriptions")
+    .select("user_id")
+    .eq("stripe_subscription_id", stripeSubId)
+    .single();
+  if (!sub) return;
+  const contact = await getUserContact(sub.user_id);
+  if (!contact) return;
+
+  // Challenge Prop Firm en cours = un compte déclaré, pas encore vérifié comme
+  // Funded, ni clôturé/refusé/suspendu.
+  const { data: propFirmAccount } = await supabase
+    .from("prop_firm_accounts")
+    .select("status")
+    .eq("user_id", sub.user_id)
+    .in("status", ["pending_verification", "active"])
+    .maybeSingle();
+  const hasActiveChallenge = !!propFirmAccount;
+
+  const endDate = new Date(periodEndISO).toLocaleDateString("fr-FR");
+  const { subject, html } = subscriptionEndingEmail(contact.firstName, endDate, hasActiveChallenge);
+  const sent = await sendEmail({ to: contact.email, subject, html });
+  if (sent) await supabase.from("email_log").insert({ user_id: sub.user_id, email_type: "subscription_ending" });
 }
 
 async function markCheckoutCompleted(stripeSessionId: string) {
