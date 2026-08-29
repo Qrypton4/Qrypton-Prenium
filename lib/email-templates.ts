@@ -206,6 +206,31 @@ export function propFirmSupplementChangedEmail(
       };
 }
 
+export function subscriptionEndingEmail(
+  firstName: string,
+  endDate: string,
+  hasActiveChallenge: boolean
+) {
+  return {
+    subject: "Votre abonnement Qrypton prend fin bientôt",
+    html: wrapper(
+      `Bonjour ${firstName},`,
+      `<p>Votre abonnement OPR Edge™ prend fin le <strong>${endDate}</strong> et ne sera
+       pas renouvelé automatiquement.</p>
+       <p>Vous pouvez le renouveler dès maintenant, en un clic, depuis votre espace client.</p>
+       ${
+         hasActiveChallenge
+           ? `<p>⚠️ <strong>Vous avez actuellement un challenge Prop Firm en cours.</strong>
+              N'oubliez pas de renouveler Qrypton pour que le robot continue de trader et de
+              poursuivre le challenge — sans abonnement actif, il s'arrête.</p>`
+           : ""
+       }`,
+      "Renouveler mon abonnement",
+      `${SITE_URL}/mon-espace`
+    ),
+  };
+}
+
 export function seasonalNoticeEmail(firstName: string) {
   return {
     subject: "Qrypton pendant l'été : ce qui change (et ce qui ne change pas)",
