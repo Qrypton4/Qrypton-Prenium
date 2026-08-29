@@ -111,13 +111,14 @@ export default async function TarifsPropFirm() {
           <h2 className="font-display text-base font-semibold text-center mb-6 text-muted-2">
             Capacité disponible par Prop Firm
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-[860px] mx-auto mb-14">
+          <div className="flex justify-center mb-14">
             {firms.map((firm) => (
-              <FirmCardView
-                key={firm.slug}
-                firm={firm}
-                description={FIRM_DESCRIPTIONS[firm.slug] ?? ""}
-              />
+              <div key={firm.slug} className="w-full max-w-[400px]">
+                <FirmCardView
+                  firm={firm}
+                  description={FIRM_DESCRIPTIONS[firm.slug] ?? ""}
+                />
+              </div>
             ))}
           </div>
         </Reveal>
