@@ -16,15 +16,14 @@ import { isSalesOpen, SALES_CLOSED_MESSAGE } from "@/lib/launch";
 export const metadata = {
   title: "Prop Firm — Tarifs Qrypton",
   description:
-    "Utilisez Qrypton sur un compte auprès d'une Prop Firm compatible (FTMO, FundedNext). Mêmes tarifs que Fonds propres.",
+    "Utilisez Qrypton sur un compte auprès de FTMO. Mêmes tarifs que Fonds propres.",
 };
 
 const FIRM_DESCRIPTIONS: Record<string, string> = {
   ftmo: "Utilisez Qrypton sur un compte FTMO compatible.",
-  fundednext: "Utilisez Qrypton sur un compte FundedNext compatible.",
 };
 
-const FIRM_ORDER = ["ftmo", "fundednext"];
+const FIRM_ORDER = ["ftmo"];
 
 async function getTarifsData(): Promise<{
   isLoggedIn: boolean;
@@ -107,7 +106,7 @@ export default async function TarifsPropFirm() {
           </div>
         </Reveal>
 
-        {/* Capacités d'allocation FTMO / FundedNext */}
+        {/* Capacité d'allocation FTMO */}
         <Reveal delay={0.05}>
           <h2 className="font-display text-base font-semibold text-center mb-6 text-muted-2">
             Capacité disponible par Prop Firm
