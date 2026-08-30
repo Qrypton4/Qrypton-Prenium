@@ -14,6 +14,7 @@ import {
   subscriptionEndingEmail,
 } from "@/lib/email-templates";
 import { getPlan, computeLicenseEndDate, PlanKey } from "@/lib/plans";
+import { getPropFirmPlan } from "@/lib/propFirmPlans";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
@@ -233,7 +234,7 @@ async function activateNewSubscription(session: Stripe.Checkout.Session) {
   const userId = session.client_reference_id!;
   const stripeSubId = session.subscription as string;
   const planKey = (session.metadata?.plan as PlanKey) || "monthly";
-  const plan = getPlan(planKey) || getPlan("monthly")!;
+  const plan = getPlan(planKey) || getPropFirmPlan(planKey) || getPlan("monthly")!;
 
   await supabase.from("profiles").update({ stripe_customer_id: session.customer as string }).eq("id", userId);
 
