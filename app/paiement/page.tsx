@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { ConsentForm } from "./ConsentForm";
 import { PaiementGate } from "./PaiementGate";
 import { getPlan } from "@/lib/plans";
+import { getPropFirmPlan } from "@/lib/propFirmPlans";
 import { isSalesOpen } from "@/lib/launch";
 import { supabaseAdmin } from "@/lib/supabase";
 
@@ -27,10 +28,10 @@ export default async function Paiement({
     redirect(`/connexion?next=/paiement${searchParams.plan ? `?plan=${searchParams.plan}` : ""}`);
   }
 
-  const plan = getPlan(planKey);
+const plan = getPlan(planKey) || getPropFirmPlan(planKey);
   if (!plan) {
     redirect("/tarifs");
-  }
+  } 
 
   let hasDeclaredAccount = false;
   if (isPropFirmContext) {
