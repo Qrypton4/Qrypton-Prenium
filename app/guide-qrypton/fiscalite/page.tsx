@@ -77,6 +77,44 @@ export default function GuideFiscalite() {
           </div>
         </Reveal>
 
+        {/* Cas particulier : Prop Firm */}
+        <Reveal delay={0.07}>
+          <div className="border border-line rounded-2xl bg-bg-2 p-8 md:p-10 mb-6">
+            <h2 className="font-display text-base font-semibold mb-3">
+              Cas particulier : gains réalisés via une Prop Firm
+            </h2>
+            <p className="text-muted text-[13.5px] leading-relaxed mb-3">
+              Concernant la fiscalité des gains réalisés avec une Prop Firm, Qrypton ne peut pas
+              déterminer le régime fiscal applicable à chaque utilisateur, celui-ci dépendant
+              notamment de sa situation personnelle, de son statut et des conditions de son
+              activité.
+            </p>
+            <p className="text-muted text-[13.5px] leading-relaxed mb-3">
+              De manière générale, ce sont les sommes effectivement versées par la Prop Firm au
+              trader (les payouts) qui doivent être prises en compte dans sa déclaration, et non
+              le capital ou les gains simplement affichés sur le compte de trading de la Prop
+              Firm.
+            </p>
+            <p className="text-muted text-[13.5px] leading-relaxed mb-3">
+              Pour un résident fiscal français, ces revenus doivent être déclarés auprès de
+              l&apos;administration fiscale selon la catégorie correspondant à sa situation. Selon
+              les conditions d&apos;exercice, des règles relatives aux revenus professionnels,
+              notamment BNC, peuvent être applicables. L&apos;administration fiscale précise que
+              la catégorie d&apos;imposition dépend de la nature de l&apos;activité.
+            </p>
+            <p className="text-muted text-[13.5px] leading-relaxed mb-3">
+              Pour connaître précisément la catégorie à utiliser, le montant à déclarer et les
+              éventuelles obligations auprès de l&apos;URSSAF, nous recommandons de se rapprocher
+              de son expert-comptable ou de l&apos;administration fiscale.
+            </p>
+            <p className="text-muted-2 text-[12.5px] leading-relaxed">
+              Qrypton fournit un logiciel/robot de trading et ne fournit aucun conseil fiscal,
+              juridique ou comptable. Chaque utilisateur reste responsable de ses propres
+              obligations déclaratives et fiscales.
+            </p>
+          </div>
+        </Reveal>
+
        {/* Broker — Fonds propres */}
         <Reveal delay={0.08}>
           <div className="text-[10.5px] text-muted-2 uppercase tracking-widest font-mono mb-3 px-1">
