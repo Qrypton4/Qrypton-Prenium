@@ -63,8 +63,13 @@ export function getPlan(key: string): PlanConfig | null {
 
 /**
  * Calcule la date de fin de licence (mois actifs + mois de facturation).
+ * Type volontairement générique (pas PlanConfig strict) pour être réutilisable
+ * avec PropFirmPlanConfig (lib/propFirmPlans.ts), qui a la même forme.
  */
-export function computeLicenseEndDate(startDate: Date, plan: PlanConfig): Date {
+export function computeLicenseEndDate(
+  startDate: Date,
+  plan: { activeMonths: number; bonusMonths: number }
+): Date {
   return addMonths(new Date(startDate), plan.activeMonths + plan.bonusMonths);
 }
 function addMonths(date: Date, months: number): Date {
