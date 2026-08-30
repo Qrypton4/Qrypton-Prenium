@@ -1,67 +1,127 @@
 // lib/propFirmPlans.ts
-// Source unique de vérité pour les offres Prop Firm.
-// Structure calquée sur lib/plans.ts (Fonds propres) pour que la page
-// /tarifs/prop-firm affiche exactement les mêmes cartes/boutons.
+// Source unique de vérité pour les licences Prop Firm : 3 capacités (10K / 20K
+// / 40K) × 3 durées (mensuel / 6 mois / 12 mois) = 9 combinaisons.
 //
-// IMPORTANT : stripePriceEnvVar est prévu pour la suite, mais aucune variable
-// d'environnement correspondante n'existe encore et aucun checkout ne les lit.
-// Les prix restent donc "de travail", modifiables ici sans toucher au reste
-// du code.
+// Séparé volontairement de lib/plans.ts (Fonds propres), qui garde son propre
+// tarif à capacité unique. Aucun fichier ne dépendait de PROP_FIRM_PLANS avant
+// cette mise à jour — la réécriture ne casse donc rien d'existant.
+//
+// Chaque combinaison référence une variable d'environnement distincte pour
+// son price_id Stripe. Tant que la variable n'existe pas, le paiement échoue
+// proprement avec un message explicite (voir app/api/checkout/route.ts) —
+// jamais de prix codé en dur envoyé à Stripe.
 
-export type PropFirmPlanKey = "monthly" | "six_months" | "twelve_months";
+export type PropFirmCapacityKey = "10k" | "20k" | "40k";
+export type PropFirmDurationKey = "monthly" | "six_months" | "twelve_months";
+export type PropFirmPlanKey = `${PropFirmCapacityKey}_${PropFirmDurationKey}`;
+
+export interface PropFirmCapacityInfo {
+  key: PropFirmCapacityKey;
+  amountLabel: string; // "10K"
+  title: string; // "Licence 10K"
+  capitalEUR: number; // 10000
+  description: string; // "Compatible avec un capital total jusqu'à 10 000 €"
+}
+
+export interface PropFirmDurationInfo {
+  key: PropFirmDurationKey;
+  label: string; // "Mensuel"
+  months: number; // 1, 6, 12
+  badge: string;
+  highlight: boolean; // "Meilleur tarif — recommandé"
+}
 
 export interface PropFirmPlanConfig {
   key: PropFirmPlanKey;
-  label: string;
+  capacity: PropFirmCapacityKey;
+  duration: PropFirmDurationKey;
+  label: string; // "Qrypton 20K — 12 mois"
   priceEUR: number;
   billingMonths: number;
-  compareToMonthly: number | null; // prix équivalent en mensuel, pour affichage barré
+  activeMonths: number;
+  bonusMonths: number;
+  compareToMonthly: number | null;
   savingsEUR: number | null;
-  highlight: boolean; // badge "Meilleur choix"
-  includedAccounts: number; // 1 compte Prop Firm inclus
-  extraAccountPriceEUR: number; // +49€/mois par compte supplémentaire
-  stripePriceEnvVar: string; // pas encore utilisé — préparé pour la connexion future
+  stripePriceEnvVar: string;
 }
 
-export const PROP_FIRM_PLANS: Record<PropFirmPlanKey, PropFirmPlanConfig> = {
-  monthly: {
-    key: "monthly",
-    label: "Qrypton Prop Firm — Mensuel",
-    priceEUR: 149,
-    billingMonths: 1,
-    compareToMonthly: null,
-    savingsEUR: null,
-    highlight: false,
-    includedAccounts: 1,
-    extraAccountPriceEUR: 49,
-    stripePriceEnvVar: "NEXT_PUBLIC_STRIPE_PRICE_ID_PROPFIRM_MONTHLY",
+export const PROP_FIRM_CAPACITIES: PropFirmCapacityInfo[] = [
+  {
+    key: "10k",
+    amountLabel: "10K",
+    title: "Licence 10K",
+    capitalEUR: 10000,
+    description: "Compatible avec un capital total jusqu'à 10 000 €",
   },
-  six_months: {
-    key: "six_months",
-    label: "Qrypton Prop Firm — 6 mois",
-    priceEUR: 699,
-    billingMonths: 6,
-    compareToMonthly: 894,
-    savingsEUR: 195,
-    highlight: false,
-    includedAccounts: 1,
-    extraAccountPriceEUR: 49,
-    stripePriceEnvVar: "NEXT_PUBLIC_STRIPE_PRICE_ID_PROPFIRM_6M",
+  {
+    key: "20k",
+    amountLabel: "20K",
+    title: "Licence 20K",
+    capitalEUR: 20000,
+    description: "Compatible avec un capital total jusqu'à 20 000 €",
   },
-  twelve_months: {
-    key: "twelve_months",
-    label: "Qrypton Prop Firm — 12 mois",
-    priceEUR: 999,
-    billingMonths: 12,
-    compareToMonthly: 1788,
-    savingsEUR: 789,
-    highlight: true,
-    includedAccounts: 1,
-    extraAccountPriceEUR: 49,
-    stripePriceEnvVar: "NEXT_PUBLIC_STRIPE_PRICE_ID_PROPFIRM_12M",
+  {
+    key: "40k",
+    amountLabel: "40K",
+    title: "Licence 40K",
+    capitalEUR: 40000,
+    description: "Compatible avec un capital total jusqu'à 40 000 €",
   },
+];
+
+export const PROP_FIRM_DURATIONS: PropFirmDurationInfo[] = [
+  { key: "monthly", label: "Mensuel", months: 1, badge: "Sans engagement", highlight: false },
+  { key: "six_months", label: "6 mois", months: 6, badge: "Meilleur équilibre", highlight: false },
+  { key: "twelve_months", label: "12 mois", months: 12, badge: "Meilleur tarif · recommandé", highlight: true },
+];
+
+// priceEUR par capacité et par durée — seule source de vérité pour les montants affichés.
+const PRICE_TABLE: Record<PropFirmCapacityKey, Record<PropFirmDurationKey, number>> = {
+  "10k": { monthly: 39, six_months: 199, twelve_months: 299 },
+  "20k": { monthly: 59, six_months: 299, twelve_months: 499 },
+  "40k": { monthly: 79, six_months: 399, twelve_months: 699 },
 };
+
+function envVarFor(capacity: PropFirmCapacityKey, duration: PropFirmDurationKey): string {
+  const cap = capacity.toUpperCase(); // "10K"
+  const dur = duration === "monthly" ? "MONTHLY" : duration === "six_months" ? "6M" : "12M";
+  return `NEXT_PUBLIC_STRIPE_PRICE_ID_PROPFIRM_${cap}_${dur}`;
+}
+
+function buildPlan(capacity: PropFirmCapacityKey, duration: PropFirmDurationKey): PropFirmPlanConfig {
+  const capacityInfo = PROP_FIRM_CAPACITIES.find((c) => c.key === capacity)!;
+  const durationInfo = PROP_FIRM_DURATIONS.find((d) => d.key === duration)!;
+  const priceEUR = PRICE_TABLE[capacity][duration];
+  const monthlyPrice = PRICE_TABLE[capacity].monthly;
+  const compareToMonthly = durationInfo.months > 1 ? monthlyPrice * durationInfo.months : null;
+  const savingsEUR = compareToMonthly !== null ? compareToMonthly - priceEUR : null;
+
+  return {
+    key: `${capacity}_${duration}`,
+    capacity,
+    duration,
+    label: `Qrypton ${capacityInfo.amountLabel} — ${durationInfo.label}`,
+    priceEUR,
+    billingMonths: durationInfo.months,
+    activeMonths: durationInfo.months,
+    bonusMonths: 0,
+    compareToMonthly,
+    savingsEUR,
+    stripePriceEnvVar: envVarFor(capacity, duration),
+  };
+}
+
+export const PROP_FIRM_PLANS: Record<PropFirmPlanKey, PropFirmPlanConfig> = Object.fromEntries(
+  PROP_FIRM_CAPACITIES.flatMap((c) =>
+    PROP_FIRM_DURATIONS.map((d) => [`${c.key}_${d.key}`, buildPlan(c.key, d.key)])
+  )
+) as Record<PropFirmPlanKey, PropFirmPlanConfig>;
 
 export function getPropFirmPlan(key: string): PropFirmPlanConfig | null {
   return key in PROP_FIRM_PLANS ? PROP_FIRM_PLANS[key as PropFirmPlanKey] : null;
+}
+
+/** Prix mensuel équivalent, pour l'affichage ("41,58 € / mois"). */
+export function getPropFirmMonthlyEquivalent(plan: PropFirmPlanConfig): number {
+  return plan.priceEUR / plan.billingMonths;
 }
