@@ -3,6 +3,7 @@ import Stripe from "stripe";
 import { createClient } from "@/lib/supabase-server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { getPlan, PlanKey } from "@/lib/plans";
+import { getPropFirmPlan } from "@/lib/propFirmPlans";
 import { shouldApplySupplement, PROP_FIRM_SUPPLEMENT_STRIPE_ENV_VAR } from "@/lib/propFirmSupplement";
 import { isSalesOpen, SALES_CLOSED_MESSAGE } from "@/lib/launch";
 
@@ -70,7 +71,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const plan = getPlan(planKey);
+  const plan = getPlan(planKey) || getPropFirmPlan(planKey);
   if (!plan) {
     return NextResponse.json({ ok: false, message: "invalid_plan" }, { status: 400 });
   }
