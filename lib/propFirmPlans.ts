@@ -71,7 +71,7 @@ export const PROP_FIRM_CAPACITIES: PropFirmCapacityInfo[] = [
 
 export const PROP_FIRM_DURATIONS: PropFirmDurationInfo[] = [
   { key: "monthly", label: "Mensuel", months: 1, badge: "Sans engagement", highlight: false },
-  { key: "six_months", label: "6 mois", months: 6, badge: "Meilleur équilibre", highlight: false },
+  { key: "six_months", label: "6 mois", months: 6, badge: "", highlight: false },
   { key: "twelve_months", label: "12 mois", months: 12, badge: "Meilleur tarif · recommandé", highlight: true },
 ];
 
