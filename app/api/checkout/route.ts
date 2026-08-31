@@ -4,46 +4,14 @@ import { createClient } from "@/lib/supabase-server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { getPlan, PlanKey } from "@/lib/plans";
 import { getPropFirmPlan } from "@/lib/propFirmPlans";
-import { shouldApplySupplement, PROP_FIRM_SUPPLEMENT_STRIPE_ENV_VAR } from "@/lib/propFirmSupplement";
 import { isSalesOpen, SALES_CLOSED_MESSAGE } from "@/lib/launch";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 const CGV_VERSION = "1.0";
 
-// Construit les line_items Stripe pour un plan donné, en ajoutant
-// automatiquement le Supplément Grande Allocation si le client a déclaré un
-// compte Prop Firm Funded avec un capital >= 80 000€ (voir
-// lib/propFirmSupplement.ts). Ne bloque jamais la vente si la variable d'env
-// du supplément manque — la correction se fait après coup via /admin.
-async function buildLineItems(
-  userId: string,
-  planKey: string,
-  priceId: string
-): Promise<{ lineItems: Stripe.Checkout.SessionCreateParams.LineItem[]; supplementApplied: boolean }> {
-  const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [
-    { price: priceId, quantity: 1 },
-  ];
-
-  const { data: declaredAccount } = await supabaseAdmin
-    .from("prop_firm_accounts")
-    .select("status, capital")
-    .eq("user_id", userId)
-    .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
-
-  let supplementApplied = false;
-
-  if (declaredAccount && shouldApplySupplement(declaredAccount.status, Number(declaredAccount.capital))) {
-    const supplementEnvVar = PROP_FIRM_SUPPLEMENT_STRIPE_ENV_VAR[planKey as PlanKey];
-    const supplementPriceId = supplementEnvVar ? process.env[supplementEnvVar] : undefined;
-    if (supplementPriceId) {
-      lineItems.push({ price: supplementPriceId, quantity: 1 });
-      supplementApplied = true;
-    }
-  }
-
-  return { lineItems, supplementApplied };
+// Construit les line_items Stripe pour un plan donné.
+function buildLineItems(priceId: string): Stripe.Checkout.SessionCreateParams.LineItem[] {
+  return [{ price: priceId, quantity: 1 }];
 }
 
 // Utilisée par ConsentForm.tsx (page /paiement) : enregistre le consentement
@@ -84,15 +52,15 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { lineItems, supplementApplied } = await buildLineItems(user.id, planKey, priceId);
+  const lineItems = buildLineItems(priceId);
 
   const session = await stripe.checkout.sessions.create({
     mode: "subscription",
     line_items: lineItems,
     client_reference_id: user.id,
     customer_email: user.email,
-    metadata: { plan: planKey, propFirmSupplementApplied: String(supplementApplied) },
-    subscription_data: { metadata: { plan: planKey, propFirmSupplementApplied: String(supplementApplied) } },
+    metadata: { plan: planKey },
+    subscription_data: { metadata: { plan: planKey } },
     success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/mon-espace?checkout=success`,
     cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/tarifs?checkout=cancelled`,
   });
@@ -125,9 +93,8 @@ export async function POST(req: NextRequest) {
 }
 
 // Conservée pour compatibilité (liens directs /api/checkout?plan=xxx sans
-// passer par la page de consentement) — même logique de supplément, mais
-// sans enregistrement de consentement puisqu'aucun formulaire n'est passé
-// par ce chemin.
+// passer par la page de consentement), sans enregistrement de consentement
+// puisqu'aucun formulaire n'est passé par ce chemin.
 export async function GET(req: NextRequest) {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
@@ -137,7 +104,7 @@ export async function GET(req: NextRequest) {
   }
 
   const planKey = req.nextUrl.searchParams.get("plan") || "monthly";
-  const plan = getPlan(planKey);
+  const plan = getPlan(planKey) || getPropFirmPlan(planKey);
   if (!plan) {
     return NextResponse.json({ ok: false, message: "invalid_plan" }, { status: 400 });
   }
@@ -157,15 +124,15 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  const { lineItems, supplementApplied } = await buildLineItems(user.id, planKey, priceId);
+  const lineItems = buildLineItems(priceId);
 
   const session = await stripe.checkout.sessions.create({
     mode: "subscription",
     line_items: lineItems,
     client_reference_id: user.id,
     customer_email: user.email,
-    metadata: { plan: planKey, propFirmSupplementApplied: String(supplementApplied) },
-    subscription_data: { metadata: { plan: planKey, propFirmSupplementApplied: String(supplementApplied) } },
+    metadata: { plan: planKey },
+    subscription_data: { metadata: { plan: planKey } },
     success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/mon-espace?checkout=success`,
     cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/tarifs?checkout=cancelled`,
   });
