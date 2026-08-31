@@ -26,6 +26,12 @@ function ctaHrefFor(planKey: string, isLoggedIn: boolean, hasActiveSub: boolean)
   return `/paiement?plan=${planKey}&context=propfirm`;
 }
 
+function getAdvantage(d: PropFirmDurationInfo, plan: PropFirmPlanConfig): { icon: string; text: string } {
+  if (d.key === "monthly") return { icon: "✓", text: "Sans engagement" };
+  if (d.key === "six_months") return { icon: "", text: `${formatEUR(plan.savingsEUR ?? 0)} € économisés` };
+  return { icon: "⭐", text: "Meilleur tarif" };
+}
+
 function DurationCard({
   d,
   plan,
@@ -37,37 +43,39 @@ function DurationCard({
   selected: boolean;
   onClick: () => void;
 }) {
+  const advantage = getAdvantage(d, plan);
+  const perMonth = plan.priceEUR / plan.billingMonths;
+
   return (
     <button
       onClick={onClick}
-      className={`text-left rounded-xl border p-4 transition-all duration-200 ${
+      className={`relative text-left rounded-xl border p-5 transition-all duration-200 ${
         selected
-          ? "border-blue-soft bg-gradient-to-b from-blue/10 to-transparent shadow-[0_0_0_1px_rgba(127,161,255,0.6)]"
+          ? "border-blue-soft bg-gradient-to-b from-blue/10 to-transparent shadow-[0_0_0_1px_rgba(127,161,255,0.6),0_0_24px_-8px_rgba(127,161,255,0.45)]"
           : "border-line-strong bg-bg-2 hover:border-blue-soft/50"
       }`}
     >
-      {d.badge && (
-        <span
-          className={`inline-block text-[9.5px] font-semibold uppercase tracking-wide px-2 py-1 rounded-md mb-2.5 ${
-            d.highlight
-              ? "bg-positive/15 text-positive"
-              : d.key === "six_months"
-              ? "bg-blue/15 text-blue-soft"
-              : "bg-white/[0.06] text-muted-2"
-          }`}
-        >
-          {d.badge}
-        </span>
-      )}
-      <div className="text-[13.5px] font-semibold mb-2">{d.label}</div>
-      <div className="font-display text-[22px] font-bold">
+      <div
+        className={`absolute top-3 right-3 w-5 h-5 rounded-full border flex items-center justify-center text-[10px] transition-all ${
+          selected ? "bg-blue border-blue text-white scale-100 opacity-100" : "border-line-strong opacity-0 scale-75"
+        }`}
+      >
+        ✓
+      </div>
+
+      <div className="text-[13.5px] font-semibold mb-3">{d.label}</div>
+
+      <div className="font-display text-[24px] font-bold mb-0.5">
         {plan.priceEUR} <span className="text-muted text-xs font-medium">€</span>
       </div>
-      {plan.savingsEUR ? (
-        <div className="text-[11px] text-positive font-medium mt-1.5">
-          Économie de {formatEUR(plan.savingsEUR)} €
-        </div>
-      ) : null}
+      <div className="font-mono text-[11.5px] text-muted-2 mb-3">
+        {formatEUR(perMonth)} € / mois
+      </div>
+
+      <div className="text-[11.5px] font-medium text-blue-soft flex items-center gap-1.5">
+        {advantage.icon && <span>{advantage.icon}</span>}
+        <span>{advantage.text}</span>
+      </div>
     </button>
   );
 }
@@ -144,7 +152,6 @@ export default function PropFirmConfigurator({
         utiliser Qrypton.
       </p>
 
-      {/* ===================== VERSION MOBILE (< sm) — accordéon ===================== */}
       <div className="sm:hidden flex flex-col gap-3 mb-2">
         {PROP_FIRM_CAPACITIES.map((c) => {
           const selected = capacity === c.key;
@@ -159,8 +166,10 @@ export default function PropFirmConfigurator({
             >
               <button onClick={() => toggleCapacity(c.key)} className="w-full flex items-center justify-between gap-4 p-5 text-left">
                 <div className="flex items-center gap-4">
-                  <div className="font-display text-[24px] font-bold w-[64px] shrink-0">{c.amountLabel}</div>
-                  <div className="text-blue-soft text-[13px] font-semibold">{c.title}</div>
+                  <div className="font-display text-[22px] font-bold shrink-0">
+                    {c.capitalEUR.toLocaleString("fr-FR")} €
+                  </div>
+                  <div className="text-blue-soft text-[12px] font-semibold uppercase tracking-wide">Balance</div>
                 </div>
                 <div
                   className={`w-6 h-6 rounded-full border flex items-center justify-center text-[11px] shrink-0 transition-transform duration-200 ${
@@ -199,7 +208,6 @@ export default function PropFirmConfigurator({
         })}
       </div>
 
-      {/* ===================== VERSION DESKTOP/TABLETTE (>= sm) — grille originale ===================== */}
       <div className="hidden sm:grid grid-cols-3 gap-3.5 mb-2">
         {PROP_FIRM_CAPACITIES.map((c) => {
           const selected = capacity === c.key;
@@ -220,8 +228,10 @@ export default function PropFirmConfigurator({
               >
                 ✓
               </div>
-              <div className="font-display text-[26px] font-bold mb-1.5">{c.amountLabel}</div>
-              <div className="text-blue-soft text-[12.5px] font-semibold">{c.title}</div>
+              <div className="font-display text-[24px] font-bold mb-1.5">
+                {c.capitalEUR.toLocaleString("fr-FR")} €
+              </div>
+              <div className="text-blue-soft text-[11px] font-semibold uppercase tracking-wide">Balance</div>
             </button>
           );
         })}
