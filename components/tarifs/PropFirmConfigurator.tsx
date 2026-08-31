@@ -10,7 +10,6 @@ import {
   PropFirmDurationKey,
   PropFirmDurationInfo,
   PropFirmPlanConfig,
-  getPropFirmMonthlyEquivalent,
 } from "@/lib/propFirmPlans";
 import { SALES_CLOSED_MESSAGE } from "@/lib/launch";
 
@@ -139,19 +138,11 @@ export default function PropFirmConfigurator({
         ))}
       </div>
 
-     <h2 className="font-display text-base font-semibold mb-1">1. Choisissez votre capacité</h2>
-      <p className="text-muted-2 text-[12.5px] mb-2">
-        Quel capital avez-vous choisi auprès de la Prop Firm recommandée (FTMO) ? Sélectionnez la
-        licence Qrypton correspondante.
+      <h2 className="font-display text-base font-semibold mb-1">1. Choisissez votre capacité</h2>
+      <p className="text-muted-2 text-[12.5px] mb-5">
+        Choisissez la capacité maximale correspondant au capital que vous souhaitez utiliser avec
+        Qrypton.
       </p>
-      <a
-        href="https://ftmo.com"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-block text-[11.5px] text-blue-soft underline underline-offset-2 hover:text-white transition mb-5"
-      >
-        Voir les tailles de compte disponibles chez FTMO (en €) →
-      </a>
 
       {/* ===================== VERSION MOBILE (< sm) — accordéon ===================== */}
       <div className="sm:hidden flex flex-col gap-3 mb-2">
@@ -187,7 +178,7 @@ export default function PropFirmConfigurator({
               >
                 <div className="px-5 pb-5 pt-1 border-t border-line">
                   <p className="text-muted-2 text-[12px] mb-4 mt-3">
-                    Choisissez votre durée — le prix se met à jour automatiquement.
+                    Choisissez votre durée.
                   </p>
                   <div className="grid grid-cols-1 gap-3">
                     {PROP_FIRM_DURATIONS.map((d) => (
@@ -295,13 +286,8 @@ export default function PropFirmConfigurator({
               </div>
             </div>
 
-            <div className="font-display text-[34px] font-bold mb-0.5">
+            <div className="font-display text-[34px] font-bold mb-6">
               {selectedPlan.priceEUR} <span className="text-muted text-base font-medium">€</span>
-            </div>
-            <div className="text-muted text-[12.5px] mb-6">
-              {selectedPlan.billingMonths > 1
-                ? `Équivalent : ${formatEUR(getPropFirmMonthlyEquivalent(selectedPlan))} € / mois`
-                : "Facturé chaque mois, sans engagement"}
             </div>
 
             {salesOpen ? (
