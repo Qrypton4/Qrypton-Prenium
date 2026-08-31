@@ -139,11 +139,19 @@ export default function PropFirmConfigurator({
         ))}
       </div>
 
-      <h2 className="font-display text-base font-semibold mb-1">1. Choisissez votre capacité</h2>
-      <p className="text-muted-2 text-[12.5px] mb-5">
-        Choisissez la capacité maximale correspondant au capital que vous souhaitez utiliser avec
-        Qrypton.
+     <h2 className="font-display text-base font-semibold mb-1">1. Choisissez votre capacité</h2>
+      <p className="text-muted-2 text-[12.5px] mb-2">
+        Quel capital avez-vous choisi auprès de la Prop Firm recommandée (FTMO) ? Sélectionnez la
+        licence Qrypton correspondante.
       </p>
+      <a
+        href="https://ftmo.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-block text-[11.5px] text-blue-soft underline underline-offset-2 hover:text-white transition mb-5"
+      >
+        Voir les tailles de compte disponibles chez FTMO (en €) →
+      </a>
 
       {/* ===================== VERSION MOBILE (< sm) — accordéon ===================== */}
       <div className="sm:hidden flex flex-col gap-3 mb-2">
