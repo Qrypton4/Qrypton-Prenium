@@ -64,11 +64,6 @@ function DurationCard({
       <div className="font-display text-[22px] font-bold">
         {plan.priceEUR} <span className="text-muted text-xs font-medium">€</span>
       </div>
-      {d.months > 1 && (
-        <div className="font-mono text-[11px] text-muted-2 mt-0.5">
-          soit {formatEUR(getPropFirmMonthlyEquivalent(plan))} € / mois
-        </div>
-      )}
       {plan.savingsEUR ? (
         <div className="text-[11px] text-positive font-medium mt-1.5">
           Économie de {formatEUR(plan.savingsEUR)} €
@@ -93,7 +88,6 @@ export default function PropFirmConfigurator({
 
   function selectDuration(key: PropFirmDurationKey) {
     setDuration(key);
-    // Petit délai pour laisser le récap se déplier (transition CSS) avant de scroller vers lui.
     setTimeout(() => {
       recapRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
     }, 150);
@@ -121,7 +115,6 @@ export default function PropFirmConfigurator({
 
   return (
     <div>
-      {/* Indicateur de progression — identique, juste redimensionné pour tenir sur mobile */}
       <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-2 mb-10 px-2">
         {steps.map((s, i) => (
           <div key={s.n} className="flex items-center gap-2">
@@ -239,7 +232,6 @@ export default function PropFirmConfigurator({
         compatible avec le robot.
       </p>
 
-      {/* Étape 2 (desktop uniquement — partagée sous la grille, comme avant) */}
       <div className="hidden sm:block">
         <div
           className={`transition-all duration-500 overflow-hidden ${
@@ -265,7 +257,6 @@ export default function PropFirmConfigurator({
         </div>
       </div>
 
-      {/* Étape 3 — récapitulatif (identique mobile/desktop) */}
       <div
         ref={recapRef}
         className={`transition-all duration-500 overflow-hidden ${
@@ -324,7 +315,6 @@ export default function PropFirmConfigurator({
         )}
       </div>
 
-      {/* Bas de page */}
       <ul className="max-w-[440px] mx-auto flex flex-col gap-2">
         {[
           "Même robot Qrypton pour toutes les licences",
