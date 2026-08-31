@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import {
   PROP_FIRM_CAPACITIES,
@@ -47,17 +47,19 @@ function DurationCard({
           : "border-line-strong bg-bg-2 hover:border-blue-soft/50"
       }`}
     >
-      <span
-        className={`inline-block text-[9.5px] font-semibold uppercase tracking-wide px-2 py-1 rounded-md mb-2.5 ${
-          d.highlight
-            ? "bg-positive/15 text-positive"
-            : d.key === "six_months"
-            ? "bg-blue/15 text-blue-soft"
-            : "bg-white/[0.06] text-muted-2"
-        }`}
-      >
-        {d.badge}
-      </span>
+      {d.badge && (
+        <span
+          className={`inline-block text-[9.5px] font-semibold uppercase tracking-wide px-2 py-1 rounded-md mb-2.5 ${
+            d.highlight
+              ? "bg-positive/15 text-positive"
+              : d.key === "six_months"
+              ? "bg-blue/15 text-blue-soft"
+              : "bg-white/[0.06] text-muted-2"
+          }`}
+        >
+          {d.badge}
+        </span>
+      )}
       <div className="text-[13.5px] font-semibold mb-2">{d.label}</div>
       <div className="font-display text-[22px] font-bold">
         {plan.priceEUR} <span className="text-muted text-xs font-medium">€</span>
@@ -87,6 +89,15 @@ export default function PropFirmConfigurator({
 }) {
   const [capacity, setCapacity] = useState<PropFirmCapacityKey | null>(null);
   const [duration, setDuration] = useState<PropFirmDurationKey | null>(null);
+  const recapRef = useRef<HTMLDivElement>(null);
+
+  function selectDuration(key: PropFirmDurationKey) {
+    setDuration(key);
+    // Petit délai pour laisser le récap se déplier (transition CSS) avant de scroller vers lui.
+    setTimeout(() => {
+      recapRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 150);
+  }
 
   const selectedPlan = capacity && duration ? PROP_FIRM_PLANS[`${capacity}_${duration}`] : null;
   const selectedCapacityInfo = capacity ? PROP_FIRM_CAPACITIES.find((c) => c.key === capacity)! : null;
@@ -170,7 +181,7 @@ export default function PropFirmConfigurator({
 
               <div
                 className={`transition-all duration-400 overflow-hidden ${
-                  selected ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+                  selected ? "max-h-[900px] opacity-100" : "max-h-0 opacity-0"
                 }`}
               >
                 <div className="px-5 pb-5 pt-1 border-t border-line">
@@ -184,7 +195,7 @@ export default function PropFirmConfigurator({
                         d={d}
                         plan={PROP_FIRM_PLANS[`${c.key}_${d.key}`]}
                         selected={duration === d.key}
-                        onClick={() => setDuration(d.key)}
+                        onClick={() => selectDuration(d.key)}
                       />
                     ))}
                   </div>
@@ -247,7 +258,7 @@ export default function PropFirmConfigurator({
                   d={d}
                   plan={PROP_FIRM_PLANS[`${capacity}_${d.key}`]}
                   selected={duration === d.key}
-                  onClick={() => setDuration(d.key)}
+                  onClick={() => selectDuration(d.key)}
                 />
               ))}
           </div>
@@ -256,6 +267,7 @@ export default function PropFirmConfigurator({
 
       {/* Étape 3 — récapitulatif (identique mobile/desktop) */}
       <div
+        ref={recapRef}
         className={`transition-all duration-500 overflow-hidden ${
           selectedPlan ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
         }`}
