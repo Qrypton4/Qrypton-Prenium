@@ -138,10 +138,10 @@ export default function PropFirmConfigurator({
         ))}
       </div>
 
-      <h2 className="font-display text-base font-semibold mb-1">1. Choisissez votre capacité</h2>
+      <h2 className="font-display text-base font-semibold mb-1">1. Quel est le capital de votre compte Prop Firm ?</h2>
       <p className="text-muted-2 text-[12.5px] mb-5">
-        Choisissez la capacité maximale correspondant au capital que vous souhaitez utiliser avec
-        Qrypton.
+        Sélectionnez le capital du compte que vous possédez déjà et sur lequel vous souhaitez
+        utiliser Qrypton.
       </p>
 
       {/* ===================== VERSION MOBILE (< sm) — accordéon ===================== */}
@@ -178,7 +178,8 @@ export default function PropFirmConfigurator({
               >
                 <div className="px-5 pb-5 pt-1 border-t border-line">
                   <p className="text-muted-2 text-[12px] mb-4 mt-3">
-                    Choisissez votre durée.
+                    Sélectionnez la formule qui vous convient. Plus la durée de votre licence est
+                    longue, plus votre tarif est avantageux.
                   </p>
                   <div className="grid grid-cols-1 gap-3">
                     {PROP_FIRM_DURATIONS.map((d) => (
@@ -226,10 +227,32 @@ export default function PropFirmConfigurator({
         })}
       </div>
 
-      <p className="text-muted-2 text-[11px] text-center mt-4 mb-10">
-        Qrypton ne fournit aucun compte de trading. La licence définit uniquement le capital maximum
-        compatible avec le robot.
+      <p className="text-muted-2 text-[11px] text-center mt-4 mb-6">
+        Votre licence définit uniquement le capital maximal compatible avec Qrypton. Qrypton ne
+        fournit aucun compte de trading.
       </p>
+
+      <div className="max-w-[440px] mx-auto border border-line rounded-xl bg-bg/40 px-5 py-4 text-center mb-10">
+        <p className="text-muted-2 text-[11.5px] leading-relaxed mb-2">
+          Vous n&apos;avez pas encore de compte Prop Firm ? Obtenez votre compte, puis revenez
+          sélectionner la licence correspondant à son capital.
+        </p>
+        <p className="text-muted-2 text-[11.5px] mb-2.5">
+          Vous pouvez découvrir notre Prop Firm recommandée :
+        </p>
+        <a
+          href="https://ftmo.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block text-[12px] font-semibold text-blue-soft hover:text-white transition mb-3"
+        >
+          Découvrir FTMO →
+        </a>
+        <p className="text-muted-2 text-[10px] leading-relaxed">
+          Qrypton est un service indépendant et n&apos;est pas affilié à FTMO. Qrypton ne fournit
+          aucun compte de trading.
+        </p>
+      </div>
 
       <div className="hidden sm:block">
         <div
@@ -239,7 +262,8 @@ export default function PropFirmConfigurator({
         >
           <h2 className="font-display text-base font-semibold mb-1">2. Choisissez votre durée</h2>
           <p className="text-muted-2 text-[12.5px] mb-5">
-            Le prix et l&apos;équivalent mensuel se mettent à jour automatiquement.
+            Sélectionnez la formule qui vous convient. Plus la durée de votre licence est longue,
+            plus votre tarif est avantageux.
           </p>
           <div className="grid grid-cols-3 gap-3.5 mb-10">
             {capacity &&
@@ -274,7 +298,7 @@ export default function PropFirmConfigurator({
             <div className="grid grid-cols-2 gap-3 mb-5 text-left">
               <div className="border border-line rounded-xl bg-bg px-4 py-3">
                 <div className="font-mono text-[10px] text-muted-2 uppercase tracking-wide mb-1">
-                  Capacité maximale
+                  Capital maximal
                 </div>
                 <div className="text-[15px] font-semibold">
                   {selectedCapacityInfo.capitalEUR.toLocaleString("fr-FR")} €
