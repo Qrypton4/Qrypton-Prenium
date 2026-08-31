@@ -111,7 +111,7 @@ export default function PropFirmDeclarationForm({
         <p className="text-[14px] font-medium mb-1.5">Compte déclaré ✓</p>
         <p className="text-muted-2 text-[12.5px] leading-relaxed">
           {alreadyFunded
-            ? "Votre tarif ci-dessous inclut automatiquement le Supplément Grande Allocation si applicable. Après vérification de votre compte, votre licence sera confirmée — vous serez informé par email en cas de correction."
+           ? "Après vérification de votre compte, votre licence sera confirmée — vous serez informé par email en cas de correction."
             : "Votre compte en challenge est enregistré. Dès qu'il passera en Funded, revenez dans votre espace pour le déclarer comme tel."}
         </p>
       </div>
