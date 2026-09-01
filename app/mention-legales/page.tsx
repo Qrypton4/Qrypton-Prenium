@@ -19,7 +19,7 @@ export default function MentionsLegales() {
           numéro SIREN 108 731 670 (SIRET 108 731 670 00015),
           dont l&apos;établissement est situé 12 Résidence Simone Veil, 59138 Bachant, France.
         </p>
-        <p>Contact : contact@qryptonedge.com</p>
+        <p>Contact : contact.qrypton@gmail.com</p>
         <p>TVA non applicable, article 293 B du Code général des impôts (franchise en base de TVA).</p>
 
         <h2 className="text-white font-semibold mt-6 mb-2">Directeur de la publication</h2>
