@@ -19,19 +19,22 @@ export default function Confidentialite() {
         <Section title="3. Finalité du traitement">
           Créer et gérer votre compte, vous permettre d&apos;accéder à OPR Edge™ selon votre abonnement, traiter les paiements via Stripe, vous contacter en cas de besoin, et assurer la sécurité du service.
         </Section>
-        <Section title="4. Hébergement et sous-traitants">
-          Supabase (base de données et authentification), Google (authentification OAuth), Stripe (paiements), Vercel (hébergement). Ces prestataires peuvent héberger des données hors UE avec des garanties de conformité RGPD.
+        <Section title="4. Bases légales des traitements">
+          Création et gestion du compte, fourniture du logiciel et gestion de l&apos;abonnement : exécution du contrat. Paiement : exécution du contrat. Facturation et obligations comptables : obligation légale. Sécurité et prévention de la fraude : intérêt légitime. Cookies ou technologies non essentielles, le cas échéant : consentement.
         </Section>
-        <Section title="5. Durée de conservation">
-          Vos données sont conservées pendant la durée de votre abonnement, puis archivées jusqu&apos;à 3 ans après la fin de la relation contractuelle, sauf obligation légale contraire.
+        <Section title="5. Hébergement et sous-traitants">
+          Supabase (base de données et authentification), Google (authentification OAuth), Stripe (paiements), Vercel (hébergement). Ces prestataires peuvent héberger ou traiter certaines données hors Union européenne, selon leur infrastructure ; ces transferts sont encadrés par les garanties prévues par la réglementation applicable (clauses contractuelles types ou équivalent).
         </Section>
-        <Section title="6. Droits des utilisateurs (RGPD)">
-          Droit d&apos;accès, de rectification, d&apos;effacement, de limitation, de portabilité et d&apos;opposition. Pour exercer ces droits : contact.qrypton@gmail.com. Vous pouvez aussi saisir la CNIL (www.cnil.fr).
+        <Section title="6. Durée de conservation">
+          Vos données de compte sont conservées pendant la durée de votre abonnement puis pendant une durée nécessaire aux obligations légales et à la gestion d&apos;éventuels litiges. Les données de facturation sont conservées pendant la durée imposée par les obligations légales et comptables applicables. Les données techniques et de sécurité sont conservées pendant une durée limitée et proportionnée aux besoins de sécurité.
         </Section>
-        <Section title="7. Cookies">
+        <Section title="7. Droits des utilisateurs (RGPD)">
+          Droit d&apos;accès, de rectification, d&apos;effacement, de limitation, de portabilité et d&apos;opposition. Pour exercer ces droits : contact.qrypton@gmail.com. Vous pouvez aussi saisir l&apos;autorité de contrôle compétente, notamment la CNIL (www.cnil.fr).
+        </Section>
+        <Section title="8. Cookies">
           Le site utilise uniquement des cookies strictement nécessaires (session, authentification). Aucun cookie publicitaire tiers.
         </Section>
-        <Section title="8. Contact">
+        <Section title="9. Contact">
           Pour toute question relative à cette politique : contact.qrypton@gmail.com
         </Section>
       </div>
