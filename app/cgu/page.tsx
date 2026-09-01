@@ -125,7 +125,7 @@ export default function CGU() {
         </Section>
 
         <Section title="14. Contact">
-          Pour toute question relative aux présentes CGV/CGU : contact@qryptonedge.com
+          Pour toute question relative aux présentes CGV/CGU : contact.qrypton@gmail.com
         </Section>
       </div>
     </main>
