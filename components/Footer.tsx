@@ -17,6 +17,18 @@ export default function Footer() {
         >
           📋 Mentions légales →
         </Link>
+        <Link
+          href="/cgu"
+          className="inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5 text-[12.5px] text-muted-2 transition hover:border-blue-soft hover:bg-white/[0.06] hover:text-white"
+        >
+          📄 CGV/CGU →
+        </Link>
+        <Link
+          href="/confidentialite"
+          className="inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5 text-[12.5px] text-muted-2 transition hover:border-blue-soft hover:bg-white/[0.06] hover:text-white"
+        >
+          🔒 Confidentialité →
+        </Link>
         <div className="flex items-center gap-2">
             <Link
               href="https://www.instagram.com/qrypton.edge"
