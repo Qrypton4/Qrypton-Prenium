@@ -60,8 +60,8 @@ export default async function Home() {
               Un logiciel, pas des promesses.
             </h2>
             <p className="text-muted mt-3.5">
-              Chaque décision de conception vise d&apos;abord à protéger le capital, et ensuite
-              seulement à générer de la performance.
+              Chaque décision de conception vise à appliquer une stratégie prédéfinie avec une
+              gestion du risque structurée et disciplinée.
             </p>
           </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-line border border-line rounded-2xl overflow-hidden">
