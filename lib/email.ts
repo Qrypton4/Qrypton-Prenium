@@ -12,7 +12,11 @@ interface SendEmailParams {
 
 export async function sendEmail({ to, subject, html }: SendEmailParams): Promise<boolean> {
   const apiKey = process.env.RESEND_API_KEY;
-  const from = process.env.EMAIL_FROM || "Qrypton <contact.qrypton@gmail.com>";
+  const from = process.env.EMAIL_FROM || "Qrypton <no-reply@qryptonedge.com>";
+  // Les emails partent depuis le domaine vérifié qryptonedge.com (obligatoire pour
+  // Resend), mais toute réponse d'un client doit arriver sur la vraie boîte
+  // consultée au quotidien, pas se perdre sur no-reply@.
+  const replyTo = process.env.EMAIL_REPLY_TO || "contact.qrypton@gmail.com";
 
   if (!apiKey) {
     console.warn(`[email] RESEND_API_KEY manquante — email "${subject}" à ${to} non envoyé (simulation).`);
@@ -26,7 +30,7 @@ export async function sendEmail({ to, subject, html }: SendEmailParams): Promise
         Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ from, to, subject, html }),
+      body: JSON.stringify({ from, to, subject, html, reply_to: replyTo }),
     });
 
     if (!res.ok) {
