@@ -27,6 +27,10 @@ export default function Risques() {
               selon une stratégie prédéfinie. Ce service est un outil logiciel : il ne constitue
               ni un conseil en investissement personnalisé, ni un service de gestion sous mandat,
               ni une recommandation d&apos;investissement au sens de la réglementation applicable.
+              Qrypton ne fournit aucune recommandation personnalisée concernant l&apos;achat, la
+              vente ou la détention d&apos;un instrument financier. La décision d&apos;utiliser le
+              logiciel et de l&apos;associer à un compte de trading appartient exclusivement à
+              l&apos;utilisateur.
             </p>
           </section>
 
@@ -36,7 +40,10 @@ export default function Risques() {
               L&apos;utilisateur conserve l&apos;entière responsabilité de l&apos;installation, de
               la configuration et de l&apos;utilisation du logiciel, ainsi que de toutes les
               décisions de trading exécutées sur son compte. Qrypton n&apos;a accès à aucun moment
-              aux fonds ni aux comptes de trading des utilisateurs.
+              aux fonds ni aux comptes de trading des utilisateurs. L&apos;utilisateur reconnaît
+              qu&apos;il reste seul responsable de son compte, du respect des règles applicables
+              à son broker ou à sa Prop Firm, ainsi que des conséquences financières liées à ses
+              décisions et à l&apos;utilisation du logiciel.
             </p>
           </section>
 
@@ -46,7 +53,9 @@ export default function Risques() {
               Le trading sur les marchés financiers, y compris via un système automatisé, comporte
               un risque de perte en capital pouvant aller jusqu&apos;à la perte totale des sommes
               engagées. Les instruments financiers concernés (notamment les indices tels que le
-              Nasdaq) peuvent connaître une forte volatilité.
+              Nasdaq) peuvent connaître une forte volatilité. L&apos;utilisation d&apos;un logiciel
+              automatisé ne supprime pas ce risque. Qrypton ne garantit aucun niveau de
+              performance, de rentabilité ou de résultat.
             </p>
           </section>
 
