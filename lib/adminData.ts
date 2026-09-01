@@ -90,12 +90,13 @@ export async function getAllClients(): Promise<ClientRow[]> {
     .from("subscriptions")
     .select("id, user_id, plan, status, current_period_end, created_at")
     .order("created_at", { ascending: false });
+  const subsList = subs ?? [];
 
   const { data: profiles } = await supabaseAdmin.from("profiles").select("id, stripe_customer_id");
   const { data: invoices } = await supabaseAdmin.from("invoices").select("user_id, amount_paid");
 
-  const subsByUser = new Map<string, (typeof subs)[number]>();
-  for (const s of subs ?? []) {
+  const subsByUser = new Map<string, (typeof subsList)[number]>();
+  for (const s of subsList) {
     // On garde l'abonnement le plus récent par client (déjà trié par created_at desc).
     if (!subsByUser.has(s.user_id)) subsByUser.set(s.user_id, s);
   }
