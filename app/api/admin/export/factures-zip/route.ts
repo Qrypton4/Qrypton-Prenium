@@ -49,9 +49,9 @@ export async function GET(req: NextRequest) {
     })
   );
 
-  const zipBuffer = await zip.generateAsync({ type: "nodebuffer" });
+ const zipBuffer = await zip.generateAsync({ type: "nodebuffer" });
 
-  return new NextResponse(zipBuffer, {
+  return new NextResponse(new Uint8Array(zipBuffer), {
     headers: {
       "Content-Type": "application/zip",
       "Content-Disposition": `attachment; filename="Factures_Qrypton_${from ?? "debut"}_${to ?? "fin"}.zip"`,
