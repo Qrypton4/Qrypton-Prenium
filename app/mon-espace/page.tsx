@@ -21,17 +21,25 @@ export default async function MonEspace() {
 );
   }
 
+  // .order + .limit(1) plutôt que .single() seul : un utilisateur peut avoir
+  // plusieurs lignes dans `licenses`/`subscriptions` au fil de ses tests ou
+  // renouvellements successifs — .single() plante dès qu'il y en a plus
+  // d'une. On prend systématiquement la plus récente.
   const { data: license } = await supabaseAdmin
     .from("licenses")
     .select("id, license_key, status, mt5_account_login, active_license_until, last_verified_at")
     .eq("user_id", user.id)
-    .single();
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
 
   const { data: subscription } = await supabaseAdmin
     .from("subscriptions")
     .select("status, current_period_end")
     .eq("user_id", user.id)
-    .single();
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
 
   const { data: invoices } = await supabaseAdmin
     .from("invoices")
