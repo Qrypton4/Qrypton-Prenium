@@ -75,11 +75,19 @@ export default async function AdminPropFirm() {
     <>
       <SiteNavContainer />
       <main className="max-w-[960px] mx-auto px-6 md:px-12 py-16">
-        <div className="mb-10">
-          <span className="font-mono text-xs text-blue-soft uppercase tracking-widest block mb-3">
-            Admin
-          </span>
-          <h1 className="font-display text-2xl font-semibold">Allocation Prop Firm</h1>
+        <div className="mb-10 flex items-center justify-between flex-wrap gap-4">
+          <div>
+            <span className="font-mono text-xs text-blue-soft uppercase tracking-widest block mb-3">
+              Admin
+            </span>
+            <h1 className="font-display text-2xl font-semibold">Allocation Prop Firm</h1>
+          </div>
+          <a
+            href="/admin/gestion"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-line-strong text-[13px] font-medium text-muted-2 hover:text-white hover:border-blue-soft transition"
+          >
+            🧾 Gestion &amp; Comptabilité →
+          </a>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
