@@ -18,11 +18,15 @@ export async function POST() {
     return NextResponse.json({ ok: false, message: "not_authenticated" }, { status: 401 });
   }
 
+  // .order + .limit(1) plutôt que .single() seul — même correctif que pour
+  // lib/license.ts, app/mon-espace/page.tsx et live-snapshot/route.ts.
   const { data: license } = await supabaseAdmin
     .from("licenses")
     .select("id, mt5_account_login, reset_count")
     .eq("user_id", user.id)
-    .single();
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
 
   if (!license) {
     return NextResponse.json({ ok: false, message: "no_license" }, { status: 404 });
