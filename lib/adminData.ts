@@ -27,6 +27,8 @@ export interface ClientRow {
   endDate: string | null;
   stripeCustomerId: string | null;
   totalPaidEUR: number;
+  propFirmDeclared: boolean;
+  propFirmStatus: string | null;
 }
 
 export interface InvoiceRow {
@@ -94,6 +96,16 @@ export async function getAllClients(): Promise<ClientRow[]> {
 
   const { data: profiles } = await supabaseAdmin.from("profiles").select("id, stripe_customer_id");
   const { data: invoices } = await supabaseAdmin.from("invoices").select("user_id, amount_paid");
+  const { data: propFirmAccounts } = await supabaseAdmin
+    .from("prop_firm_accounts")
+    .select("user_id, status, created_at")
+    .order("created_at", { ascending: false });
+
+  const propFirmByUser = new Map<string, string>();
+  for (const a of propFirmAccounts ?? []) {
+    // On garde la déclaration la plus récente par client.
+    if (!propFirmByUser.has(a.user_id)) propFirmByUser.set(a.user_id, a.status);
+  }
 
   const subsByUser = new Map<string, (typeof subsList)[number]>();
   for (const s of subsList) {
@@ -127,6 +139,8 @@ export async function getAllClients(): Promise<ClientRow[]> {
       endDate: sub.current_period_end ?? null,
       stripeCustomerId: stripeCustomerByUser.get(userId) ?? null,
       totalPaidEUR: centsToEUR(totalPaidByUser.get(userId) ?? 0),
+      propFirmDeclared: propFirmByUser.has(userId),
+      propFirmStatus: propFirmByUser.get(userId) ?? null,
     };
   });
 }
@@ -148,6 +162,12 @@ export async function getClientDetail(userId: string) {
     .from("licenses")
     .select("license_key, status, mt5_account_login, active_license_until")
     .eq("user_id", userId);
+
+  const { data: propFirmAccounts } = await supabaseAdmin
+    .from("prop_firm_accounts")
+    .select("status, capital, created_at")
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false });
 
   const { data: profile } = await supabaseAdmin
     .from("profiles")
@@ -172,6 +192,7 @@ export async function getClientDetail(userId: string) {
       pdfUrl: i.pdf_url,
     })),
     licenses: licenses ?? [],
+    propFirmAccounts: propFirmAccounts ?? [],
   };
 }
 
