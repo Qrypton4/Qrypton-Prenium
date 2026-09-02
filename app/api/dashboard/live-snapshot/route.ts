@@ -16,11 +16,17 @@ export async function GET() {
     return NextResponse.json({ ok: false, message: "not_authenticated" }, { status: 401 });
   }
 
+  // .order + .limit(1) plutôt que .single() seul : même correctif que pour
+  // lib/license.ts et app/mon-espace/page.tsx — un utilisateur peut avoir
+  // plusieurs lignes dans `licenses` au fil de ses abonnements/tests, et
+  // .single() plante dès qu'il y en a plus d'une.
   const { data: license } = await supabaseAdmin
     .from("licenses")
     .select("id, mt5_account_login")
     .eq("user_id", user.id)
-    .single();
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
 
   if (!license || !license.mt5_account_login) {
     return NextResponse.json({ ok: false, message: "no_account_linked" }, { status: 404 });
@@ -32,7 +38,7 @@ export async function GET() {
     .eq("license_id", license.id)
     .order("captured_at", { ascending: false })
     .limit(1)
-    .single();
+    .maybeSingle();
 
   if (error || !snapshot) {
     return NextResponse.json({ ok: false, message: "no_snapshot" }, { status: 404 });
