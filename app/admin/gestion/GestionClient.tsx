@@ -27,6 +27,24 @@ function StatusBadge({ status }: { status: string | null }) {
   );
 }
 
+function PropFirmBadge({ declared, status }: { declared: boolean; status: string | null }) {
+  if (!declared) {
+    return <span className="inline-block text-[11px] font-mono px-2 py-0.5 rounded-full border text-muted-2 bg-white/[0.03] border-line-strong">non déclaré</span>;
+  }
+  const isVerified = status === "verified" || status === "active";
+  const isRejected = status === "rejected";
+  const cls = isVerified
+    ? "text-positive bg-positive/10 border-positive/30"
+    : isRejected
+    ? "text-muted-2 bg-white/[0.04] border-line-strong"
+    : "text-blue-soft bg-blue/10 border-blue-soft/30";
+  return (
+    <span className={`inline-block text-[11px] font-mono px-2 py-0.5 rounded-full border ${cls}`}>
+      {status ?? "déclaré"}
+    </span>
+  );
+}
+
 function Card({ children }: { children: React.ReactNode }) {
   return <div className="border border-line-strong rounded-2xl bg-bg-2 p-6">{children}</div>;
 }
@@ -142,6 +160,7 @@ function Row({ label, value, highlight }: { label: string; value: string | numbe
 function ClientsTab({ clients }: { clients: ClientRow[] }) {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<"all" | "active" | "canceled" | "expired">("all");
+  const [propFirmFilter, setPropFirmFilter] = useState<"all" | "declared" | "not_declared">("all");
   const [selected, setSelected] = useState<ClientRow | null>(null);
 
   const filtered = useMemo(() => {
@@ -163,9 +182,14 @@ function ClientsTab({ clients }: { clients: ClientRow[] }) {
         (statusFilter === "canceled" && isCanceled) ||
         (statusFilter === "expired" && isExpired);
 
-      return matchesSearch && matchesStatus;
+      const matchesPropFirm =
+        propFirmFilter === "all" ||
+        (propFirmFilter === "declared" && c.propFirmDeclared) ||
+        (propFirmFilter === "not_declared" && !c.propFirmDeclared);
+
+      return matchesSearch && matchesStatus && matchesPropFirm;
     });
-  }, [clients, search, statusFilter]);
+  }, [clients, search, statusFilter, propFirmFilter]);
 
   return (
     <div>
@@ -186,6 +210,15 @@ function ClientsTab({ clients }: { clients: ClientRow[] }) {
           <option value="canceled">Annulés</option>
           <option value="expired">Expirés</option>
         </select>
+        <select
+          value={propFirmFilter}
+          onChange={(e) => setPropFirmFilter(e.target.value as typeof propFirmFilter)}
+          className="bg-bg-2 border border-line-strong rounded-lg px-3 py-2 text-[13.5px]"
+        >
+          <option value="all">Compte Prop Firm : tous</option>
+          <option value="declared">Déclaré</option>
+          <option value="not_declared">Non déclaré</option>
+        </select>
       </div>
 
       {filtered.length === 0 ? (
@@ -200,6 +233,7 @@ function ClientsTab({ clients }: { clients: ClientRow[] }) {
                 <th className="px-4 py-3 font-medium">Inscription</th>
                 <th className="px-4 py-3 font-medium">Offre</th>
                 <th className="px-4 py-3 font-medium">Statut</th>
+                <th className="px-4 py-3 font-medium">Compte Prop Firm</th>
                 <th className="px-4 py-3 font-medium">Fin</th>
               </tr>
             </thead>
@@ -216,6 +250,9 @@ function ClientsTab({ clients }: { clients: ClientRow[] }) {
                   <td className="px-4 py-3 font-mono text-[12px]">{c.plan ?? "—"}</td>
                   <td className="px-4 py-3">
                     <StatusBadge status={c.status} />
+                  </td>
+                  <td className="px-4 py-3">
+                    <PropFirmBadge declared={c.propFirmDeclared} status={c.propFirmStatus} />
                   </td>
                   <td className="px-4 py-3 text-muted-2">{fmtDate(c.endDate)}</td>
                 </tr>
@@ -245,6 +282,7 @@ interface ClientDetail {
   }>;
   invoices: Array<{ id: string; date: string; amountEUR: number; pdfUrl: string | null }>;
   licenses: Array<{ license_key: string; status: string | null; mt5_account_login: string | null }>;
+  propFirmAccounts: Array<{ status: string | null; capital: number | null; created_at: string }>;
 }
 
 function ClientDetailModal({ client, onClose }: { client: ClientRow; onClose: () => void }) {
@@ -338,6 +376,25 @@ function ClientDetailModal({ client, onClose }: { client: ClientRow; onClose: ()
                       ) : (
                         <span className="text-muted-2 text-[12px]">—</span>
                       )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div>
+              <h4 className="text-[11px] uppercase tracking-wide font-mono text-muted-2 mb-2">Compte Prop Firm</h4>
+              {detail.propFirmAccounts.length === 0 ? (
+                <p className="text-muted-2 text-[13px]">Aucun compte déclaré.</p>
+              ) : (
+                <div className="flex flex-col gap-2">
+                  {detail.propFirmAccounts.map((a, i) => (
+                    <div key={i} className="border border-line rounded-lg p-3 text-[13px] flex justify-between items-center">
+                      <span>{fmtDate(a.created_at)}</span>
+                      <span className="font-mono">
+                        {a.capital ? `${a.capital.toLocaleString("fr-FR")} €` : "—"}
+                      </span>
+                      <StatusBadge status={a.status} />
                     </div>
                   ))}
                 </div>
