@@ -999,9 +999,9 @@ function GuideTab() {
           Ouvrir le guide →
         </Link>
       </Card>
-      <Card title="Tutoriels">
-        <p className="text-muted text-sm">Bientôt disponible.</p>
-      </Card>
+      <div className="sm:col-span-3">
+        <TutorialVideoCard />
+      </div>
       <Card title="FAQ">
         <Link href="/faq" className="text-blue-soft text-sm hover:underline">
           Consulter la FAQ →
@@ -1010,6 +1010,51 @@ function GuideTab() {
     </div>
   );
 }
+
+function TutorialVideoCard() {
+  const [videoUrl, setVideoUrl] = useState<string | null>(null);
+  const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
+
+  useEffect(() => {
+    fetch("/api/tutorial-video")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.ok && d.url) {
+          setVideoUrl(d.url);
+          setStatus("ready");
+        } else {
+          setStatus("error");
+        }
+      })
+      .catch(() => setStatus("error"));
+  }, []);
+
+  return (
+    <Card title="Tutoriels">
+      {status === "loading" && <p className="text-muted text-sm">Chargement de la vidéo…</p>}
+      {status === "error" && (
+        <p className="text-muted text-sm">
+          Vidéo bientôt disponible. En attendant, consultez le{" "}
+          <Link href="/guide-demarrage" className="text-blue-soft hover:underline">
+            guide de démarrage
+          </Link>
+          .
+        </p>
+      )}
+      {status === "ready" && videoUrl && (
+        <video
+          controls
+          preload="metadata"
+          className="w-full rounded-xl border border-line-strong bg-black"
+        >
+          <source src={videoUrl} type="video/mp4" />
+          Votre navigateur ne prend pas en charge la lecture vidéo.
+        </video>
+      )}
+    </Card>
+  );
+}
+
 
 function SettingsTab({ email }: { email?: string | null }) {
   return (
