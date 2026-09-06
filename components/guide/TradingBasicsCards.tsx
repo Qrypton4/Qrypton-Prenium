@@ -21,7 +21,7 @@ const CAPITAL_CARD: BasicCard = {
       { label: "Fonds propres", value: "10 000 €" },
       { label: "Prop Firm", value: "10 000 € à 200 000 €", note: "sans risque personnel" },
     ],
-  callout: "💡 Avec environ 1 000 €, vous pouvez combiner 1 an de Qrypton + un challenge 10 000 €.",
+  callout: "💡 Avec environ 400 €, vous pouvez combiner 1 an de Qrypton + un challenge 10 000 €.",
   example: "Tarifs indicatifs. Les conditions et tailles de comptes varient selon la Prop Firm. La réussite d'un challenge n'est pas garantie.",
   highlight: true,
   linkHref: "/guide-qrypton/prop-firm",
