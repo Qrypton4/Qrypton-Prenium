@@ -85,12 +85,30 @@ export default function GuidePropFirm() {
                 Qrypton n&apos;est ni partenaire, ni affilié, ni sponsorisé par FTMO. FTMO est une
                 société indépendante et Qrypton est un service totalement indépendant.
               </p>
-              <p className="text-muted text-[13.5px] leading-relaxed mb-6">
+            <p className="text-muted text-[13.5px] leading-relaxed mb-6">
                 Certaines règles de FTMO limitent l&apos;allocation de capital pouvant être
                 utilisée avec une même stratégie. Comme plusieurs clients peuvent utiliser
                 Qrypton, la capacité disponible est donc partagée entre les utilisateurs de
                 Qrypton.
               </p>
+
+              <div className="border border-blue-soft/30 rounded-2xl bg-blue/5 px-5 py-4 mb-6">
+                <p className="text-white/90 text-[13px] font-medium mb-1.5 flex items-center gap-1.5">
+                  ⚠️ Attention — FTMO
+                </p>
+                <p className="text-muted text-[12.5px] leading-relaxed">
+                  Avec un compte <strong className="text-white">FTMO Standard</strong>, les positions
+                  doivent être clôturées avant le week-end. Le compte{" "}
+                  <strong className="text-white">FTMO Swing</strong> permet de conserver les positions
+                  pendant le week-end. Vérifiez le type de compte choisi avant d&apos;utiliser Qrypton.
+                </p>
+                <Link
+                  href="/faq#weekend-ftmo"
+                  className="inline-block text-blue-soft text-[12px] font-medium hover:underline mt-2"
+                >
+                  En savoir plus →
+                </Link>
+              </div> 
 
               <h3 className="font-display text-sm font-semibold text-blue-soft mb-2">
                 Votre allocation Qrypton
