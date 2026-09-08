@@ -6,26 +6,28 @@ function isTestBypass(email: string | null | undefined): boolean {
   return !!bypassEmail && !!email && email.toLowerCase() === bypassEmail.toLowerCase();
 }
 
-async function isPreregistered(email: string | null | undefined): Promise<boolean> {
-  if (!email) return false;
+// "Préinscrit" = a créé son compte Qrypton avant le début de l'accès anticipé.
+async function isPreregistered(userId: string | null | undefined): Promise<boolean> {
+  if (!userId) return false;
   const { data } = await supabaseAdmin
-    .from("preinscriptions")
-    .select("id")
-    .eq("email", email.trim().toLowerCase())
+    .from("profiles")
+    .select("created_at")
+    .eq("id", userId)
     .maybeSingle();
-  return !!data;
+  if (!data?.created_at) return false;
+  return new Date(data.created_at).getTime() < EARLY_ACCESS_AT.getTime();
 }
 
 // true = la personne peut s'abonner maintenant.
-// N'importer ce fichier QUE depuis du code serveur (API routes, pages
-// async côté serveur) — jamais depuis un composant "use client".
-export async function isSalesOpen(userEmail?: string | null): Promise<boolean> {
-  if (isTestBypass(userEmail)) return true;
+export async function isSalesOpen(
+  user?: { id?: string | null; email?: string | null } | null
+): Promise<boolean> {
+  if (isTestBypass(user?.email)) return true;
 
   const now = Date.now();
   if (now >= PUBLIC_LAUNCH_AT.getTime()) return true;
   if (now >= EARLY_ACCESS_AT.getTime()) {
-    return await isPreregistered(userEmail);
+    return await isPreregistered(user?.id);
   }
   return false;
 }
