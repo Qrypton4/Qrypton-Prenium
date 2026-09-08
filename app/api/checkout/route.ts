@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  if (!(await isSalesOpen(user?.email))) {
+  if (!(await isSalesOpen(user))) {
     return NextResponse.json({ ok: false, message: SALES_CLOSED_MESSAGE }, { status: 403 });
   }
   if (!user) {
