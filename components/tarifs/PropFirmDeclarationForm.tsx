@@ -159,10 +159,15 @@ export default function PropFirmDeclarationForm({
           <div className="w-full bg-bg border border-line-strong rounded-lg px-3 py-2.5 text-[13.5px] text-muted-2">
             FTMO
           </div>
-          <p className="text-muted-2 text-[11px] leading-relaxed mt-2 border-l-2 border-blue-soft/40 pl-2.5">
-            ⚠️ FTMO Standard ≠ FTMO Swing — le compte Standard ne permet pas de conserver de
-            position ouverte pendant le week-end, contrairement au Swing.
+         <p className="text-muted-2 text-[11px] leading-relaxed mt-2 border-l-2 border-blue-soft/40 pl-2.5">
+            ⚠️ FTMO Standard ≠ FTMO Swing{" "}
+            <span className="inline-block text-[9px] font-semibold uppercase tracking-wide px-1 py-0.5 rounded bg-positive/15 text-positive align-middle">
+              Swing recommandé
+            </span>{" "}
+            — le compte Standard ne permet pas de conserver de position ouverte pendant le
+            week-end, contrairement au Swing.
           </p>
+
         </div>
 
         <div>
