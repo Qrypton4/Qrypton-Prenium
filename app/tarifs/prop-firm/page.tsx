@@ -5,7 +5,6 @@ import SiteNavContainer from "@/components/SiteNavContainer";
 import { Reveal } from "@/components/Animated";
 import PropFirmConfigurator from "@/components/tarifs/PropFirmConfigurator";
 import { isSalesOpen } from "@/lib/launch-server";
-import PreinscriptionForm from "@/components/PreinscriptionForm";
 
 export const metadata = {
   title: "Prop Firm — Tarifs Qrypton",
@@ -17,6 +16,7 @@ async function getTarifsData(): Promise<{
   isLoggedIn: boolean;
   hasActiveSub: boolean;
   userEmail: string | null;
+  userId: string | null;
 }> {
   const supabase = createClient();
   const {
@@ -24,7 +24,7 @@ async function getTarifsData(): Promise<{
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return { isLoggedIn: false, hasActiveSub: false, userEmail: null };
+    return { isLoggedIn: false, hasActiveSub: false, userEmail: null, userId: null };
   }
 
   const { data: subscription } = await supabaseAdmin
@@ -38,12 +38,13 @@ async function getTarifsData(): Promise<{
     isLoggedIn: true,
     hasActiveSub: !!subscription,
     userEmail: user.email ?? null,
+    userId: user.id,
   };
 }
 
 export default async function TarifsPropFirm() {
-  const { isLoggedIn, hasActiveSub, userEmail } = await getTarifsData();
-  const salesOpen = await isSalesOpen(userEmail);
+  const { isLoggedIn, hasActiveSub, userEmail, userId } = await getTarifsData();
+  const salesOpen = await isSalesOpen({ id: userId, email: userEmail });
 
   return (
     <>
@@ -69,12 +70,6 @@ export default async function TarifsPropFirm() {
             <PropFirmConfigurator isLoggedIn={isLoggedIn} hasActiveSub={hasActiveSub} salesOpen={salesOpen} />
           </div>
         </Reveal>
-
-        {!salesOpen && (
-          <div className="mt-8">
-            <PreinscriptionForm />
-          </div>
-        )}
 
         <Reveal delay={0.12}>
           <div className="max-w-[620px] mx-auto text-center border-t border-line pt-10 mt-14 mb-6">
