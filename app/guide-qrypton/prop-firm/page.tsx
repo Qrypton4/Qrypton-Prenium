@@ -97,10 +97,14 @@ export default function GuidePropFirm() {
                   ⚠️ Attention — FTMO
                 </p>
                 <p className="text-muted text-[12.5px] leading-relaxed">
-                  Avec un compte <strong className="text-white">FTMO Standard</strong>, les positions
+                 Avec un compte <strong className="text-white">FTMO Standard</strong>, les positions
                   doivent être clôturées avant le week-end. Le compte{" "}
-                  <strong className="text-white">FTMO Swing</strong> permet de conserver les positions
-                  pendant le week-end. Vérifiez le type de compte choisi avant d&apos;utiliser Qrypton.
+                  <strong className="text-white">FTMO Swing</strong>{" "}
+                  <span className="inline-block text-[9.5px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded bg-positive/15 text-positive align-middle">
+                    Recommandé
+                  </span>{" "}
+                  permet de conserver les positions pendant le week-end. Vérifiez le type de compte
+                  choisi avant d&apos;utiliser Qrypton.
                 </p>
                 <Link
                   href="/faq#weekend-ftmo"
