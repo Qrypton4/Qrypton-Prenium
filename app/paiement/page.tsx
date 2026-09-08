@@ -17,7 +17,7 @@ export default async function Paiement({
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  if (!isSalesOpen(user?.email)) {
+  if (!(await isSalesOpen(user?.email))) {
     redirect("/tarifs/fonds-propres");
   }
 
