@@ -6,19 +6,23 @@ import { PLANS, PlanKey } from "@/lib/plans";
 import { SALES_CLOSED_MESSAGE } from "@/lib/launch";
 import { isSalesOpen } from "@/lib/launch-server";
 import FondsPropresPricingSection from "@/components/tarifs/FondsPropresPricingSection";
-import PreinscriptionForm from "@/components/PreinscriptionForm";
 
 export const metadata = {
   title: "Fonds propres — Tarifs Qrypton",
   description: "OPR Edge™ à partir de 79€/mois pour trader avec vos propres fonds. Formules mensuelle, 6 mois et 12 mois.",
 };
 
-async function getTarifsData(): Promise<{ isLoggedIn: boolean; hasActiveSub: boolean; userEmail: string | null }> {
+async function getTarifsData(): Promise<{
+  isLoggedIn: boolean;
+  hasActiveSub: boolean;
+  userEmail: string | null;
+  userId: string | null;
+}> {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
-    return { isLoggedIn: false, hasActiveSub: false, userEmail: null };
+    return { isLoggedIn: false, hasActiveSub: false, userEmail: null, userId: null };
   }
 
   const { data: subscription } = await supabaseAdmin
@@ -28,8 +32,7 @@ async function getTarifsData(): Promise<{ isLoggedIn: boolean; hasActiveSub: boo
     .eq("status", "active")
     .maybeSingle();
 
-  return { isLoggedIn: true, hasActiveSub: !!subscription, userEmail: user.email ?? null };
-
+  return { isLoggedIn: true, hasActiveSub: !!subscription, userEmail: user.email ?? null, userId: user.id };
 }
 
 function ctaHrefFor(planKey: PlanKey, isLoggedIn: boolean, hasActiveSub: boolean): string {
@@ -39,8 +42,8 @@ function ctaHrefFor(planKey: PlanKey, isLoggedIn: boolean, hasActiveSub: boolean
 }
 
 export default async function TarifsFondsPropres() {
-  const { isLoggedIn, hasActiveSub, userEmail } = await getTarifsData();
-  const salesOpen = await isSalesOpen(userEmail);
+  const { isLoggedIn, hasActiveSub, userEmail, userId } = await getTarifsData();
+  const salesOpen = await isSalesOpen({ id: userId, email: userEmail });
 
   return (
     <>
@@ -82,12 +85,6 @@ export default async function TarifsFondsPropres() {
           salesOpen={salesOpen}
           salesClosedMessage={SALES_CLOSED_MESSAGE}
         />
-
-        {!salesOpen && (
-          <div className="mt-8">
-            <PreinscriptionForm />
-          </div>
-        )}
 
         <div className="max-w-[720px] mx-auto mt-14 border-t border-line pt-10 text-center">
           <h2 className="font-display text-base font-semibold mb-4">Incluses dans les 3 formules</h2>
