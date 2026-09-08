@@ -1,5 +1,6 @@
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import ScrollToTop from "@/components/ScrollToTop";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
@@ -75,7 +76,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <div className="grid-bg" />
-        <IntroAnimation />
+        <Script id="intro-skip-check" strategy="beforeInteractive">
+  {`(function(){try{if(sessionStorage.getItem('qrypton_intro_played')==='1'){document.documentElement.setAttribute('data-skip-intro','1');}else{sessionStorage.setItem('qrypton_intro_played','1');}}catch(e){}})();`}
+</Script>
+<IntroAnimation />
         <ScrollToTop />
         <ScrollProgressBar />
         <ServiceWorkerRegister />
