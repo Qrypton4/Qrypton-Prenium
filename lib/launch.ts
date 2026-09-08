@@ -9,4 +9,4 @@ export const PUBLIC_LAUNCH_AT = new Date("2026-09-22T00:00:00+02:00");
 export const EARLY_ACCESS_AT = new Date(PUBLIC_LAUNCH_AT.getTime() - 24 * 60 * 60 * 1000);
 
 export const SALES_CLOSED_MESSAGE =
-  "Les abonnements ouvrent le 22 septembre 2026. Les personnes préinscrites peuvent s'abonner dès le 21 septembre, 24h avant tout le monde — inscrivez-vous gratuitement ci-dessous.";
+  "Les abonnements ouvrent le 22 septembre 2026. Créez votre compte gratuitement dès maintenant (en haut à droite) pour bénéficier d'un accès 24h avant tout le monde, dès le 21 septembre.";
