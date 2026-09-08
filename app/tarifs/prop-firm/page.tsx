@@ -5,6 +5,7 @@ import SiteNavContainer from "@/components/SiteNavContainer";
 import { Reveal } from "@/components/Animated";
 import PropFirmConfigurator from "@/components/tarifs/PropFirmConfigurator";
 import { isSalesOpen } from "@/lib/launch";
+import PreinscriptionForm from "@/components/PreinscriptionForm";
 
 export const metadata = {
   title: "Prop Firm — Tarifs Qrypton",
@@ -42,7 +43,7 @@ async function getTarifsData(): Promise<{
 
 export default async function TarifsPropFirm() {
   const { isLoggedIn, hasActiveSub, userEmail } = await getTarifsData();
-  const salesOpen = isSalesOpen(userEmail);
+  const salesOpen = await isSalesOpen(userEmail);
 
   return (
     <>
@@ -68,6 +69,12 @@ export default async function TarifsPropFirm() {
             <PropFirmConfigurator isLoggedIn={isLoggedIn} hasActiveSub={hasActiveSub} salesOpen={salesOpen} />
           </div>
         </Reveal>
+
+        {!salesOpen && (
+          <div className="mt-8">
+            <PreinscriptionForm />
+          </div>
+        )}
 
         <Reveal delay={0.12}>
           <div className="max-w-[620px] mx-auto text-center border-t border-line pt-10 mt-14 mb-6">
