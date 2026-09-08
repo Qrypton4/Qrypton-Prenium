@@ -5,6 +5,7 @@ import SiteNavContainer from "@/components/SiteNavContainer";
 import { PLANS, PlanKey } from "@/lib/plans";
 import { isSalesOpen, SALES_CLOSED_MESSAGE } from "@/lib/launch";
 import FondsPropresPricingSection from "@/components/tarifs/FondsPropresPricingSection";
+import PreinscriptionForm from "@/components/PreinscriptionForm";
 
 export const metadata = {
   title: "Fonds propres — Tarifs Qrypton",
@@ -38,7 +39,7 @@ function ctaHrefFor(planKey: PlanKey, isLoggedIn: boolean, hasActiveSub: boolean
 
 export default async function TarifsFondsPropres() {
   const { isLoggedIn, hasActiveSub, userEmail } = await getTarifsData();
-    const salesOpen = isSalesOpen(userEmail);
+  const salesOpen = await isSalesOpen(userEmail);
 
   return (
     <>
@@ -80,7 +81,13 @@ export default async function TarifsFondsPropres() {
           salesOpen={salesOpen}
           salesClosedMessage={SALES_CLOSED_MESSAGE}
         />
-       
+
+        {!salesOpen && (
+          <div className="mt-8">
+            <PreinscriptionForm />
+          </div>
+        )}
+
         <div className="max-w-[720px] mx-auto mt-14 border-t border-line pt-10 text-center">
           <h2 className="font-display text-base font-semibold mb-4">Incluses dans les 3 formules</h2>
           <ul className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-[13.5px] text-muted">
