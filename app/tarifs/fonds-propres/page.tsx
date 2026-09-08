@@ -3,7 +3,8 @@ import { createClient } from "@/lib/supabase-server";
 import { supabaseAdmin } from "@/lib/supabase";
 import SiteNavContainer from "@/components/SiteNavContainer";
 import { PLANS, PlanKey } from "@/lib/plans";
-import { isSalesOpen, SALES_CLOSED_MESSAGE } from "@/lib/launch";
+import { SALES_CLOSED_MESSAGE } from "@/lib/launch";
+import { isSalesOpen } from "@/lib/launch-server";
 import FondsPropresPricingSection from "@/components/tarifs/FondsPropresPricingSection";
 import PreinscriptionForm from "@/components/PreinscriptionForm";
 
