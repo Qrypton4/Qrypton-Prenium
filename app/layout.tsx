@@ -8,6 +8,7 @@ import InstallPromptIOS from "@/components/InstallPromptIOS";
 import { PWAInstallProvider } from "@/components/PWAInstallContext";
 import Footer from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/next";
+import IntroAnimation from "@/components/IntroAnimation";
 
 export const metadata: Metadata = {
   title: "Qrypton — Trading algorithmique, conçu avec précision.",
@@ -74,6 +75,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <div className="grid-bg" />
+        <IntroAnimation />
         <ScrollToTop />
         <ScrollProgressBar />
         <ServiceWorkerRegister />
