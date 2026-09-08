@@ -14,6 +14,10 @@ module.exports = {
         blue: "#3D6BFF",
         "blue-soft": "#7FA1FF",
         positive: "#6FE3A5",
+        "electric-cyan": "#5DE0F5",
+        "electric-cyan-2": "#33C4F2",
+        "electric-blue-2": "#149BF0",
+        "electric-blue": "#0A6BFF",
       },
       fontFamily: {
         display: ["'Space Grotesk'", "sans-serif"],
