@@ -4,7 +4,8 @@ import { createClient } from "@/lib/supabase-server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { getPlan, PlanKey } from "@/lib/plans";
 import { getPropFirmPlan } from "@/lib/propFirmPlans";
-import { isSalesOpen, SALES_CLOSED_MESSAGE } from "@/lib/launch";
+import { SALES_CLOSED_MESSAGE } from "@/lib/launch";
+import { isSalesOpen } from "@/lib/launch-server";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 const CGV_VERSION = "1.0";
