@@ -4,7 +4,7 @@ import { ConsentForm } from "./ConsentForm";
 import { PaiementGate } from "./PaiementGate";
 import { getPlan } from "@/lib/plans";
 import { getPropFirmPlan } from "@/lib/propFirmPlans";
-import { isSalesOpen } from "@/lib/launch";
+import { isSalesOpen } from "@/lib/launch-server";
 import { supabaseAdmin } from "@/lib/supabase";
 
 export const metadata = { title: "Paiement — Qrypton" };
