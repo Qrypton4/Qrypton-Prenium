@@ -4,7 +4,7 @@ import { supabaseAdmin } from "@/lib/supabase";
 import SiteNavContainer from "@/components/SiteNavContainer";
 import { Reveal } from "@/components/Animated";
 import PropFirmConfigurator from "@/components/tarifs/PropFirmConfigurator";
-import { isSalesOpen } from "@/lib/launch";
+import { isSalesOpen } from "@/lib/launch-server";
 import PreinscriptionForm from "@/components/PreinscriptionForm";
 
 export const metadata = {
