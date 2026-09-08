@@ -9,20 +9,15 @@ import { isSalesOpen, SALES_CLOSED_MESSAGE } from "@/lib/launch";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 const CGV_VERSION = "1.0";
 
-// Construit les line_items Stripe pour un plan donné.
 function buildLineItems(priceId: string): Stripe.Checkout.SessionCreateParams.LineItem[] {
   return [{ price: priceId, quantity: 1 }];
 }
 
-// Utilisée par ConsentForm.tsx (page /paiement) : enregistre le consentement
-// légal (CGV + renoncement au droit de rétractation, IP, user-agent, texte
-// exact accepté) AVANT de créer la session Stripe, puis retourne l'URL de
-// paiement au client.
 export async function POST(req: NextRequest) {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  if (!isSalesOpen(user?.email)) {
+  if (!(await isSalesOpen(user?.email))) {
     return NextResponse.json({ ok: false, message: SALES_CLOSED_MESSAGE }, { status: 403 });
   }
   if (!user) {
@@ -92,14 +87,11 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({ ok: true, url: session.url });
 }
 
-// Conservée pour compatibilité (liens directs /api/checkout?plan=xxx sans
-// passer par la page de consentement), sans enregistrement de consentement
-// puisqu'aucun formulaire n'est passé par ce chemin.
 export async function GET(req: NextRequest) {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  if (!isSalesOpen(user?.email)) {
+  if (!(await isSalesOpen(user?.email))) {
     return NextResponse.json({ ok: false, message: SALES_CLOSED_MESSAGE }, { status: 403 });
   }
 
