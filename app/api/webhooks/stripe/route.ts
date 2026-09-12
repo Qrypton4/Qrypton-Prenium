@@ -39,7 +39,8 @@ export async function POST(req: NextRequest) {
     const invoice = await stripe.invoices.retrieve(session.invoice as string);
     invoiceUrl = invoice.hosted_invoice_url ?? undefined;
   }
-  await sendPaymentConfirmationEmail(session.client_reference_id!, invoiceUrl);
+  const confirmedPlanKey = (session.metadata?.plan as PlanKey) || "monthly";
+  await sendPaymentConfirmationEmail(session.client_reference_id!, confirmedPlanKey, invoiceUrl);
   break;
 }
 
@@ -127,10 +128,12 @@ async function getUserContact(userId: string): Promise<{ email: string; firstNam
   };
 }
 
-async function sendPaymentConfirmationEmail(userId: string, invoiceUrl?: string) {
+async function sendPaymentConfirmationEmail(userId: string, planKey: PlanKey, invoiceUrl?: string) {
   const contact = await getUserContact(userId);
   if (!contact) return;
-  const { subject, html } = paymentConfirmationEmail(contact.firstName, "OPR Edge™", "79,00 €", invoiceUrl);
+  const plan = getPlan(planKey) || getPropFirmPlan(planKey) || getPlan("monthly")!;
+  const amountLabel = `${plan.priceEUR.toFixed(2).replace(".", ",")} €`;
+  const { subject, html } = paymentConfirmationEmail(contact.firstName, "OPR Edge™", amountLabel, invoiceUrl);
   const sent = await sendEmail({ to: contact.email, subject, html });
   if (sent) await supabase.from("email_log").insert({ user_id: userId, email_type: "payment_confirmation" });
 }
