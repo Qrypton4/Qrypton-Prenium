@@ -9,7 +9,7 @@ import FondsPropresPricingSection from "@/components/tarifs/FondsPropresPricingS
 
 export const metadata = {
   title: "Fonds propres — Tarifs Qrypton",
-  description: "OPR Edge™ à partir de 79€/mois pour trader avec vos propres fonds. Formules mensuelle, 6 mois et 12 mois.",
+  description: "OPR Edge™ à partir de 39€/mois pour trader avec vos propres fonds. Formules mensuelle, 6 mois et 12 mois.",
 };
 
 async function getTarifsData(): Promise<{
