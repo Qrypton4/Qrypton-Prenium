@@ -82,17 +82,29 @@ export function getPerformanceData(): PerformanceData {
       drawdownPct: r.drawdownPct,
     });
   }
-
-  const finalCapital = Math.round(capital * 100) / 100;
+const finalCapital = Math.round(capital * 100) / 100;
   const netProfitEUR =
     Math.round((finalCapital - raw.summary.initialCapital) * 100) / 100;
   const netProfitPct =
     Math.round((finalCapital / raw.summary.initialCapital - 1) * 100 * 100) / 100;
 
+  // "Dernière synchronisation" = date du dernier mois de performance renseigné
+  // dans data/performance.json (dernier jour de ce mois), calculée automatiquement.
+  // Se met donc à jour tout seul à chaque ajout d'un mois, sans y penser.
+  const lastMonthly = sortedMonthly[sortedMonthly.length - 1];
+  const autoLastUpdated = lastMonthly
+    ? `${lastMonthly.year}-${String(lastMonthly.month).padStart(2, "0")}-${String(
+        new Date(lastMonthly.year, lastMonthly.month, 0).getDate()
+      ).padStart(2, "0")}`
+    : raw.meta.lastUpdated;
+
   return {
     ...raw,
+    meta: { ...raw.meta, lastUpdated: autoLastUpdated },
     summary: { ...raw.summary, finalCapital, netProfitEUR, netProfitPct },
     monthly,
     equityCurve,
   };
 }
+
+ 
