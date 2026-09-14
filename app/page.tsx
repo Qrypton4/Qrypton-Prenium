@@ -26,9 +26,6 @@ export default async function Home() {
           <span className="w-1.5 h-1.5 rounded-full bg-blue shadow-[0_0_8px_#3D6BFF]" />
           Nasdaq · Stratégie Opening Price Range
         </div>
-        <div className="mb-7 fade-up">
-          <SyncBadge date={challenge.lastUpdated} />
-        </div>
         <h1 className="font-display text-[36px] md:text-[64px] font-semibold leading-[1.1] tracking-tight max-w-[900px] fade-up">
           Trading algorithmique.
           <br />
