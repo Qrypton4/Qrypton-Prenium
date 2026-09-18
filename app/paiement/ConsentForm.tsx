@@ -6,8 +6,16 @@ const CGV_TEXT =
   "J'accepte les Conditions Générales de Vente et d'Utilisation.";
 const RIGHTS_WAIVER_TEXT =
   "Je demande expressément l'activation immédiate de ma licence et reconnais qu'en conséquence, conformément à la réglementation applicable, je pourrai perdre mon droit de rétractation dès l'exécution complète du service.";
+
+// Texte affiché dans la bannière jaune ET enregistré comme preuve en base —
+// c'est le texte substantiel, celui qui compte juridiquement.
 const RISK_WARNING_TEXT =
-  "Je reconnais avoir été informé(e) que le trading et l'utilisation d'un robot algorithmique comportent un risque de perte en capital, pouvant aller d'une perte minime jusqu'à la perte totale des fonds engagés. Je reconnais que les performances passées (backtests ou résultats réels) ne préjugent en rien des performances futures, et que Qrypton ne garantit ni ne promet aucun pourcentage de gain, aucun résultat ni aucune performance, quelle qu'elle soit. Je reconnais être seul(e) responsable de mes décisions d'utilisation et de leurs conséquences financières. OPR Edge™ est un outil logiciel et ne constitue ni un conseil en investissement ni une garantie de gain.";
+  "Le trading et l'utilisation d'un robot algorithmique comportent un risque de perte en capital, pouvant aller d'une perte minime jusqu'à la perte totale des fonds engagés. Les performances passées (backtests ou résultats réels) ne préjugent en rien des performances futures. Qrypton ne garantit ni ne promet aucun pourcentage de gain, aucun résultat ni aucune performance, quelle qu'elle soit. L'utilisateur est seul responsable de ses décisions d'utilisation et de leurs conséquences financières. OPR Edge™ est un outil logiciel et ne constitue ni un conseil en investissement ni une garantie de gain.";
+
+// Texte court affiché à côté de la case — renvoie explicitement à l'avertissement
+// ci-dessus, qui reste le texte réellement enregistré (RISK_WARNING_TEXT).
+const RISK_CHECKBOX_LABEL =
+  "Je reconnais avoir lu et compris l'avertissement sur les risques liés au trading ci-dessus.";
 
 export function ConsentForm({ plan }: { plan: string }) {
   const [cgvAccepted, setCgvAccepted] = useState(false);
@@ -53,12 +61,7 @@ export function ConsentForm({ plan }: { plan: string }) {
     <div className="flex flex-col gap-4">
       <div className="flex items-start gap-3 rounded-lg border border-amber-500/40 bg-amber-500/10 p-4 text-sm text-amber-200">
         <span aria-hidden="true">⚠️</span>
-        <span>
-          Le trading algorithmique comporte un risque de perte en capital, pouvant aller
-          jusqu'à la perte totale des fonds engagés. Les performances passées ne préjugent
-          pas des performances futures. Qrypton ne garantit ni ne promet aucun pourcentage
-          de gain.
-        </span>
+        <span>{RISK_WARNING_TEXT}</span>
       </div>
 
       <label className="flex items-start gap-3 text-sm text-muted-2 cursor-pointer">
@@ -93,7 +96,7 @@ export function ConsentForm({ plan }: { plan: string }) {
           onChange={(e) => setRiskWarningAccepted(e.target.checked)}
           className="mt-1"
         />
-        <span>{RISK_WARNING_TEXT}</span>
+        <span>{RISK_CHECKBOX_LABEL}</span>
       </label>
 
       {error && <p className="text-sm text-red-400">{error}</p>}
