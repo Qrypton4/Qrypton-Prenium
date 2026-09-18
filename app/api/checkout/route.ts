@@ -26,9 +26,17 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json();
-  const { plan: planKey, cgvAccepted, rightsWaiverAccepted, cgvText, rightsWaiverText } = body;
+  const {
+    plan: planKey,
+    cgvAccepted,
+    rightsWaiverAccepted,
+    riskWarningAccepted,
+    cgvText,
+    rightsWaiverText,
+    riskWarningText,
+  } = body;
 
-  if (!cgvAccepted || !rightsWaiverAccepted) {
+  if (!cgvAccepted || !rightsWaiverAccepted || !riskWarningAccepted) {
     return NextResponse.json(
       { ok: false, message: "consent_required" },
       { status: 400 }
@@ -72,8 +80,10 @@ export async function POST(req: NextRequest) {
     plan: planKey,
     cgv_accepted: cgvAccepted,
     rights_waiver_accepted: rightsWaiverAccepted,
+    risk_warning_accepted: riskWarningAccepted,
     cgv_text: cgvText ?? null,
     rights_waiver_text: rightsWaiverText ?? null,
+    risk_warning_text: riskWarningText ?? null,
     cgv_version: CGV_VERSION,
     ip_address: ipAddress,
     user_agent: userAgent,
