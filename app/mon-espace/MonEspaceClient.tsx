@@ -6,6 +6,7 @@ import { Card, Row, Kpi } from "./ui";
 import Image from "next/image";
 import PWAInstallSettingsCard from "@/components/PWAInstallSettingsCard";
 import PropFirmDeclarationForm from "@/components/tarifs/PropFirmDeclarationForm";
+import RecentActivityAccordion from "@/components/mon-espace/RecentActivityAccordion";
 
 const TABS = [
   { id: "dashboard", label: "📊 Tableau de bord" },
@@ -416,10 +417,8 @@ function PerformanceTabRich({
   const dates: string[] = chrono.map((t: any) => t.close_time);
   const firstDate = chrono[0]?.close_time;
 
-  const wins = trades.filter((t: any) => Number(t.profit) > 0).length;
+const wins = trades.filter((t: any) => Number(t.profit) > 0).length;
   const losses = trades.length - wins;
-
-  const recentTrades = trades.slice(0, 3);
 
   return (
       <div className="flex flex-col gap-5 tab-fade">
@@ -530,50 +529,9 @@ function PerformanceTabRich({
         </div>
       </Card>
 
-      <Card title="Activité récente">
-        <div className="flex flex-col">
-          {recentTrades.map((t: any) => {
-            const win = Number(t.profit) >= 0;
-            return (
-              <div
-                key={t.id}
-                className="flex justify-between items-center py-3.5 border-t border-line first:border-0"
-              >
-                <div className="flex items-center gap-3">
-                  <div
-                    className={`w-9 h-9 rounded-full flex items-center justify-center text-sm ${
-                      win ? "bg-positive/10 text-positive" : "bg-red-400/10 text-red-400"
-                    }`}
-                  >
-                    {win ? "↗" : "↘"}
-                  </div>
-                  <div>
-                    <div className="text-[13px] font-medium">Trade clôturé</div>
-                    <div className="text-[11.5px] text-muted-2 mt-0.5">
-                      {t.symbol} · {t.direction === "buy" ? "Achat" : "Vente"} · {t.lot_size} lot
-                    </div>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className={`text-sm font-semibold ${win ? "text-positive" : "text-red-400"}`}>
-                    {win ? "+" : ""}
-                    {Number(t.profit).toFixed(2)} €
-                  </div>
-                  <div className="text-[10.5px] text-muted-2 mt-0.5">
-                    {new Date(t.close_time).toLocaleString("fr-FR", {
-                      day: "2-digit",
-                      month: "2-digit",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </Card>
-
+    <Card title="Activité récente">
+        <RecentActivityAccordion trades={trades} />
+      </Card> 
       <button
         onClick={() => downloadTradesCSV(trades)}
         className="border border-line rounded-2xl bg-bg-2 px-5 py-4 flex items-center justify-between text-left hover:border-blue-soft/40 hover:bg-white/[0.03] transition"
