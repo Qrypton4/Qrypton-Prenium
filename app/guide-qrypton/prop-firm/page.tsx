@@ -40,7 +40,7 @@ export default function GuidePropFirm() {
               de trader manuellement.
             </Field>
             
-            <Field title="Si je perds le compte financé, dois-je rembourser ?">
+            <Field title="Si le robot échoue le challenge (ou fait perdre le compte financé) dois-je rembourser ?">
                Non. Le capital appartient à la Prop Firm, pas à vous. En cas de
                liquidation du compte (drawdown dépassé), vous perdez simplement
              l&apos;accès à ce compte financé — vous ne devez rien à personne.
