@@ -65,6 +65,15 @@ export default async function TarifsPropFirm() {
           </div>
         </Reveal>
 
+        <div className="max-w-[620px] mx-auto rounded-2xl border border-blue-soft/30 px-5 py-3 text-center mb-8">
+          <p className="text-sm text-white/80">
+            Le robot nécessite un PC allumé de 15h30 à 18h00.{" "}
+            <Link href="/faq#mobile-tablette" className="text-blue-soft hover:underline">
+              En savoir plus →
+            </Link>
+          </p>
+        </div>
+
         <Reveal delay={0.06}>
           <div className="border border-line rounded-[26px] bg-bg-2 p-6 md:p-10">
             <PropFirmConfigurator isLoggedIn={isLoggedIn} hasActiveSub={hasActiveSub} salesOpen={salesOpen} />
