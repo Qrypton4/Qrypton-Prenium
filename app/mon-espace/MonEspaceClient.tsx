@@ -33,6 +33,7 @@ export default function MonEspaceClient({
   lastBalance,
   userEmail,
   propFirmAccounts,
+  accountHistory,
 }: {
   license: any;
   subscription: any;
