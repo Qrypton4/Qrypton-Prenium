@@ -81,6 +81,39 @@ export default async function MonEspace() {
   const { data: trades } = license.mt5_account_login
     ? await tradesQuery.eq("mt5_account_login", license.mt5_account_login)
     : { data: [] };
+   // Historique de TOUS les comptes MT5 jamais liés à cette licence (y compris
+  // ceux resetés), pour que le client retrouve ses performances passées.
+  const { data: allTrades } = await supabaseAdmin
+    .from("live_trades")
+    .select("mt5_account_login, profit, close_time")
+    .eq("license_id", license.id);
+
+  const accountGroups = new Map<
+    string,
+    { profit: number; count: number; wins: number; firstTrade: string | null; lastTrade: string | null }
+  >();
+  for (const t of allTrades ?? []) {
+    const acc = t.mt5_account_login ?? "inconnu";
+    const g = accountGroups.get(acc) ?? { profit: 0, count: 0, wins: 0, firstTrade: null, lastTrade: null };
+    g.profit += Number(t.profit);
+    g.count += 1;
+    if (Number(t.profit) > 0) g.wins += 1;
+    if (!g.firstTrade || t.close_time < g.firstTrade) g.firstTrade = t.close_time;
+    if (!g.lastTrade || t.close_time > g.lastTrade) g.lastTrade = t.close_time;
+    accountGroups.set(acc, g);
+  }
+  const accountHistory = Array.from(accountGroups.entries())
+    .map(([account, g]) => ({
+      account,
+      netProfit: g.profit,
+      tradeCount: g.count,
+      winRate: g.count ? ((g.wins / g.count) * 100).toFixed(1) : "0",
+      firstTrade: g.firstTrade,
+      lastTrade: g.lastTrade,
+      isCurrent: license.mt5_account_login === account,
+    }))
+    .sort((a, b) => (b.lastTrade ?? "").localeCompare(a.lastTrade ?? ""));
+Nouveau
   const hasTrades = !!(trades && trades.length > 0);
   const netProfit = hasTrades ? trades!.reduce((s, t) => s + Number(t.profit), 0) : 0;
   const winRate = hasTrades
@@ -102,7 +135,8 @@ export default async function MonEspace() {
       lastBalance={lastBalance}
       userEmail={user.email}
       propFirmAccounts={propFirmAccounts ?? []}
-    />
+   accountHistory={accountHistory}   
+      />
   </>
 );
 }
