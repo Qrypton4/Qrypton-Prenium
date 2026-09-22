@@ -113,7 +113,6 @@ export default async function MonEspace() {
       isCurrent: license.mt5_account_login === account,
     }))
     .sort((a, b) => (b.lastTrade ?? "").localeCompare(a.lastTrade ?? ""));
-Nouveau
   const hasTrades = !!(trades && trades.length > 0);
   const netProfit = hasTrades ? trades!.reduce((s, t) => s + Number(t.profit), 0) : 0;
   const winRate = hasTrades
