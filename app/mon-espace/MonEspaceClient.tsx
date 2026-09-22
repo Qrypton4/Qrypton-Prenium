@@ -44,6 +44,7 @@ export default function MonEspaceClient({
   lastBalance: number;
   userEmail?: string | null;
   propFirmAccounts?: any[];
+  accountHistory?: any[];
 }) {
   const [tab, setTab] = useState<TabId>("dashboard");
   const [moreOpen, setMoreOpen] = useState(false);
@@ -150,6 +151,7 @@ export default function MonEspaceClient({
               netProfit={netProfit}
               winRate={winRate}
               lastBalance={lastBalance}
+              accountHistory={accountHistory}
             />
           )}
           {tab === "license" && <LicenseTab license={license} propFirmAccounts={propFirmAccounts ?? []} />}
