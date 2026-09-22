@@ -363,6 +363,7 @@ function PerformanceTabRich({
   netProfit,
   winRate,
   lastBalance,
+  accountHistory,
 }: any) {
   const [liveSnapshot, setLiveSnapshot] = useState<{
     balance: number;
@@ -520,6 +521,53 @@ const wins = trades.filter((t: any) => Number(t.profit) > 0).length;
     <Card title="Activité récente">
         <RecentActivityAccordion trades={trades} />
       </Card> 
+        {accountHistory && accountHistory.filter((a: any) => !a.isCurrent).length > 0 && (
+        <Card title="Comptes précédents">
+          <div className="flex flex-col gap-3">
+            {accountHistory
+              .filter((a: any) => !a.isCurrent)
+              .map((a: any) => (
+                <div
+                  key={a.account}
+                  className="border border-line rounded-xl p-4 flex flex-col gap-2"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-[13px] font-medium">Compte {a.account}</span>
+                    <span className="text-[11px] text-muted-2">
+                      {a.firstTrade && a.lastTrade
+                        ? `${new Date(a.firstTrade).toLocaleDateString("fr-FR")} → ${new Date(
+                            a.lastTrade
+                          ).toLocaleDateString("fr-FR")}`
+                        : "—"}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-3 text-center">
+                    <div>
+                      <div
+                        className={`text-[15px] font-semibold ${
+                          a.netProfit >= 0 ? "text-positive" : "text-red-400"
+                        }`}
+                      >
+                        {a.netProfit >= 0 ? "+" : ""}
+                        {Math.round(a.netProfit).toLocaleString("fr-FR")} €
+                      </div>
+                      <div className="text-[10px] text-muted-2">Profit net</div>
+                    </div>
+                    <div>
+                      <div className="text-[15px] font-semibold">{a.winRate} %</div>
+                      <div className="text-[10px] text-muted-2">Win rate</div>
+                    </div>
+                    <div>
+                      <div className="text-[15px] font-semibold">{a.tradeCount}</div>
+                      <div className="text-[10px] text-muted-2">Trades</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </div>
+        </Card>
+      )}
+
       <button
         onClick={() => downloadTradesCSV(trades)}
         className="border border-line rounded-2xl bg-bg-2 px-5 py-4 flex items-center justify-between text-left hover:border-blue-soft/40 hover:bg-white/[0.03] transition"
