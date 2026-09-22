@@ -393,21 +393,7 @@ function PerformanceTabRich({
       clearInterval(interval);
     };
   }, []);
-  if (!hasTrades) {
-    return (
-      <div className="flex flex-col gap-6">
-        <h2 className="text-xs text-muted uppercase tracking-wide">Performances</h2>
-        <div className="border border-line rounded-2xl bg-bg-2 p-12 text-center">
-          <div className="text-base font-semibold mb-2">Aucun trade pour le moment</div>
-          <p className="text-muted text-sm max-w-[380px] mx-auto leading-relaxed">
-            Dès que votre robot commencera à trader, vos statistiques (capital, profit,
-            historique) apparaîtront ici automatiquement.
-          </p>
-        </div>
-      </div>
-    );
-  }
-
+ 
   const startCapital = lastBalance - netProfit;
   const perfPct = startCapital > 0 ? (netProfit / startCapital) * 100 : 0;
   const perfPositive = netProfit >= 0;
