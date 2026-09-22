@@ -69,12 +69,18 @@ export default async function MonEspace() {
   );
 }
 
-  const { data: trades } = await supabaseAdmin
+ // On n'affiche que les trades du compte MT5 actuellement lié à la licence.
+  // L'historique de l'ancien compte reste en base (pour les admins/archives)
+  // mais disparaît de l'affichage client dès qu'il reset/change de compte.
+  const tradesQuery = supabaseAdmin
     .from("live_trades")
     .select("*")
     .eq("license_id", license.id)
-    .order("close_time", { ascending: false })
+    .order("close_time", { ascending: false });
 
+  const { data: trades } = license.mt5_account_login
+    ? await tradesQuery.eq("mt5_account_login", license.mt5_account_login)
+    : { data: [] };
   const hasTrades = !!(trades && trades.length > 0);
   const netProfit = hasTrades ? trades!.reduce((s, t) => s + Number(t.profit), 0) : 0;
   const winRate = hasTrades
