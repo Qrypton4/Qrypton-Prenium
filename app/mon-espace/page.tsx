@@ -118,7 +118,21 @@ export default async function MonEspace() {
   const winRate = hasTrades
     ? ((trades!.filter((t) => t.profit > 0).length / trades!.length) * 100).toFixed(1)
     : "0";
-  const lastBalance = hasTrades ? trades![0]?.balance_after ?? 0 : 0;
+  const { data: lastSnapshot } = await supabaseAdmin
+  .from("account_snapshots")
+  .select("balance")
+  .eq("license_id", license.id)
+  .order("captured_at", { ascending: false })
+  .limit(1)
+  .maybeSingle();
+
+const lastBalance =
+  lastSnapshot?.balance != null
+    ? Number(lastSnapshot.balance)
+    : hasTrades
+    ? trades![0]?.balance_after ?? 0
+    : 0;
+
 
   return (
   <>
