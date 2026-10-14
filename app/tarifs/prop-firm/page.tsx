@@ -4,6 +4,7 @@ import { supabaseAdmin } from "@/lib/supabase";
 import SiteNavContainer from "@/components/SiteNavContainer";
 import { Reveal } from "@/components/Animated";
 import PropFirmConfigurator from "@/components/tarifs/PropFirmConfigurator";
+import FtmoCapacityGauge from "@/components/tarifs/FtmoCapacityGauge";
 import { isSalesOpen } from "@/lib/launch-server";
 
 export const metadata = {
@@ -73,6 +74,10 @@ export default async function TarifsPropFirm() {
             </Link>
           </p>
         </div>
+
+        <Reveal delay={0.03}>
+          <FtmoCapacityGauge />
+        </Reveal>
 
         <Reveal delay={0.06}>
           <div className="border border-line rounded-[26px] bg-bg-2 p-6 md:p-10">
